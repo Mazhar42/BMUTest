@@ -1,0 +1,4 @@
+# PLACEHOLDER — must be confirmed by BMU laboratory.
+# Result parameters and reference ranges for STRUCTURED departments (used from M7). Intentionally empty:
+# reference ranges are clinical content and must come from the BMU laboratory, never from the software team.
+test_code,param_code,name,unit,decimals,sort,value_type,critical_low,critical_high,analyzer_code,sex,age_min_days,age_max_days,low,high,range_text

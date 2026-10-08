@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@import "@bmu/ui/theme.css";
+@source "../../../packages/ui/src";
+
+@media print {
+  .no-print { display: none !important; }
+}

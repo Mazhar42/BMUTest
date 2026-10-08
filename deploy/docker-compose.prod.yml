@@ -1,0 +1,114 @@
+# Production stack for the VPS (docs/runbooks/deploy.md). Images come from GHCR, built by CI; nothing is
+# built or mounted from source here. Secrets live only in /opt/bmu-lab/.env on the server.
+name: bmu-lab
+
+x-api: &api
+  image: ${REGISTRY:-ghcr.io/OWNER}/bmu-lab-api:${TAG:-latest}
+  restart: unless-stopped
+  env_file: .env
+  environment:
+    ENV: prod
+    DATABASE_URL: postgresql+psycopg://bmu:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/bmu
+    REDIS_URL: redis://redis:6379/0
+    S3_ENDPOINT: http://minio:9000
+    STORAGE_BACKEND: s3
+  depends_on:
+    postgres: { condition: service_healthy }
+    redis: { condition: service_started }
+    minio: { condition: service_started }
+  logging: &logging
+    driver: json-file
+    options: { max-size: "20m", max-file: "5" }
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bmu
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: bmu
+    command: >
+      postgres -c wal_level=replica -c archive_mode=on
+      -c archive_command='test ! -f /wal_archive/%f && cp %p /wal_archive/%f'
+      -c archive_timeout=300 -c max_connections=200
+    entrypoint: ["sh", "-c", "mkdir -p /wal_archive && chown postgres:postgres /wal_archive && exec docker-entrypoint.sh \"$$@\"", "--"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - walarchive:/wal_archive
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bmu -d bmu"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    logging: *logging
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes: [redis:/data]
+    logging: *logging
+
+  # S3-compatible private object store (prescription photos, reports). Not exposed outside the host.
+  minio:
+    image: rustfs/rustfs:${RUSTFS_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY:?set S3_ACCESS_KEY}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY:?set S3_SECRET_KEY}
+    volumes: [objects:/data]
+    logging: *logging
+
+  api:
+    <<: *api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers ${API_WORKERS:-4} --proxy-headers --forwarded-allow-ips '*'
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8000/api/v1/health || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 30
+
+  worker:
+    <<: *api
+    command: celery -A app.workers.celery_app worker --loglevel=INFO --concurrency=4
+    environment:
+      ENV: prod
+      DATABASE_URL: postgresql+psycopg://bmu:${POSTGRES_PASSWORD}@postgres:5432/bmu
+      REDIS_URL: redis://redis:6379/0
+      S3_ENDPOINT: http://minio:9000
+      STORAGE_BACKEND: s3
+      CELERY_ENABLED: "true"
+
+  beat:
+    <<: *api
+    command: celery -A app.workers.celery_app beat --loglevel=INFO --schedule /tmp/celerybeat-schedule
+    environment:
+      ENV: prod
+      DATABASE_URL: postgresql+psycopg://bmu:${POSTGRES_PASSWORD}@postgres:5432/bmu
+      REDIS_URL: redis://redis:6379/0
+      S3_ENDPOINT: http://minio:9000
+      STORAGE_BACKEND: s3
+      CELERY_ENABLED: "true"
+
+  web:
+    image: ${REGISTRY:-ghcr.io/OWNER}/bmu-lab-web:${TAG:-latest}
+    restart: unless-stopped
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?set SITE_ADDRESS (your domain)}
+      ACME_EMAIL: ${ACME_EMAIL:-admin@localhost}
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      api: { condition: service_healthy }
+    logging: *logging
+
+volumes:
+  pgdata:
+  walarchive:
+  redis:
+  objects:
+  caddy_data:
+  caddy_config:

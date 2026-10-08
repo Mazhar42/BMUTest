@@ -1,0 +1,16 @@
+{
+  "HELP_DESK": "হেল্প ডেস্ক",
+  "VERIFIER": "যাচাইকারী",
+  "BANK_TELLER": "ব্যাংক টেলার",
+  "CASHIER": "ক্যাশিয়ার",
+  "COLLECTOR": "নমুনা সংগ্রহকারী",
+  "LAB_RECEPTION": "ল্যাব রিসেপশন",
+  "TECHNICIAN": "টেকনিশিয়ান",
+  "PATHOLOGIST": "প্যাথলজিস্ট",
+  "REPORT_DESK": "রিপোর্ট ডেস্ক",
+  "WAIVER_APPROVER": "মওকুফ অনুমোদনকারী",
+  "LAB_ADMIN": "ল্যাব অ্যাডমিন",
+  "AUDITOR": "অডিটর",
+  "SUPER_ADMIN": "সুপার অ্যাডমিন",
+  "HOME_COLLECTOR": "বাসা থেকে সংগ্রহকারী"
+}

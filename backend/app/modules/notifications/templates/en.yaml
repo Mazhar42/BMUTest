@@ -1,0 +1,9 @@
+# SMS templates (English). Keep every message within 2 SMS segments (see tests/unit/test_sms_templates.py).
+# {code} = order code with dashes, {amount} = taka in the message language, {link} = short patient link.
+otp: "BMU Lab code: {otp}. Valid for 5 minutes. Do not share it with anyone."
+order_submitted: "BMU Lab: request {code} received. We will verify your tests and send the amount by SMS."
+order_verified: "BMU Lab {code}: tests verified. Amount Tk {amount}. Details: {link}"
+order_clarification: "BMU Lab {code}: we need more information about your prescription. Open {link}"
+order_rejected: "BMU Lab {code}: your request could not be accepted. Please contact the help desk."
+walkin_created: "BMU Lab code {code}. Amount Tk {amount}. Pay at the bank booth using this code."
+waiver_approved: "BMU Lab {code}: fee waiver approved. Amount payable Tk {amount}."

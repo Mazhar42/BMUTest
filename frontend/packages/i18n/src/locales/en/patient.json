@@ -1,0 +1,87 @@
+{
+  "welcome": {
+    "title": "Lab tests without the queues",
+    "body": "Send your prescription, get your tests verified, and come to the hospital only to give the sample.",
+    "chooseLanguage": "Choose your language"
+  },
+  "login": {
+    "devCode": "Test mode — your code is",
+    "privacy": "Your number is used only for lab messages."
+  },
+  "home": {
+    "hello": "Hello",
+    "welcome": "Welcome",
+    "book": "Book a Test",
+    "bookBody": "Send a prescription and choose tests",
+    "appointments": "My Appointments",
+    "appointmentsBody": "Status of your requests and visits",
+    "reports": "My Reports",
+    "reportsBody": "View and download your reports"
+  },
+  "whoFor": {
+    "title": "Who is this for?",
+    "subtitle": "Choose the person who will give the sample.",
+    "myself": "For myself",
+    "addFamily": "Add a family member"
+  },
+  "family": {
+    "title": "Add family member",
+    "selfTitle": "About you",
+    "name": "Full name",
+    "nameHint": "As on the prescription, in English letters.",
+    "nameBn": "Name in Bangla",
+    "age": "Age",
+    "ageYears": "Age in years",
+    "dob": "Date of birth",
+    "relation": "Relation to you"
+  },
+  "book": {
+    "steps": { "photos": "Prescription", "tests": "Tests", "review": "Review" },
+    "photosTitle": "Photograph the prescription",
+    "photosBody": "Up to 3 pages. Staff check your tests against it.",
+    "photosTip": "Lay the paper flat in good light so the doctor's writing is readable.",
+    "takePhoto": "Take photo",
+    "addPage": "Add page",
+    "page": "Page {{n}}",
+    "skipPhotos": "Continue without a photo",
+    "testsTitle": "Choose the tests",
+    "testsBody": "Search in Bangla or English, or type what is written (e.g. S. Creat).",
+    "searchPlaceholder": "Search tests…",
+    "fasting": "fasting",
+    "fastingHours": "Come fasting ({{hours}} hours)",
+    "fastingTitle": "Some tests need fasting",
+    "review": "Review",
+    "reviewTitle": "Check and submit",
+    "needsPrescription": "Some of these tests need a prescription photo. Go back and add one, or the request will be refused.",
+    "priceNote": "Prices are final after staff verify your tests.",
+    "doctor": "Doctor's name",
+    "notes": "Note for the lab",
+    "submit": "Submit request"
+  },
+  "order": {
+    "code": "Your code",
+    "submittedTitle": "Request submitted",
+    "submittedBody": "We'll check your tests and send the amount by SMS.",
+    "verifyBy": "Usually verified by {{time}}",
+    "clarifyTitle": "We need more information",
+    "addPhoto": "Add a clearer photo",
+    "photosAdded": "{{count}} photo(s) ready to send",
+    "reply": "Your answer",
+    "sendReply": "Send",
+    "clarifySent": "Sent. We'll check it again.",
+    "rejectedTitle": "Request not accepted",
+    "payTitle": "Amount to pay: {{amount}}",
+    "payBody": "Pay at the hospital bank booth with this code — no paper needed. Online payment (bKash, Nagad, cards) is coming soon.",
+    "waiver": "Waiver",
+    "cancel": "Cancel this request",
+    "cancelConfirm": "Cancel this request?"
+  },
+  "orders": {
+    "empty": "No requests yet",
+    "emptyBody": "Book a test to get started."
+  },
+  "reports": {
+    "empty": "No reports yet",
+    "emptyBody": "When a report is released you'll get an SMS, and it will appear here to view or download."
+  }
+}

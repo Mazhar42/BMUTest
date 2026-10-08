@@ -1,0 +1,69 @@
+{
+  "orderStatus": {
+    "DRAFT": "খসড়া",
+    "PENDING_VERIFICATION": "যাচাইয়ের অপেক্ষায়",
+    "NEEDS_CLARIFICATION": "আরও তথ্য প্রয়োজন",
+    "AWAITING_PAYMENT": "পেমেন্টের অপেক্ষায়",
+    "PAID": "পরিশোধিত",
+    "READY_FOR_COLLECTION": "নমুনা দেওয়ার জন্য প্রস্তুত",
+    "CHECKED_IN": "চেক-ইন হয়েছে",
+    "COLLECTED": "নমুনা নেওয়া হয়েছে",
+    "IN_LAB": "ল্যাবে আছে",
+    "COMPLETED": "সম্পন্ন",
+    "REJECTED": "বাতিল (গ্রহণযোগ্য নয়)",
+    "EXPIRED": "মেয়াদোত্তীর্ণ",
+    "CANCELLED": "বাতিল",
+    "REFUND_PENDING": "রিফান্ড প্রক্রিয়াধীন",
+    "REFUNDED": "রিফান্ড হয়েছে"
+  },
+  "waiverStatus": { "REQUESTED": "অনুরোধ করা হয়েছে", "APPROVED": "অনুমোদিত", "DECLINED": "নামঞ্জুর", "WITHDRAWN": "প্রত্যাহার" },
+  "feeCategory": {
+    "GENERAL": "সাধারণ",
+    "FREE": "বিনামূল্যে",
+    "POOR_FUND": "দরিদ্র তহবিল",
+    "STAFF": "স্টাফ",
+    "CONCESSION": "ছাড়"
+  },
+  "priority": { "NORMAL": "সাধারণ", "ELDERLY": "বয়স্ক", "DISABLED": "প্রতিবন্ধী", "EMERGENCY": "জরুরি" },
+  "channel": {
+    "APP": "অ্যাপ",
+    "WEB": "ওয়েব",
+    "HELPDESK": "হেল্প ডেস্ক",
+    "WALKIN": "সরাসরি",
+    "KIOSK": "কিয়স্ক",
+    "HOME": "বাসা",
+    "BACKENTRY": "পরবর্তী এন্ট্রি"
+  },
+  "relation": {
+    "SELF": "আমি নিজে",
+    "SPOUSE": "স্বামী / স্ত্রী",
+    "CHILD": "সন্তান",
+    "PARENT": "বাবা / মা",
+    "SIBLING": "ভাই / বোন",
+    "OTHER": "অন্যান্য"
+  },
+  "specimen": { "BLOOD": "রক্ত", "URINE": "প্রস্রাব", "STOOL": "মল", "SWAB": "সোয়াব", "OTHER": "অন্যান্য" },
+  "container": {
+    "EDTA": "ইডিটিএ (বেগুনি)",
+    "PLAIN": "প্লেইন (লাল)",
+    "SST": "এসএসটি (সোনালি)",
+    "FLUORIDE": "ফ্লোরাইড (ধূসর)",
+    "CITRATE": "সাইট্রেট (নীল)",
+    "HEPARIN": "হেপারিন (সবুজ)",
+    "URINE_CUP": "প্রস্রাবের পাত্র",
+    "STOOL_CUP": "মলের পাত্র",
+    "BLOOD_CULTURE": "ব্লাড কালচার বোতল",
+    "SWAB_TUBE": "সোয়াব টিউব",
+    "OTHER": "অন্যান্য"
+  },
+  "resource": { "BLOOD_COLLECTION": "রক্ত সংগ্রহ", "URINE": "প্রস্রাব / মল", "SPECIAL": "বিশেষ" },
+  "resultMode": { "STRUCTURED": "কাঠামোবদ্ধ এন্ট্রি", "PDF_UPLOAD": "পিডিএফ আপলোড" },
+  "paymentMethod": { "GATEWAY": "অনলাইন", "BANK_TELLER": "ব্যাংক বুথ", "COUNTER_CASH": "কাউন্টারে নগদ", "WAIVER": "মওকুফ" },
+  "timeline": {
+    "submitted": "অনুরোধ জমা হয়েছে",
+    "verified": "পরীক্ষা যাচাই",
+    "paid": "পেমেন্ট",
+    "collected": "নমুনা সংগ্রহ",
+    "reported": "রিপোর্ট প্রস্তুত"
+  }
+}

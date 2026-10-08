@@ -1,0 +1,15 @@
+{
+  "name": "bmu-lab-e2e",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.5",
+    "otplib": "^12.0.1",
+    "typescript": "~5.7.2"
+  }
+}

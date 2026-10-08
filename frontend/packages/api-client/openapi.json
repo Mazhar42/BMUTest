@@ -1,0 +1,8589 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "BMU Lab API",
+  "version": "0.1.0"
+ },
+ "paths": {
+  "/api/v1/health": {
+   "get": {
+    "tags": [
+     "ops"
+    ],
+    "summary": "Health",
+    "operationId": "health_api_v1_health_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "type": "object",
+         "title": "Response Health Api V1 Health Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/auth/login": {
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Login",
+    "operationId": "login_api_v1_staff_auth_login_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/LoginIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/LoginOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/auth/totp": {
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Login Totp",
+    "operationId": "login_totp_api_v1_staff_auth_totp_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TotpIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/LoginOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/auth/me": {
+   "get": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Get Me",
+    "operationId": "get_me_api_v1_staff_auth_me_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffMe"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/auth/unlock": {
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Unlock",
+    "operationId": "unlock_api_v1_staff_auth_unlock_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UnlockIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffMe"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/auth/lock": {
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Lock",
+    "operationId": "lock_api_v1_staff_auth_lock_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/auth/logout": {
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Logout",
+    "operationId": "logout_api_v1_staff_auth_logout_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/auth/me/preferences": {
+   "patch": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Preferences",
+    "operationId": "preferences_api_v1_staff_auth_me_preferences_patch",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PreferencesIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffMe"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/auth/me/pin": {
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Set Pin",
+    "operationId": "set_pin_api_v1_staff_auth_me_pin_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PinIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/auth/me/password": {
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Change Password",
+    "operationId": "change_password_api_v1_staff_auth_me_password_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PasswordChangeIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/admin/staff": {
+   "get": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "List Staff",
+    "operationId": "list_staff_api_v1_staff_admin_staff_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/StaffOut"
+         },
+         "title": "Response List Staff Api V1 Staff Admin Staff Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Create Staff",
+    "operationId": "create_staff_api_v1_staff_admin_staff_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/StaffCreate"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/admin/staff/{staff_id}": {
+   "patch": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Update Staff",
+    "operationId": "update_staff_api_v1_staff_admin_staff__staff_id__patch",
+    "parameters": [
+     {
+      "name": "staff_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Staff Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/StaffUpdate"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/admin/staff/{staff_id}/reset-totp": {
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Reset Totp",
+    "operationId": "reset_totp_api_v1_staff_admin_staff__staff_id__reset_totp_post",
+    "parameters": [
+     {
+      "name": "staff_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Staff Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/admin/staff/{staff_id}/reset-password": {
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Reset Password",
+    "operationId": "reset_password_api_v1_staff_admin_staff__staff_id__reset_password_post",
+    "parameters": [
+     {
+      "name": "staff_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Staff Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PasswordResetIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/admin/devices": {
+   "get": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "List Devices",
+    "operationId": "list_devices_api_v1_staff_admin_devices_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/DeviceOut"
+         },
+         "title": "Response List Devices Api V1 Staff Admin Devices Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Create Device",
+    "operationId": "create_device_api_v1_staff_admin_devices_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DeviceCreate"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DeviceCreated"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/admin/devices/{device_id}": {
+   "delete": {
+    "tags": [
+     "staff-auth"
+    ],
+    "summary": "Deactivate Device",
+    "operationId": "deactivate_device_api_v1_staff_admin_devices__device_id__delete",
+    "parameters": [
+     {
+      "name": "device_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Device Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/auth/otp/request": {
+   "post": {
+    "tags": [
+     "patient-auth"
+    ],
+    "summary": "Request Otp",
+    "operationId": "request_otp_api_v1_patient_auth_otp_request_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/OtpRequestIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OtpRequestOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/auth/otp/verify": {
+   "post": {
+    "tags": [
+     "patient-auth"
+    ],
+    "summary": "Verify Otp",
+    "operationId": "verify_otp_api_v1_patient_auth_otp_verify_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/OtpVerifyIn"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PatientTokenOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/auth/refresh": {
+   "post": {
+    "tags": [
+     "patient-auth"
+    ],
+    "summary": "Refresh",
+    "operationId": "refresh_api_v1_patient_auth_refresh_post",
+    "parameters": [
+     {
+      "name": "x-requested-with",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "X-Requested-With"
+      }
+     },
+     {
+      "name": "bmu_refresh",
+      "in": "cookie",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Bmu Refresh"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PatientTokenOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/auth/logout": {
+   "post": {
+    "tags": [
+     "patient-auth"
+    ],
+    "summary": "Logout",
+    "operationId": "logout_api_v1_patient_auth_logout_post",
+    "parameters": [
+     {
+      "name": "x-requested-with",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "X-Requested-With"
+      }
+     },
+     {
+      "name": "bmu_refresh",
+      "in": "cookie",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Bmu Refresh"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/catalog/departments": {
+   "get": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "List Departments",
+    "operationId": "list_departments_api_v1_staff_catalog_departments_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/DepartmentOut"
+         },
+         "title": "Response List Departments Api V1 Staff Catalog Departments Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "Create Department",
+    "operationId": "create_department_api_v1_staff_catalog_departments_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DepartmentIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DepartmentOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/catalog/departments/{dept_id}": {
+   "put": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "Update Department",
+    "operationId": "update_department_api_v1_staff_catalog_departments__dept_id__put",
+    "parameters": [
+     {
+      "name": "dept_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Dept Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DepartmentIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DepartmentOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/catalog/tests": {
+   "get": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "Search Tests",
+    "operationId": "search_tests_api_v1_staff_catalog_tests_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "department_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "uuid"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Department Id"
+      }
+     },
+     {
+      "name": "include_inactive",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "boolean",
+       "default": false,
+       "title": "Include Inactive"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 500,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/TestOut"
+         },
+         "title": "Response Search Tests Api V1 Staff Catalog Tests Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "Create Test",
+    "operationId": "create_test_api_v1_staff_catalog_tests_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TestIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TestDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/catalog/tests/{test_id}": {
+   "get": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "Get Test",
+    "operationId": "get_test_api_v1_staff_catalog_tests__test_id__get",
+    "parameters": [
+     {
+      "name": "test_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Test Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TestDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "Update Test",
+    "operationId": "update_test_api_v1_staff_catalog_tests__test_id__patch",
+    "parameters": [
+     {
+      "name": "test_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Test Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/TestUpdate"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TestDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/catalog/tests/{test_id}/prices": {
+   "post": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "Set Price",
+    "operationId": "set_price_api_v1_staff_catalog_tests__test_id__prices_post",
+    "parameters": [
+     {
+      "name": "test_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Test Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PriceIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TestDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/catalog/tests/{test_id}/parameters": {
+   "put": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "Replace Parameters",
+    "operationId": "replace_parameters_api_v1_staff_catalog_tests__test_id__parameters_put",
+    "parameters": [
+     {
+      "name": "test_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Test Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "array",
+        "items": {
+         "$ref": "#/components/schemas/ParameterIO-Input"
+        },
+        "title": "Data"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TestDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/catalog/import/{kind}": {
+   "post": {
+    "tags": [
+     "staff-catalog"
+    ],
+    "summary": "Import Csv",
+    "operationId": "import_csv_api_v1_staff_catalog_import__kind__post",
+    "parameters": [
+     {
+      "name": "kind",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Kind"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_import_csv_api_v1_staff_catalog_import__kind__post"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImportResult"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/catalog/tests": {
+   "get": {
+    "tags": [
+     "patient-catalog"
+    ],
+    "summary": "Search Tests",
+    "operationId": "search_tests_api_v1_patient_catalog_tests_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 100,
+       "minimum": 1,
+       "default": 30,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/TestOut"
+         },
+         "title": "Response Search Tests Api V1 Patient Catalog Tests Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/catalog/tests/{test_id}": {
+   "get": {
+    "tags": [
+     "patient-catalog"
+    ],
+    "summary": "Get Test",
+    "operationId": "get_test_api_v1_patient_catalog_tests__test_id__get",
+    "parameters": [
+     {
+      "name": "test_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Test Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/TestOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/patients": {
+   "get": {
+    "tags": [
+     "staff-patients"
+    ],
+    "summary": "Search",
+    "operationId": "search_api_v1_staff_patients_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "minLength": 2,
+       "maxLength": 80,
+       "title": "Q"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/StaffPatientOut"
+         },
+         "title": "Response Search Api V1 Staff Patients Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "staff-patients"
+    ],
+    "summary": "Register",
+    "operationId": "register_api_v1_staff_patients_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/StaffPatientIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffPatientOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/patients/duplicates": {
+   "post": {
+    "tags": [
+     "staff-patients"
+    ],
+    "summary": "Duplicates",
+    "operationId": "duplicates_api_v1_staff_patients_duplicates_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/StaffPatientIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/DuplicateCandidate"
+         },
+         "title": "Response Duplicates Api V1 Staff Patients Duplicates Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/patients/{patient_id}": {
+   "get": {
+    "tags": [
+     "staff-patients"
+    ],
+    "summary": "Get Patient",
+    "operationId": "get_patient_api_v1_staff_patients__patient_id__get",
+    "parameters": [
+     {
+      "name": "patient_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Patient Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffPatientOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "staff-patients"
+    ],
+    "summary": "Update Patient",
+    "operationId": "update_patient_api_v1_staff_patients__patient_id__patch",
+    "parameters": [
+     {
+      "name": "patient_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Patient Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PatientUpdate"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffPatientOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/me": {
+   "get": {
+    "tags": [
+     "patient-profile"
+    ],
+    "summary": "Me",
+    "operationId": "me_api_v1_patient_me_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AccountOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "patient-profile"
+    ],
+    "summary": "Update Me",
+    "operationId": "update_me_api_v1_patient_me_patch",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AccountPrefsIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/AccountOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/patients": {
+   "get": {
+    "tags": [
+     "patient-profile"
+    ],
+    "summary": "List Patients",
+    "operationId": "list_patients_api_v1_patient_patients_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/PatientOut"
+         },
+         "title": "Response List Patients Api V1 Patient Patients Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "patient-profile"
+    ],
+    "summary": "Create Patient",
+    "operationId": "create_patient_api_v1_patient_patients_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PatientIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PatientOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/patients/{patient_id}": {
+   "get": {
+    "tags": [
+     "patient-profile"
+    ],
+    "summary": "Get Patient",
+    "operationId": "get_patient_api_v1_patient_patients__patient_id__get",
+    "parameters": [
+     {
+      "name": "patient_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Patient Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PatientOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "patient-profile"
+    ],
+    "summary": "Update Patient",
+    "operationId": "update_patient_api_v1_patient_patients__patient_id__patch",
+    "parameters": [
+     {
+      "name": "patient_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Patient Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PatientUpdate"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PatientOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/prescriptions": {
+   "post": {
+    "tags": [
+     "staff-prescriptions"
+    ],
+    "summary": "Upload",
+    "operationId": "upload_api_v1_staff_prescriptions_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_upload_api_v1_staff_prescriptions_post"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PrescriptionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/prescriptions/{prescription_id}/images/{n}": {
+   "get": {
+    "tags": [
+     "staff-prescriptions"
+    ],
+    "summary": "Image",
+    "operationId": "image_api_v1_staff_prescriptions__prescription_id__images__n__get",
+    "parameters": [
+     {
+      "name": "prescription_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Prescription Id"
+      }
+     },
+     {
+      "name": "n",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "N"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/prescriptions": {
+   "post": {
+    "tags": [
+     "patient-prescriptions"
+    ],
+    "summary": "Upload",
+    "operationId": "upload_api_v1_patient_prescriptions_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_upload_api_v1_patient_prescriptions_post"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PrescriptionOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/prescriptions/{prescription_id}/images/{n}": {
+   "get": {
+    "tags": [
+     "patient-prescriptions"
+    ],
+    "summary": "Image",
+    "operationId": "image_api_v1_patient_prescriptions__prescription_id__images__n__get",
+    "parameters": [
+     {
+      "name": "prescription_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Prescription Id"
+      }
+     },
+     {
+      "name": "n",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "N"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders": {
+   "get": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "List Orders",
+    "operationId": "list_orders_api_v1_staff_orders_get",
+    "parameters": [
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "$ref": "#/components/schemas/OrderStatus"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Status"
+      }
+     },
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "maxLength": 80
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "cursor",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cursor"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 50,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OrderPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders/stats": {
+   "get": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Stats",
+    "operationId": "stats_api_v1_staff_orders_stats_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": {
+          "type": "integer"
+         },
+         "title": "Response Stats Api V1 Staff Orders Stats Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders/{ref}": {
+   "get": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Get Order",
+    "description": "The order id, or its code in any format (typed or scanned).",
+    "operationId": "get_order_api_v1_staff_orders__ref__get",
+    "parameters": [
+     {
+      "name": "ref",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Ref"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffOrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/patients/{patient_id}/orders": {
+   "get": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Patient Orders",
+    "operationId": "patient_orders_api_v1_staff_patients__patient_id__orders_get",
+    "parameters": [
+     {
+      "name": "patient_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Patient Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/OrderRow"
+         },
+         "title": "Response Patient Orders Api V1 Staff Patients  Patient Id  Orders Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/verification/queue": {
+   "get": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Queue",
+    "operationId": "queue_api_v1_staff_verification_queue_get",
+    "parameters": [
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "$ref": "#/components/schemas/OrderStatus",
+       "default": "PENDING_VERIFICATION"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/OrderRow"
+         },
+         "title": "Response Queue Api V1 Staff Verification Queue Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders/{order_id}/verify": {
+   "post": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Verify",
+    "operationId": "verify_api_v1_staff_orders__order_id__verify_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/VerifyIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffOrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders/{order_id}/clarify": {
+   "post": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Clarify",
+    "operationId": "clarify_api_v1_staff_orders__order_id__clarify_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReasonIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffOrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders/{order_id}/reject": {
+   "post": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Reject",
+    "operationId": "reject_api_v1_staff_orders__order_id__reject_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReasonIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffOrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders/walkin": {
+   "post": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Walkin",
+    "operationId": "walkin_api_v1_staff_orders_walkin_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/WalkinIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffOrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders/{order_id}/cancel": {
+   "post": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Cancel",
+    "operationId": "cancel_api_v1_staff_orders__order_id__cancel_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReasonIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/StaffOrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders/{order_id}/slip": {
+   "post": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Slip",
+    "description": "Print the 3-part slip. The first print is the original; every later one is watermarked REPRINT n.",
+    "operationId": "slip_api_v1_staff_orders__order_id__slip_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/pdf": {}
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/orders/{order_id}/waivers": {
+   "post": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Request Waiver",
+    "operationId": "request_waiver_api_v1_staff_orders__order_id__waivers_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/WaiverRequestIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/WaiverOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/waivers": {
+   "get": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Waivers",
+    "operationId": "waivers_api_v1_staff_waivers_get",
+    "parameters": [
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "$ref": "#/components/schemas/WaiverStatus",
+       "default": "REQUESTED"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/WaiverQueueRow"
+         },
+         "title": "Response Waivers Api V1 Staff Waivers Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/waivers/{waiver_id}/decision": {
+   "post": {
+    "tags": [
+     "staff-orders"
+    ],
+    "summary": "Decide",
+    "operationId": "decide_api_v1_staff_waivers__waiver_id__decision_post",
+    "parameters": [
+     {
+      "name": "waiver_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Waiver Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/WaiverDecisionIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/WaiverOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/orders": {
+   "post": {
+    "tags": [
+     "patient-orders"
+    ],
+    "summary": "Submit",
+    "operationId": "submit_api_v1_patient_orders_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/SubmitOrderIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "get": {
+    "tags": [
+     "patient-orders"
+    ],
+    "summary": "List Orders",
+    "operationId": "list_orders_api_v1_patient_orders_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/OrderOut"
+         },
+         "title": "Response List Orders Api V1 Patient Orders Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/orders/{ref}": {
+   "get": {
+    "tags": [
+     "patient-orders"
+    ],
+    "summary": "Get Order",
+    "description": "The order id, or its code in any format (SMS links carry the code).",
+    "operationId": "get_order_api_v1_patient_orders__ref__get",
+    "parameters": [
+     {
+      "name": "ref",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Ref"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/orders/{order_id}/clarification": {
+   "post": {
+    "tags": [
+     "patient-orders"
+    ],
+    "summary": "Respond",
+    "operationId": "respond_api_v1_patient_orders__order_id__clarification_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ClarificationResponseIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/orders/{order_id}/prescription-images": {
+   "post": {
+    "tags": [
+     "patient-orders"
+    ],
+    "summary": "Add Images",
+    "operationId": "add_images_api_v1_patient_orders__order_id__prescription_images_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_add_images_api_v1_patient_orders__order_id__prescription_images_post"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/orders/{order_id}/cancel": {
+   "post": {
+    "tags": [
+     "patient-orders"
+    ],
+    "summary": "Cancel",
+    "operationId": "cancel_api_v1_patient_orders__order_id__cancel_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OrderOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "AccountOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "mobile": {
+      "type": "string",
+      "title": "Mobile"
+     },
+     "preferred_language": {
+      "type": "string",
+      "title": "Preferred Language"
+     },
+     "patients": {
+      "items": {
+       "$ref": "#/components/schemas/PatientOut"
+      },
+      "type": "array",
+      "title": "Patients"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "mobile",
+     "preferred_language",
+     "patients"
+    ],
+    "title": "AccountOut"
+   },
+   "AccountPrefsIn": {
+    "properties": {
+     "preferred_language": {
+      "type": "string",
+      "enum": [
+       "bn",
+       "en"
+      ],
+      "title": "Preferred Language"
+     }
+    },
+    "type": "object",
+    "required": [
+     "preferred_language"
+    ],
+    "title": "AccountPrefsIn"
+   },
+   "Body_add_images_api_v1_patient_orders__order_id__prescription_images_post": {
+    "properties": {
+     "files": {
+      "items": {
+       "type": "string",
+       "contentMediaType": "application/octet-stream"
+      },
+      "type": "array",
+      "title": "Files"
+     }
+    },
+    "type": "object",
+    "required": [
+     "files"
+    ],
+    "title": "Body_add_images_api_v1_patient_orders__order_id__prescription_images_post"
+   },
+   "Body_import_csv_api_v1_staff_catalog_import__kind__post": {
+    "properties": {
+     "file": {
+      "type": "string",
+      "contentMediaType": "application/octet-stream",
+      "title": "File"
+     }
+    },
+    "type": "object",
+    "required": [
+     "file"
+    ],
+    "title": "Body_import_csv_api_v1_staff_catalog_import__kind__post"
+   },
+   "Body_upload_api_v1_patient_prescriptions_post": {
+    "properties": {
+     "patient_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Patient Id"
+     },
+     "files": {
+      "items": {
+       "type": "string",
+       "contentMediaType": "application/octet-stream"
+      },
+      "type": "array",
+      "title": "Files",
+      "description": "1–3 images, each ≤ 1 MB"
+     },
+     "doctor_name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Doctor Name"
+     },
+     "prescription_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prescription Date"
+     }
+    },
+    "type": "object",
+    "required": [
+     "patient_id",
+     "files"
+    ],
+    "title": "Body_upload_api_v1_patient_prescriptions_post"
+   },
+   "Body_upload_api_v1_staff_prescriptions_post": {
+    "properties": {
+     "patient_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Patient Id"
+     },
+     "files": {
+      "items": {
+       "type": "string",
+       "contentMediaType": "application/octet-stream"
+      },
+      "type": "array",
+      "title": "Files",
+      "description": "1–3 images (webcam photo of the paper prescription)"
+     },
+     "doctor_name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Doctor Name"
+     },
+     "prescription_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prescription Date"
+     }
+    },
+    "type": "object",
+    "required": [
+     "patient_id",
+     "files"
+    ],
+    "title": "Body_upload_api_v1_staff_prescriptions_post"
+   },
+   "Channel": {
+    "type": "string",
+    "enum": [
+     "APP",
+     "WEB",
+     "HELPDESK",
+     "WALKIN",
+     "KIOSK",
+     "HOME",
+     "BACKENTRY"
+    ],
+    "title": "Channel"
+   },
+   "ClarificationResponseIn": {
+    "properties": {
+     "note": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "test_ids": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string",
+         "format": "uuid"
+        },
+        "type": "array",
+        "maxItems": 30,
+        "minItems": 1
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Test Ids"
+     }
+    },
+    "type": "object",
+    "title": "ClarificationResponseIn"
+   },
+   "CollectionResource": {
+    "type": "string",
+    "enum": [
+     "BLOOD_COLLECTION",
+     "URINE",
+     "SPECIAL"
+    ],
+    "title": "CollectionResource"
+   },
+   "ContainerType": {
+    "type": "string",
+    "enum": [
+     "EDTA",
+     "PLAIN",
+     "SST",
+     "FLUORIDE",
+     "CITRATE",
+     "HEPARIN",
+     "URINE_CUP",
+     "STOOL_CUP",
+     "BLOOD_CULTURE",
+     "SWAB_TUBE",
+     "OTHER"
+    ],
+    "title": "ContainerType"
+   },
+   "DepartmentBrief": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "name_en": {
+      "type": "string",
+      "title": "Name En"
+     },
+     "name_bn": {
+      "type": "string",
+      "title": "Name Bn"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "code",
+     "name_en",
+     "name_bn"
+    ],
+    "title": "DepartmentBrief"
+   },
+   "DepartmentIn": {
+    "properties": {
+     "code": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_]{2,20}$",
+      "title": "Code"
+     },
+     "name_en": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 2,
+      "title": "Name En"
+     },
+     "name_bn": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name Bn"
+     },
+     "result_mode": {
+      "$ref": "#/components/schemas/ResultMode",
+      "default": "STRUCTURED"
+     },
+     "report_signatory_staff_ids": {
+      "items": {
+       "type": "string",
+       "format": "uuid"
+      },
+      "type": "array",
+      "title": "Report Signatory Staff Ids",
+      "default": []
+     },
+     "sort": {
+      "type": "integer",
+      "title": "Sort",
+      "default": 0
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "name_en",
+     "name_bn"
+    ],
+    "title": "DepartmentIn"
+   },
+   "DepartmentOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "name_en": {
+      "type": "string",
+      "title": "Name En"
+     },
+     "name_bn": {
+      "type": "string",
+      "title": "Name Bn"
+     },
+     "result_mode": {
+      "$ref": "#/components/schemas/ResultMode"
+     },
+     "report_signatory_staff_ids": {
+      "items": {
+       "type": "string",
+       "format": "uuid"
+      },
+      "type": "array",
+      "title": "Report Signatory Staff Ids"
+     },
+     "sort": {
+      "type": "integer",
+      "title": "Sort"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "code",
+     "name_en",
+     "name_bn",
+     "result_mode",
+     "report_signatory_staff_ids",
+     "sort",
+     "active"
+    ],
+    "title": "DepartmentOut"
+   },
+   "DeviceCreate": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 2,
+      "title": "Name"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/DeviceKind"
+     },
+     "queue_id": {
+      "type": "string",
+      "maxLength": 40,
+      "title": "Queue Id",
+      "default": "main"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "kind"
+    ],
+    "title": "DeviceCreate"
+   },
+   "DeviceCreated": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/DeviceKind"
+     },
+     "queue_id": {
+      "type": "string",
+      "title": "Queue Id"
+     },
+     "is_active": {
+      "type": "boolean",
+      "title": "Is Active"
+     },
+     "last_seen_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Seen At"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "token": {
+      "type": "string",
+      "title": "Token"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "kind",
+     "queue_id",
+     "is_active",
+     "last_seen_at",
+     "created_at",
+     "token"
+    ],
+    "title": "DeviceCreated"
+   },
+   "DeviceKind": {
+    "type": "string",
+    "enum": [
+     "DISPLAY",
+     "KIOSK",
+     "ANALYZER"
+    ],
+    "title": "DeviceKind"
+   },
+   "DeviceOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "kind": {
+      "$ref": "#/components/schemas/DeviceKind"
+     },
+     "queue_id": {
+      "type": "string",
+      "title": "Queue Id"
+     },
+     "is_active": {
+      "type": "boolean",
+      "title": "Is Active"
+     },
+     "last_seen_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Seen At"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "name",
+     "kind",
+     "queue_id",
+     "is_active",
+     "last_seen_at",
+     "created_at"
+    ],
+    "title": "DeviceOut"
+   },
+   "DuplicateCandidate": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "full_name": {
+      "type": "string",
+      "title": "Full Name"
+     },
+     "sex": {
+      "$ref": "#/components/schemas/Sex"
+     },
+     "age": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     },
+     "reason": {
+      "type": "string",
+      "enum": [
+       "MOBILE",
+       "NAME"
+      ],
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "full_name",
+     "sex",
+     "age",
+     "mobile",
+     "reason"
+    ],
+    "title": "DuplicateCandidate"
+   },
+   "FeeCategory": {
+    "type": "string",
+    "enum": [
+     "GENERAL",
+     "FREE",
+     "POOR_FUND",
+     "STAFF",
+     "CONCESSION"
+    ],
+    "title": "FeeCategory"
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "ImportResult": {
+    "properties": {
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "created": {
+      "type": "integer",
+      "title": "Created",
+      "default": 0
+     },
+     "updated": {
+      "type": "integer",
+      "title": "Updated",
+      "default": 0
+     },
+     "unchanged": {
+      "type": "integer",
+      "title": "Unchanged",
+      "default": 0
+     },
+     "price_changes": {
+      "type": "integer",
+      "title": "Price Changes",
+      "default": 0
+     },
+     "errors": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Errors",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "kind"
+    ],
+    "title": "ImportResult"
+   },
+   "ItemStatus": {
+    "type": "string",
+    "enum": [
+     "ORDERED",
+     "COLLECTED",
+     "RECEIVED",
+     "RESULT_ENTERED",
+     "VERIFIED",
+     "RELEASED",
+     "RECOLLECT_REQUIRED",
+     "CANCELLED"
+    ],
+    "title": "ItemStatus"
+   },
+   "LoginIn": {
+    "properties": {
+     "username": {
+      "type": "string",
+      "maxLength": 60,
+      "minLength": 1,
+      "title": "Username"
+     },
+     "password": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Password"
+     },
+     "station": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 60
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Station"
+     }
+    },
+    "type": "object",
+    "required": [
+     "username",
+     "password"
+    ],
+    "title": "LoginIn"
+   },
+   "LoginOut": {
+    "properties": {
+     "status": {
+      "type": "string",
+      "enum": [
+       "OK",
+       "TOTP_REQUIRED",
+       "TOTP_ENROLL"
+      ],
+      "title": "Status"
+     },
+     "access_token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Access Token"
+     },
+     "challenge": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Challenge"
+     },
+     "otpauth_uri": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Otpauth Uri"
+     },
+     "totp_secret": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Totp Secret"
+     },
+     "me": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/StaffMe"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "status"
+    ],
+    "title": "LoginOut"
+   },
+   "OrderItemOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "test_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Test Id"
+     },
+     "department_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Department Id"
+     },
+     "test_code": {
+      "type": "string",
+      "title": "Test Code"
+     },
+     "test_name_en": {
+      "type": "string",
+      "title": "Test Name En"
+     },
+     "test_name_bn": {
+      "type": "string",
+      "title": "Test Name Bn"
+     },
+     "abbreviation": {
+      "type": "string",
+      "title": "Abbreviation"
+     },
+     "price_snapshot": {
+      "type": "integer",
+      "title": "Price Snapshot"
+     },
+     "status": {
+      "$ref": "#/components/schemas/ItemStatus"
+     },
+     "specimen_type": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/SpecimenType"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "container_type": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ContainerType"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "fasting_required": {
+      "type": "boolean",
+      "title": "Fasting Required",
+      "default": false
+     },
+     "fasting_hours": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fasting Hours"
+     },
+     "prep_en": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep En"
+     },
+     "prep_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep Bn"
+     },
+     "tat_hours": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Tat Hours"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "test_id",
+     "department_id",
+     "test_code",
+     "test_name_en",
+     "test_name_bn",
+     "abbreviation",
+     "price_snapshot",
+     "status"
+    ],
+    "title": "OrderItemOut"
+   },
+   "OrderOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "order_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Order Code"
+     },
+     "status": {
+      "$ref": "#/components/schemas/OrderStatus"
+     },
+     "status_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status Reason"
+     },
+     "channel": {
+      "$ref": "#/components/schemas/Channel"
+     },
+     "priority": {
+      "$ref": "#/components/schemas/OrderPriority"
+     },
+     "fee_category": {
+      "$ref": "#/components/schemas/FeeCategory"
+     },
+     "patient": {
+      "$ref": "#/components/schemas/PatientBrief"
+     },
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/OrderItemOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "subtotal": {
+      "type": "integer",
+      "title": "Subtotal"
+     },
+     "discount": {
+      "type": "integer",
+      "title": "Discount"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "amount_due": {
+      "type": "integer",
+      "title": "Amount Due"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "clarification_note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Clarification Note"
+     },
+     "submitted_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Submitted At"
+     },
+     "sla_due_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sla Due At"
+     },
+     "verified_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verified At"
+     },
+     "needs_fasting": {
+      "type": "boolean",
+      "title": "Needs Fasting"
+     },
+     "max_tat_hours": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Max Tat Hours"
+     },
+     "prescription": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/PrescriptionBrief"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "timeline": {
+      "items": {
+       "$ref": "#/components/schemas/TimelineStep"
+      },
+      "type": "array",
+      "title": "Timeline"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "order_code",
+     "status",
+     "status_reason",
+     "channel",
+     "priority",
+     "fee_category",
+     "patient",
+     "items",
+     "subtotal",
+     "discount",
+     "total",
+     "amount_due",
+     "notes",
+     "clarification_note",
+     "submitted_at",
+     "sla_due_at",
+     "verified_at",
+     "needs_fasting",
+     "max_tat_hours",
+     "prescription",
+     "timeline",
+     "created_at"
+    ],
+    "title": "OrderOut",
+    "description": "What the patient sees."
+   },
+   "OrderPage": {
+    "properties": {
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/OrderRow"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "next_cursor": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Next Cursor"
+     }
+    },
+    "type": "object",
+    "required": [
+     "items",
+     "next_cursor"
+    ],
+    "title": "OrderPage"
+   },
+   "OrderPriority": {
+    "type": "string",
+    "enum": [
+     "NORMAL",
+     "ELDERLY",
+     "DISABLED",
+     "EMERGENCY"
+    ],
+    "title": "OrderPriority"
+   },
+   "OrderRow": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "order_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Order Code"
+     },
+     "status": {
+      "$ref": "#/components/schemas/OrderStatus"
+     },
+     "channel": {
+      "$ref": "#/components/schemas/Channel"
+     },
+     "priority": {
+      "$ref": "#/components/schemas/OrderPriority"
+     },
+     "fee_category": {
+      "$ref": "#/components/schemas/FeeCategory"
+     },
+     "patient_name": {
+      "type": "string",
+      "title": "Patient Name"
+     },
+     "patient_sex": {
+      "$ref": "#/components/schemas/Sex"
+     },
+     "patient_age": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Patient Age"
+     },
+     "tests": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Tests"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "submitted_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Submitted At"
+     },
+     "sla_due_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sla Due At"
+     },
+     "overdue": {
+      "type": "boolean",
+      "title": "Overdue"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "order_code",
+     "status",
+     "channel",
+     "priority",
+     "fee_category",
+     "patient_name",
+     "patient_sex",
+     "patient_age",
+     "tests",
+     "total",
+     "submitted_at",
+     "sla_due_at",
+     "overdue"
+    ],
+    "title": "OrderRow"
+   },
+   "OrderStatus": {
+    "type": "string",
+    "enum": [
+     "DRAFT",
+     "PENDING_VERIFICATION",
+     "NEEDS_CLARIFICATION",
+     "AWAITING_PAYMENT",
+     "PAID",
+     "READY_FOR_COLLECTION",
+     "CHECKED_IN",
+     "COLLECTED",
+     "IN_LAB",
+     "COMPLETED",
+     "REJECTED",
+     "EXPIRED",
+     "CANCELLED",
+     "REFUND_PENDING",
+     "REFUNDED"
+    ],
+    "title": "OrderStatus"
+   },
+   "OtpRequestIn": {
+    "properties": {
+     "mobile": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 10,
+      "title": "Mobile"
+     },
+     "lang": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "bn",
+         "en"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Lang"
+     }
+    },
+    "type": "object",
+    "required": [
+     "mobile"
+    ],
+    "title": "OtpRequestIn"
+   },
+   "OtpRequestOut": {
+    "properties": {
+     "mobile": {
+      "type": "string",
+      "title": "Mobile"
+     },
+     "expires_in": {
+      "type": "integer",
+      "title": "Expires In"
+     },
+     "resend_after": {
+      "type": "integer",
+      "title": "Resend After"
+     },
+     "debug_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Debug Code",
+      "description": "Dev/test only (mock SMS); never set in prod"
+     }
+    },
+    "type": "object",
+    "required": [
+     "mobile",
+     "expires_in",
+     "resend_after"
+    ],
+    "title": "OtpRequestOut"
+   },
+   "OtpVerifyIn": {
+    "properties": {
+     "mobile": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 10,
+      "title": "Mobile"
+     },
+     "code": {
+      "type": "string",
+      "pattern": "^\\d{6}$",
+      "title": "Code"
+     },
+     "lang": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "bn",
+         "en"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Lang"
+     }
+    },
+    "type": "object",
+    "required": [
+     "mobile",
+     "code"
+    ],
+    "title": "OtpVerifyIn"
+   },
+   "ParameterIO-Input": {
+    "properties": {
+     "id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 1,
+      "title": "Code"
+     },
+     "name": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "unit": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Unit"
+     },
+     "decimals": {
+      "type": "integer",
+      "maximum": 4.0,
+      "minimum": 0.0,
+      "title": "Decimals",
+      "default": 1
+     },
+     "sort": {
+      "type": "integer",
+      "title": "Sort",
+      "default": 0
+     },
+     "value_type": {
+      "$ref": "#/components/schemas/ValueType",
+      "default": "NUMERIC"
+     },
+     "options": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Options",
+      "default": []
+     },
+     "critical_low": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "string",
+        "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Critical Low"
+     },
+     "critical_high": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "string",
+        "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Critical High"
+     },
+     "analyzer_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Analyzer Code"
+     },
+     "ranges": {
+      "items": {
+       "$ref": "#/components/schemas/RangeIO-Input"
+      },
+      "type": "array",
+      "title": "Ranges",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "name"
+    ],
+    "title": "ParameterIO"
+   },
+   "ParameterIO-Output": {
+    "properties": {
+     "id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 1,
+      "title": "Code"
+     },
+     "name": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "unit": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Unit"
+     },
+     "decimals": {
+      "type": "integer",
+      "maximum": 4.0,
+      "minimum": 0.0,
+      "title": "Decimals",
+      "default": 1
+     },
+     "sort": {
+      "type": "integer",
+      "title": "Sort",
+      "default": 0
+     },
+     "value_type": {
+      "$ref": "#/components/schemas/ValueType",
+      "default": "NUMERIC"
+     },
+     "options": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Options",
+      "default": []
+     },
+     "critical_low": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Critical Low"
+     },
+     "critical_high": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Critical High"
+     },
+     "analyzer_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Analyzer Code"
+     },
+     "ranges": {
+      "items": {
+       "$ref": "#/components/schemas/RangeIO-Output"
+      },
+      "type": "array",
+      "title": "Ranges",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "name"
+    ],
+    "title": "ParameterIO"
+   },
+   "PasswordChangeIn": {
+    "properties": {
+     "current_password": {
+      "type": "string",
+      "title": "Current Password"
+     },
+     "new_password": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 10,
+      "title": "New Password"
+     }
+    },
+    "type": "object",
+    "required": [
+     "current_password",
+     "new_password"
+    ],
+    "title": "PasswordChangeIn"
+   },
+   "PasswordResetIn": {
+    "properties": {
+     "new_password": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 10,
+      "title": "New Password"
+     }
+    },
+    "type": "object",
+    "required": [
+     "new_password"
+    ],
+    "title": "PasswordResetIn"
+   },
+   "PatientBrief": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "full_name": {
+      "type": "string",
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "sex": {
+      "$ref": "#/components/schemas/Sex"
+     },
+     "age": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "full_name",
+     "full_name_bn",
+     "sex",
+     "age",
+     "mobile"
+    ],
+    "title": "PatientBrief"
+   },
+   "PatientIn": {
+    "properties": {
+     "full_name": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 2,
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "sex": {
+      "$ref": "#/components/schemas/Sex"
+     },
+     "date_of_birth": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date Of Birth"
+     },
+     "age_years": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 130.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Years"
+     },
+     "relation_to_account": {
+      "$ref": "#/components/schemas/Relation",
+      "default": "SELF"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 20
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     },
+     "hospital_patient_no": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Hospital Patient No"
+     }
+    },
+    "type": "object",
+    "required": [
+     "full_name",
+     "sex"
+    ],
+    "title": "PatientIn"
+   },
+   "PatientOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "full_name": {
+      "type": "string",
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "sex": {
+      "$ref": "#/components/schemas/Sex"
+     },
+     "date_of_birth": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date Of Birth"
+     },
+     "age_years": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Years"
+     },
+     "age_estimated": {
+      "type": "boolean",
+      "title": "Age Estimated"
+     },
+     "age": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age",
+      "description": "Age in whole years today (Dhaka)"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     },
+     "relation_to_account": {
+      "$ref": "#/components/schemas/Relation"
+     },
+     "hospital_patient_no": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Hospital Patient No"
+     },
+     "created_channel": {
+      "$ref": "#/components/schemas/Channel"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "full_name",
+     "full_name_bn",
+     "sex",
+     "date_of_birth",
+     "age_years",
+     "age_estimated",
+     "age",
+     "mobile",
+     "relation_to_account",
+     "hospital_patient_no",
+     "created_channel",
+     "created_at"
+    ],
+    "title": "PatientOut"
+   },
+   "PatientTokenOut": {
+    "properties": {
+     "access_token": {
+      "type": "string",
+      "title": "Access Token"
+     },
+     "expires_in": {
+      "type": "integer",
+      "title": "Expires In"
+     },
+     "account_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Account Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "access_token",
+     "expires_in",
+     "account_id"
+    ],
+    "title": "PatientTokenOut"
+   },
+   "PatientUpdate": {
+    "properties": {
+     "full_name": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120,
+        "minLength": 2
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "sex": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Sex"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "date_of_birth": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date Of Birth"
+     },
+     "age_years": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 130.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Years"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 20
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     },
+     "hospital_patient_no": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Hospital Patient No"
+     }
+    },
+    "type": "object",
+    "title": "PatientUpdate"
+   },
+   "PaymentBrief": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "method": {
+      "type": "string",
+      "title": "Method"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "paid_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Paid At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "method",
+     "amount",
+     "status",
+     "paid_at"
+    ],
+    "title": "PaymentBrief"
+   },
+   "PinIn": {
+    "properties": {
+     "password": {
+      "type": "string",
+      "title": "Password"
+     },
+     "pin": {
+      "type": "string",
+      "pattern": "^\\d{4,6}$",
+      "title": "Pin"
+     }
+    },
+    "type": "object",
+    "required": [
+     "password",
+     "pin"
+    ],
+    "title": "PinIn"
+   },
+   "PreferencesIn": {
+    "properties": {
+     "preferred_language": {
+      "type": "string",
+      "enum": [
+       "bn",
+       "en"
+      ],
+      "title": "Preferred Language"
+     }
+    },
+    "type": "object",
+    "required": [
+     "preferred_language"
+    ],
+    "title": "PreferencesIn"
+   },
+   "PrescriptionBrief": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "image_count": {
+      "type": "integer",
+      "title": "Image Count"
+     },
+     "doctor_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Doctor Name"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "image_count",
+     "doctor_name",
+     "status"
+    ],
+    "title": "PrescriptionBrief"
+   },
+   "PrescriptionOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "patient_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Patient Id"
+     },
+     "image_count": {
+      "type": "integer",
+      "title": "Image Count"
+     },
+     "doctor_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Doctor Name"
+     },
+     "prescription_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prescription Date"
+     },
+     "status": {
+      "$ref": "#/components/schemas/PrescriptionStatus"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "patient_id",
+     "image_count",
+     "doctor_name",
+     "prescription_date",
+     "status"
+    ],
+    "title": "PrescriptionOut"
+   },
+   "PrescriptionStatus": {
+    "type": "string",
+    "enum": [
+     "DRAFT",
+     "SUBMITTED",
+     "NEEDS_CLARIFICATION",
+     "VERIFIED",
+     "REJECTED"
+    ],
+    "title": "PrescriptionStatus"
+   },
+   "PriceIn": {
+    "properties": {
+     "amount": {
+      "type": "integer",
+      "minimum": 0.0,
+      "title": "Amount",
+      "description": "paisa"
+     },
+     "fee_category": {
+      "$ref": "#/components/schemas/FeeCategory",
+      "default": "GENERAL"
+     }
+    },
+    "type": "object",
+    "required": [
+     "amount"
+    ],
+    "title": "PriceIn"
+   },
+   "PriceOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     },
+     "fee_category": {
+      "$ref": "#/components/schemas/FeeCategory"
+     },
+     "effective_from": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Effective From"
+     },
+     "effective_to": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Effective To"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "amount",
+     "fee_category",
+     "effective_from",
+     "effective_to"
+    ],
+    "title": "PriceOut"
+   },
+   "RangeIO-Input": {
+    "properties": {
+     "sex": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^[MF]$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sex"
+     },
+     "age_min_days": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Min Days"
+     },
+     "age_max_days": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Max Days"
+     },
+     "low": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "string",
+        "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Low"
+     },
+     "high": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "string",
+        "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "High"
+     },
+     "text": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Text"
+     }
+    },
+    "type": "object",
+    "title": "RangeIO"
+   },
+   "RangeIO-Output": {
+    "properties": {
+     "sex": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^[MF]$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sex"
+     },
+     "age_min_days": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Min Days"
+     },
+     "age_max_days": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Max Days"
+     },
+     "low": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Low"
+     },
+     "high": {
+      "anyOf": [
+       {
+        "type": "string",
+        "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "High"
+     },
+     "text": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Text"
+     }
+    },
+    "type": "object",
+    "title": "RangeIO"
+   },
+   "ReasonIn": {
+    "properties": {
+     "reason": {
+      "type": "string",
+      "maxLength": 500,
+      "minLength": 3,
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "reason"
+    ],
+    "title": "ReasonIn"
+   },
+   "Relation": {
+    "type": "string",
+    "enum": [
+     "SELF",
+     "SPOUSE",
+     "CHILD",
+     "PARENT",
+     "SIBLING",
+     "OTHER"
+    ],
+    "title": "Relation"
+   },
+   "ResultMode": {
+    "type": "string",
+    "enum": [
+     "STRUCTURED",
+     "PDF_UPLOAD"
+    ],
+    "title": "ResultMode"
+   },
+   "Role": {
+    "type": "string",
+    "enum": [
+     "HELP_DESK",
+     "VERIFIER",
+     "BANK_TELLER",
+     "CASHIER",
+     "COLLECTOR",
+     "LAB_RECEPTION",
+     "TECHNICIAN",
+     "PATHOLOGIST",
+     "REPORT_DESK",
+     "WAIVER_APPROVER",
+     "LAB_ADMIN",
+     "AUDITOR",
+     "SUPER_ADMIN",
+     "HOME_COLLECTOR"
+    ],
+    "title": "Role"
+   },
+   "RoleIn": {
+    "properties": {
+     "role": {
+      "$ref": "#/components/schemas/Role"
+     },
+     "department_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Department Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "role"
+    ],
+    "title": "RoleIn"
+   },
+   "RoleOut": {
+    "properties": {
+     "role": {
+      "$ref": "#/components/schemas/Role"
+     },
+     "department_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Department Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "role",
+     "department_id"
+    ],
+    "title": "RoleOut"
+   },
+   "Sex": {
+    "type": "string",
+    "enum": [
+     "M",
+     "F",
+     "O"
+    ],
+    "title": "Sex"
+   },
+   "SpecimenType": {
+    "type": "string",
+    "enum": [
+     "BLOOD",
+     "URINE",
+     "STOOL",
+     "SWAB",
+     "OTHER"
+    ],
+    "title": "SpecimenType"
+   },
+   "StaffCreate": {
+    "properties": {
+     "username": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.]{3,60}$",
+      "title": "Username"
+     },
+     "full_name": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 2,
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "designation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Designation"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     },
+     "password": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 10,
+      "title": "Password"
+     },
+     "roles": {
+      "items": {
+       "$ref": "#/components/schemas/RoleIn"
+      },
+      "type": "array",
+      "minItems": 1,
+      "title": "Roles"
+     }
+    },
+    "type": "object",
+    "required": [
+     "username",
+     "full_name",
+     "password",
+     "roles"
+    ],
+    "title": "StaffCreate"
+   },
+   "StaffMe": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "username": {
+      "type": "string",
+      "title": "Username"
+     },
+     "full_name": {
+      "type": "string",
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "designation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Designation"
+     },
+     "roles": {
+      "items": {
+       "$ref": "#/components/schemas/RoleOut"
+      },
+      "type": "array",
+      "title": "Roles"
+     },
+     "permissions": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Permissions"
+     },
+     "station": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Station"
+     },
+     "preferred_language": {
+      "type": "string",
+      "title": "Preferred Language"
+     },
+     "totp_enabled": {
+      "type": "boolean",
+      "title": "Totp Enabled"
+     },
+     "session_expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Session Expires At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "username",
+     "full_name",
+     "full_name_bn",
+     "designation",
+     "roles",
+     "permissions",
+     "station",
+     "preferred_language",
+     "totp_enabled",
+     "session_expires_at"
+    ],
+    "title": "StaffMe"
+   },
+   "StaffOrderOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "order_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Order Code"
+     },
+     "status": {
+      "$ref": "#/components/schemas/OrderStatus"
+     },
+     "status_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status Reason"
+     },
+     "channel": {
+      "$ref": "#/components/schemas/Channel"
+     },
+     "priority": {
+      "$ref": "#/components/schemas/OrderPriority"
+     },
+     "fee_category": {
+      "$ref": "#/components/schemas/FeeCategory"
+     },
+     "patient": {
+      "$ref": "#/components/schemas/PatientBrief"
+     },
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/OrderItemOut"
+      },
+      "type": "array",
+      "title": "Items"
+     },
+     "subtotal": {
+      "type": "integer",
+      "title": "Subtotal"
+     },
+     "discount": {
+      "type": "integer",
+      "title": "Discount"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "amount_due": {
+      "type": "integer",
+      "title": "Amount Due"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "clarification_note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Clarification Note"
+     },
+     "submitted_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Submitted At"
+     },
+     "sla_due_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sla Due At"
+     },
+     "verified_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verified At"
+     },
+     "needs_fasting": {
+      "type": "boolean",
+      "title": "Needs Fasting"
+     },
+     "max_tat_hours": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Max Tat Hours"
+     },
+     "prescription": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/PrescriptionBrief"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "timeline": {
+      "items": {
+       "$ref": "#/components/schemas/TimelineStep"
+      },
+      "type": "array",
+      "title": "Timeline"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "lang": {
+      "type": "string",
+      "title": "Lang"
+     },
+     "overdue": {
+      "type": "boolean",
+      "title": "Overdue"
+     },
+     "slip_print_count": {
+      "type": "integer",
+      "title": "Slip Print Count"
+     },
+     "created_by_staff_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Created By Staff Id"
+     },
+     "verified_by_staff_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Verified By Staff Id"
+     },
+     "waiver_approved_by": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Waiver Approved By"
+     },
+     "waivers": {
+      "items": {
+       "$ref": "#/components/schemas/WaiverOut"
+      },
+      "type": "array",
+      "title": "Waivers"
+     },
+     "payments": {
+      "items": {
+       "$ref": "#/components/schemas/PaymentBrief"
+      },
+      "type": "array",
+      "title": "Payments"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "order_code",
+     "status",
+     "status_reason",
+     "channel",
+     "priority",
+     "fee_category",
+     "patient",
+     "items",
+     "subtotal",
+     "discount",
+     "total",
+     "amount_due",
+     "notes",
+     "clarification_note",
+     "submitted_at",
+     "sla_due_at",
+     "verified_at",
+     "needs_fasting",
+     "max_tat_hours",
+     "prescription",
+     "timeline",
+     "created_at",
+     "lang",
+     "overdue",
+     "slip_print_count",
+     "created_by_staff_id",
+     "verified_by_staff_id",
+     "waiver_approved_by",
+     "waivers",
+     "payments"
+    ],
+    "title": "StaffOrderOut"
+   },
+   "StaffOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "username": {
+      "type": "string",
+      "title": "Username"
+     },
+     "full_name": {
+      "type": "string",
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "designation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Designation"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     },
+     "is_active": {
+      "type": "boolean",
+      "title": "Is Active"
+     },
+     "totp_enabled": {
+      "type": "boolean",
+      "title": "Totp Enabled"
+     },
+     "locked_until": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Locked Until"
+     },
+     "roles": {
+      "items": {
+       "$ref": "#/components/schemas/RoleOut"
+      },
+      "type": "array",
+      "title": "Roles"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "username",
+     "full_name",
+     "full_name_bn",
+     "designation",
+     "mobile",
+     "is_active",
+     "totp_enabled",
+     "locked_until",
+     "roles",
+     "created_at"
+    ],
+    "title": "StaffOut"
+   },
+   "StaffPatientIn": {
+    "properties": {
+     "full_name": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 2,
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 120
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "sex": {
+      "$ref": "#/components/schemas/Sex"
+     },
+     "date_of_birth": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date Of Birth"
+     },
+     "age_years": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "maximum": 130.0,
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Years"
+     },
+     "relation_to_account": {
+      "$ref": "#/components/schemas/Relation",
+      "default": "SELF"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 20
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     },
+     "hospital_patient_no": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Hospital Patient No"
+     },
+     "nid": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 20,
+        "pattern": "^\\d{10,17}$"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Nid"
+     },
+     "force": {
+      "type": "boolean",
+      "title": "Force",
+      "description": "Register even if possible duplicates were found",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "full_name",
+     "sex"
+    ],
+    "title": "StaffPatientIn"
+   },
+   "StaffPatientOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "full_name": {
+      "type": "string",
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "sex": {
+      "$ref": "#/components/schemas/Sex"
+     },
+     "date_of_birth": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date Of Birth"
+     },
+     "age_years": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age Years"
+     },
+     "age_estimated": {
+      "type": "boolean",
+      "title": "Age Estimated"
+     },
+     "age": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age",
+      "description": "Age in whole years today (Dhaka)"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     },
+     "relation_to_account": {
+      "$ref": "#/components/schemas/Relation"
+     },
+     "hospital_patient_no": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Hospital Patient No"
+     },
+     "created_channel": {
+      "$ref": "#/components/schemas/Channel"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "account_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Account Id"
+     },
+     "has_nid": {
+      "type": "boolean",
+      "title": "Has Nid"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "full_name",
+     "full_name_bn",
+     "sex",
+     "date_of_birth",
+     "age_years",
+     "age_estimated",
+     "age",
+     "mobile",
+     "relation_to_account",
+     "hospital_patient_no",
+     "created_channel",
+     "created_at",
+     "account_id",
+     "has_nid"
+    ],
+    "title": "StaffPatientOut"
+   },
+   "StaffUpdate": {
+    "properties": {
+     "full_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name"
+     },
+     "full_name_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Full Name Bn"
+     },
+     "designation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Designation"
+     },
+     "mobile": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Mobile"
+     },
+     "is_active": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Is Active"
+     },
+     "roles": {
+      "anyOf": [
+       {
+        "items": {
+         "$ref": "#/components/schemas/RoleIn"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Roles"
+     }
+    },
+    "type": "object",
+    "title": "StaffUpdate"
+   },
+   "SubmitOrderIn": {
+    "properties": {
+     "patient_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Patient Id"
+     },
+     "prescription_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prescription Id"
+     },
+     "test_ids": {
+      "items": {
+       "type": "string",
+       "format": "uuid"
+      },
+      "type": "array",
+      "maxItems": 30,
+      "minItems": 1,
+      "title": "Test Ids"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "lang": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "bn",
+         "en"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Lang"
+     }
+    },
+    "type": "object",
+    "required": [
+     "patient_id",
+     "test_ids"
+    ],
+    "title": "SubmitOrderIn"
+   },
+   "TestDetail": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "name_en": {
+      "type": "string",
+      "title": "Name En"
+     },
+     "name_bn": {
+      "type": "string",
+      "title": "Name Bn"
+     },
+     "abbreviation": {
+      "type": "string",
+      "title": "Abbreviation"
+     },
+     "aliases": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Aliases"
+     },
+     "department": {
+      "$ref": "#/components/schemas/DepartmentBrief"
+     },
+     "specimen_type": {
+      "$ref": "#/components/schemas/SpecimenType"
+     },
+     "container_type": {
+      "$ref": "#/components/schemas/ContainerType"
+     },
+     "collection_resource": {
+      "$ref": "#/components/schemas/CollectionResource"
+     },
+     "fasting_required": {
+      "type": "boolean",
+      "title": "Fasting Required"
+     },
+     "fasting_hours": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fasting Hours"
+     },
+     "prep_en": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep En"
+     },
+     "prep_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep Bn"
+     },
+     "tat_hours": {
+      "type": "integer",
+      "title": "Tat Hours"
+     },
+     "requires_prescription": {
+      "type": "boolean",
+      "title": "Requires Prescription"
+     },
+     "home_collectable": {
+      "type": "boolean",
+      "title": "Home Collectable"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active"
+     },
+     "price": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Price",
+      "description": "Current GENERAL price in paisa"
+     },
+     "sort": {
+      "type": "integer",
+      "title": "Sort"
+     },
+     "prices": {
+      "items": {
+       "$ref": "#/components/schemas/PriceOut"
+      },
+      "type": "array",
+      "title": "Prices"
+     },
+     "parameters": {
+      "items": {
+       "$ref": "#/components/schemas/ParameterIO-Output"
+      },
+      "type": "array",
+      "title": "Parameters"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "code",
+     "name_en",
+     "name_bn",
+     "abbreviation",
+     "aliases",
+     "department",
+     "specimen_type",
+     "container_type",
+     "collection_resource",
+     "fasting_required",
+     "fasting_hours",
+     "prep_en",
+     "prep_bn",
+     "tat_hours",
+     "requires_prescription",
+     "home_collectable",
+     "active",
+     "sort",
+     "prices",
+     "parameters"
+    ],
+    "title": "TestDetail"
+   },
+   "TestIn": {
+    "properties": {
+     "code": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_\\-]{2,30}$",
+      "title": "Code"
+     },
+     "name_en": {
+      "type": "string",
+      "maxLength": 160,
+      "minLength": 2,
+      "title": "Name En"
+     },
+     "name_bn": {
+      "type": "string",
+      "maxLength": 160,
+      "minLength": 1,
+      "title": "Name Bn"
+     },
+     "abbreviation": {
+      "type": "string",
+      "maxLength": 20,
+      "minLength": 1,
+      "title": "Abbreviation"
+     },
+     "aliases": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Aliases",
+      "default": []
+     },
+     "department_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Department Id"
+     },
+     "specimen_type": {
+      "$ref": "#/components/schemas/SpecimenType"
+     },
+     "container_type": {
+      "$ref": "#/components/schemas/ContainerType"
+     },
+     "collection_resource": {
+      "$ref": "#/components/schemas/CollectionResource"
+     },
+     "fasting_required": {
+      "type": "boolean",
+      "title": "Fasting Required",
+      "default": false
+     },
+     "fasting_hours": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fasting Hours"
+     },
+     "prep_en": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep En"
+     },
+     "prep_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep Bn"
+     },
+     "tat_hours": {
+      "type": "integer",
+      "maximum": 1440.0,
+      "minimum": 1.0,
+      "title": "Tat Hours",
+      "default": 24
+     },
+     "requires_prescription": {
+      "type": "boolean",
+      "title": "Requires Prescription",
+      "default": true
+     },
+     "home_collectable": {
+      "type": "boolean",
+      "title": "Home Collectable",
+      "default": true
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active",
+      "default": true
+     },
+     "sort": {
+      "type": "integer",
+      "title": "Sort",
+      "default": 0
+     },
+     "price": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "minimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Price",
+      "description": "Initial GENERAL price (paisa)"
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "name_en",
+     "name_bn",
+     "abbreviation",
+     "department_id",
+     "specimen_type",
+     "container_type",
+     "collection_resource"
+    ],
+    "title": "TestIn"
+   },
+   "TestOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "name_en": {
+      "type": "string",
+      "title": "Name En"
+     },
+     "name_bn": {
+      "type": "string",
+      "title": "Name Bn"
+     },
+     "abbreviation": {
+      "type": "string",
+      "title": "Abbreviation"
+     },
+     "aliases": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Aliases"
+     },
+     "department": {
+      "$ref": "#/components/schemas/DepartmentBrief"
+     },
+     "specimen_type": {
+      "$ref": "#/components/schemas/SpecimenType"
+     },
+     "container_type": {
+      "$ref": "#/components/schemas/ContainerType"
+     },
+     "collection_resource": {
+      "$ref": "#/components/schemas/CollectionResource"
+     },
+     "fasting_required": {
+      "type": "boolean",
+      "title": "Fasting Required"
+     },
+     "fasting_hours": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fasting Hours"
+     },
+     "prep_en": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep En"
+     },
+     "prep_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep Bn"
+     },
+     "tat_hours": {
+      "type": "integer",
+      "title": "Tat Hours"
+     },
+     "requires_prescription": {
+      "type": "boolean",
+      "title": "Requires Prescription"
+     },
+     "home_collectable": {
+      "type": "boolean",
+      "title": "Home Collectable"
+     },
+     "active": {
+      "type": "boolean",
+      "title": "Active"
+     },
+     "price": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Price",
+      "description": "Current GENERAL price in paisa"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "code",
+     "name_en",
+     "name_bn",
+     "abbreviation",
+     "aliases",
+     "department",
+     "specimen_type",
+     "container_type",
+     "collection_resource",
+     "fasting_required",
+     "fasting_hours",
+     "prep_en",
+     "prep_bn",
+     "tat_hours",
+     "requires_prescription",
+     "home_collectable",
+     "active"
+    ],
+    "title": "TestOut",
+    "description": "Public test card (no internal fields)."
+   },
+   "TestUpdate": {
+    "properties": {
+     "name_en": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name En"
+     },
+     "name_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name Bn"
+     },
+     "abbreviation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Abbreviation"
+     },
+     "aliases": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Aliases"
+     },
+     "department_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Department Id"
+     },
+     "specimen_type": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/SpecimenType"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "container_type": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ContainerType"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "collection_resource": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/CollectionResource"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "fasting_required": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fasting Required"
+     },
+     "fasting_hours": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Fasting Hours"
+     },
+     "prep_en": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep En"
+     },
+     "prep_bn": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prep Bn"
+     },
+     "tat_hours": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Tat Hours"
+     },
+     "requires_prescription": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Requires Prescription"
+     },
+     "home_collectable": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Home Collectable"
+     },
+     "active": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Active"
+     },
+     "sort": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sort"
+     }
+    },
+    "type": "object",
+    "title": "TestUpdate"
+   },
+   "TimelineStep": {
+    "properties": {
+     "key": {
+      "type": "string",
+      "enum": [
+       "submitted",
+       "verified",
+       "paid",
+       "collected",
+       "reported"
+      ],
+      "title": "Key"
+     },
+     "state": {
+      "type": "string",
+      "enum": [
+       "done",
+       "current",
+       "pending",
+       "error"
+      ],
+      "title": "State"
+     },
+     "at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "At"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "key",
+     "state"
+    ],
+    "title": "TimelineStep"
+   },
+   "TotpIn": {
+    "properties": {
+     "challenge": {
+      "type": "string",
+      "title": "Challenge"
+     },
+     "code": {
+      "type": "string",
+      "maxLength": 8,
+      "minLength": 6,
+      "title": "Code"
+     }
+    },
+    "type": "object",
+    "required": [
+     "challenge",
+     "code"
+    ],
+    "title": "TotpIn"
+   },
+   "UnlockIn": {
+    "properties": {
+     "secret": {
+      "type": "string",
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Secret",
+      "description": "Password or PIN"
+     }
+    },
+    "type": "object",
+    "required": [
+     "secret"
+    ],
+    "title": "UnlockIn"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   },
+   "ValueType": {
+    "type": "string",
+    "enum": [
+     "NUMERIC",
+     "TEXT",
+     "OPTION"
+    ],
+    "title": "ValueType"
+   },
+   "VerifyIn": {
+    "properties": {
+     "test_ids": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string",
+         "format": "uuid"
+        },
+        "type": "array",
+        "maxItems": 30,
+        "minItems": 1
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Test Ids",
+      "description": "Replace the tests"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "title": "VerifyIn"
+   },
+   "WaiverDecisionIn": {
+    "properties": {
+     "approve": {
+      "type": "boolean",
+      "title": "Approve"
+     },
+     "discount": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "exclusiveMinimum": 0.0
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Discount",
+      "description": "Approved discount in paisa"
+     },
+     "reason": {
+      "type": "string",
+      "maxLength": 500,
+      "minLength": 3,
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "approve",
+     "reason"
+    ],
+    "title": "WaiverDecisionIn"
+   },
+   "WaiverOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id"
+     },
+     "fee_category": {
+      "$ref": "#/components/schemas/FeeCategory"
+     },
+     "requested_by": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Requested By"
+     },
+     "request_reason": {
+      "type": "string",
+      "title": "Request Reason"
+     },
+     "status": {
+      "$ref": "#/components/schemas/WaiverStatus"
+     },
+     "status_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status Reason"
+     },
+     "decided_by": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Decided By"
+     },
+     "approved_discount": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Approved Discount"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "order_id",
+     "fee_category",
+     "requested_by",
+     "request_reason",
+     "status",
+     "status_reason",
+     "decided_by",
+     "approved_discount",
+     "created_at"
+    ],
+    "title": "WaiverOut"
+   },
+   "WaiverQueueRow": {
+    "properties": {
+     "waiver": {
+      "$ref": "#/components/schemas/WaiverOut"
+     },
+     "order": {
+      "$ref": "#/components/schemas/OrderRow"
+     },
+     "subtotal": {
+      "type": "integer",
+      "title": "Subtotal"
+     }
+    },
+    "type": "object",
+    "required": [
+     "waiver",
+     "order",
+     "subtotal"
+    ],
+    "title": "WaiverQueueRow"
+   },
+   "WaiverRequestIn": {
+    "properties": {
+     "fee_category": {
+      "$ref": "#/components/schemas/FeeCategory"
+     },
+     "reason": {
+      "type": "string",
+      "maxLength": 500,
+      "minLength": 3,
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "fee_category",
+     "reason"
+    ],
+    "title": "WaiverRequestIn"
+   },
+   "WaiverStatus": {
+    "type": "string",
+    "enum": [
+     "REQUESTED",
+     "APPROVED",
+     "DECLINED",
+     "WITHDRAWN"
+    ],
+    "title": "WaiverStatus"
+   },
+   "WalkinIn": {
+    "properties": {
+     "patient_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Patient Id"
+     },
+     "test_ids": {
+      "items": {
+       "type": "string",
+       "format": "uuid"
+      },
+      "type": "array",
+      "maxItems": 30,
+      "minItems": 1,
+      "title": "Test Ids"
+     },
+     "prescription_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Prescription Id"
+     },
+     "priority": {
+      "$ref": "#/components/schemas/OrderPriority",
+      "default": "NORMAL"
+     },
+     "fee_category": {
+      "$ref": "#/components/schemas/FeeCategory",
+      "default": "GENERAL"
+     },
+     "waiver_reason": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Waiver Reason"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 500
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "lang": {
+      "type": "string",
+      "enum": [
+       "bn",
+       "en"
+      ],
+      "title": "Lang",
+      "default": "bn"
+     }
+    },
+    "type": "object",
+    "required": [
+     "patient_id",
+     "test_ids"
+    ],
+    "title": "WalkinIn"
+   }
+  }
+ }
+}

@@ -1,0 +1,49 @@
+# SITE_ADDRESS = your domain (e.g. lab.example.org) for automatic HTTPS, or ":80" for plain HTTP
+# behind another proxy / for the local production-like stack.
+{
+	email {$ACME_EMAIL:admin@localhost}
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+{$SITE_ADDRESS::80} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(self), microphone=(), geolocation=()"
+		Content-Security-Policy "default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; connect-src 'self'; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+		-Server
+	}
+
+	handle /api/* {
+		request_body {
+			max_size 10MB
+		}
+		reverse_proxy api:8000
+	}
+
+	# Staff app (built with base /staff/)
+	handle /staff* {
+		root * /srv
+		@immutable path /staff/assets/*
+		header @immutable Cache-Control "public, max-age=31536000, immutable"
+		try_files {path} /staff/index.html
+		file_server
+	}
+
+	# Patient PWA
+	handle {
+		root * /srv/patient
+		@immutable path /assets/*
+		header @immutable Cache-Control "public, max-age=31536000, immutable"
+		@nocache path /index.html /sw.js /registerSW.js /manifest.webmanifest
+		header @nocache Cache-Control "no-cache"
+		try_files {path} /index.html
+		file_server
+	}
+}

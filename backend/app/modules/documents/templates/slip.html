@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Slip {{ code }}</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "Noto Sans", "Noto Sans Bengali", sans-serif; font-size: 8.4pt; color: #111; }
+  .bn { font-family: "Noto Sans Bengali", "Noto Sans", sans-serif; }
+  .part { position: relative; height: 99mm; padding: 6mm 10mm 5mm; overflow: hidden; }
+  .part + .part { border-top: 0.4mm dashed #555; }
+  .cut { position: absolute; top: 0.8mm; left: 4mm; font-size: 7pt; background: #fff; padding: 0 1mm; color: #555; }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 0.3mm solid #111; padding-bottom: 1.5mm; }
+  .inst { font-weight: 700; font-size: 9pt; line-height: 1.25; }
+  .inst small { display: block; font-weight: 400; font-size: 7.4pt; color: #333; }
+  .copy { text-align: right; font-weight: 800; font-size: 10.5pt; letter-spacing: 0.4pt; line-height: 1.2; }
+  .copy .bn { display: block; font-size: 9pt; letter-spacing: 0; }
+  .code { font-family: "Noto Sans Mono", "DejaVu Sans Mono", monospace; font-weight: 800; font-size: 17pt; letter-spacing: 0.6pt; }
+  .code.big { font-size: 22pt; }
+  .row { display: flex; gap: 5mm; margin-top: 2.5mm; }
+  .grow { flex: 1; min-width: 0; }
+  table { width: 100%; border-collapse: collapse; }
+  td, th { padding: 0.5mm 1mm; text-align: left; vertical-align: top; }
+  th { font-size: 7pt; text-transform: uppercase; color: #444; border-bottom: 0.2mm solid #999; }
+  td.r, th.r { text-align: right; }
+  .kv td:first-child { color: #444; width: 30mm; }
+  .total td { border-top: 0.3mm solid #111; font-weight: 700; }
+  .muted { color: #555; }
+  .box { border: 0.3mm solid #111; padding: 2mm; }
+  .stamp { height: 22mm; border: 0.3mm dashed #777; display: flex; align-items: flex-end; justify-content: space-between; padding: 1.5mm 2mm; font-size: 7pt; color: #555; }
+  .status { display: inline-block; padding: 0.6mm 2mm; border: 0.4mm solid #111; font-weight: 800; }
+  .prep { margin-top: 1.5mm; font-size: 7.6pt; }
+  .prep li { margin: 0.4mm 0; }
+  .watermark { position: absolute; top: 34mm; left: 0; right: 0; text-align: center; font-size: 46pt; font-weight: 900; color: rgba(200, 30, 50, 0.13); transform: rotate(-12deg); letter-spacing: 3pt; }
+  .barcode { height: 13mm; width: auto; }
+  .qr { width: 27mm; height: 27mm; }
+  .foot { position: absolute; bottom: 3mm; left: 10mm; right: 10mm; font-size: 6.6pt; color: #666; display: flex; justify-content: space-between; }
+  ul { margin: 0; padding-left: 4mm; }
+</style>
+</head>
+<body>
+
+{# ------------------------------------------------------------------ PATIENT COPY #}
+<section class="part" id="patient-copy">
+  {% if reprint %}<div class="watermark">REPRINT {{ reprint }}</div>{% endif %}
+  <div class="head">
+    <div class="inst">{{ institution_en }}<small class="bn">{{ institution_bn }}</small><small>{{ lab_en }} · <span class="bn">{{ lab_bn }}</span> · {{ address }}</small></div>
+    <div class="copy">PATIENT COPY<span class="bn">রোগীর কপি</span></div>
+  </div>
+  <div class="row">
+    <div class="grow">
+      <div class="muted">Order code · <span class="bn">অর্ডার কোড</span></div>
+      <div class="code big">{{ code }}</div>
+      <table class="kv" style="margin-top:1.5mm">
+        <tr><td>Patient · <span class="bn">রোগী</span></td><td><b>{{ patient.full_name }}</b>{% if patient.full_name_bn %} · <span class="bn">{{ patient.full_name_bn }}</span>{% endif %}</td></tr>
+        <tr><td>Age / Sex</td><td>{{ age if age is not none else "—" }} y / {{ patient.sex.value }}</td></tr>
+        <tr><td>Payment · <span class="bn">পেমেন্ট</span></td><td>{% if paid %}<span class="status">PAID · <span class="bn">পরিশোধিত</span></span>{% else %}<span class="status">DUE Tk {{ order.total | taka }} · <span class="bn">প্রদেয় ৳{{ order.total | taka | bn }}</span></span>{% endif %}</td></tr>
+        <tr><td>Token · <span class="bn">টোকেন</span></td><td class="muted">Issued after payment · <span class="bn">পেমেন্টের পর দেওয়া হবে</span></td></tr>
+      </table>
+    </div>
+    <div style="text-align:center">
+      <img class="qr" src="{{ qr }}" alt="QR {{ code }}">
+      <div class="muted" style="font-size:6.6pt">Scan at the lab · <span class="bn">ল্যাবে স্ক্যান করুন</span></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="grow">
+      <table>
+        <tr><th>Test · <span class="bn">পরীক্ষা</span></th><th class="r">Tk</th></tr>
+        {% for i in items[:8] %}<tr><td>{{ i.test_name_en }} <span class="muted bn">{{ i.test_name_bn }}</span></td><td class="r">{{ i.price_snapshot | taka }}</td></tr>{% endfor %}
+        {% if items|length > 8 %}<tr><td class="muted">+ {{ items|length - 8 }} more · <span class="bn">আরও</span></td><td></td></tr>{% endif %}
+        {% if order.discount %}<tr><td class="muted">Waiver · <span class="bn">মওকুফ</span></td><td class="r">−{{ order.discount | taka }}</td></tr>{% endif %}
+        <tr class="total"><td>Total · <span class="bn">মোট</span></td><td class="r">{{ order.total | taka }}</td></tr>
+      </table>
+    </div>
+    <div class="grow">
+      {% if prep %}
+      <div><b>Preparation · <span class="bn">প্রস্তুতি</span></b></div>
+      <ul class="prep">
+        {% for p in prep[:3] %}<li><b>{{ p.abbr }}</b>{% if p.fasting_hours %} — fasting {{ p.fasting_hours }} h · <span class="bn">{{ p.fasting_hours | bn }} ঘণ্টা খালি পেটে</span>{% endif %}{% if p.en %}<br>{{ p.en }}{% endif %}{% if p.bn %}<br><span class="bn">{{ p.bn }}</span>{% endif %}</li>{% endfor %}
+      </ul>
+      {% endif %}
+      <div class="prep"><b>Reports · <span class="bn">রিপোর্ট</span>:</b> SMS + {{ portal }} · <span class="bn">রিপোর্ট তৈরি হলে এসএমএস পাবেন।</span></div>
+    </div>
+  </div>
+</section>
+
+{# ------------------------------------------------------------------ BANK COPY #}
+<section class="part" id="bank-copy">
+  <span class="cut">cut here · <span class="bn">এখানে কাটুন</span></span>
+  {% if reprint %}<div class="watermark">REPRINT {{ reprint }}</div>{% endif %}
+  <div class="head">
+    <div class="inst">{{ institution_en }}<small>A/C head: {{ account_head }}</small></div>
+    <div class="copy">BANK COPY<span class="bn">ব্যাংক কপি</span></div>
+  </div>
+  {% if show_bank_copy %}
+  <div class="row">
+    <div class="grow">
+      <div class="code">{{ code }}</div>
+      <img class="barcode" src="{{ barcode }}" alt="Code128 {{ code }}">
+      <table class="kv">
+        <tr><td>Patient · <span class="bn">রোগী</span></td><td><b>{{ patient.full_name }}</b></td></tr>
+        <tr><td>Amount · <span class="bn">টাকা</span></td><td><b style="font-size:12pt">Tk {{ order.total | taka }}</b> · <span class="bn">৳{{ order.total | taka | bn }}</span></td></tr>
+        <tr><td>In words</td><td>{{ amount_words_en }}</td></tr>
+        <tr><td class="bn">কথায়</td><td class="bn">{{ amount_words_bn }}</td></tr>
+        {% if paid %}<tr><td>Status</td><td><span class="status">PAID</span></td></tr>{% endif %}
+      </table>
+    </div>
+    <div style="width:62mm">
+      <div class="stamp"><span>Teller stamp &amp; signature<br><span class="bn">টেলারের সিল ও স্বাক্ষর</span></span><span>Receipt no. ________</span></div>
+    </div>
+  </div>
+  {% else %}
+  <div class="row"><div class="box grow"><div class="code">{{ code }}</div><b>PAID — no bank payment needed · <span class="bn">পরিশোধিত — ব্যাংকে টাকা দিতে হবে না</span></b></div></div>
+  {% endif %}
+</section>
+
+{# ------------------------------------------------------------------ HOSPITAL COPY #}
+<section class="part" id="hospital-copy">
+  <span class="cut">cut here · <span class="bn">এখানে কাটুন</span></span>
+  {% if reprint %}<div class="watermark">REPRINT {{ reprint }}</div>{% endif %}
+  <div class="head">
+    <div class="inst">{{ institution_en }}<small>{{ lab_en }}</small></div>
+    <div class="copy">HOSPITAL COPY<span class="bn">হাসপাতাল কপি</span></div>
+  </div>
+  <div class="row">
+    <div class="grow">
+      <div class="code">{{ code }}</div>
+      <img class="barcode" src="{{ barcode }}" alt="Code128 {{ code }}">
+      <table class="kv">
+        <tr><td>Patient · <span class="bn">রোগী</span></td><td><b>{{ patient.full_name }}</b> · {{ age if age is not none else "—" }} y / {{ patient.sex.value }}{% if patient.mobile %} · {{ patient.mobile }}{% endif %}</td></tr>
+        <tr><td>Tests · <span class="bn">পরীক্ষা</span></td><td><b>{{ items | map(attribute="abbreviation") | join(", ") }}</b></td></tr>
+        <tr><td>Prescription</td><td>{% if prescription %}{{ prescription.doctor_name or "—" }}{% if prescription.prescription_date %} · {{ prescription.prescription_date.strftime("%d %b %Y") }}{% endif %} · {{ prescription.images | length }} page(s){% else %}Paper prescription seen at counter{% endif %}</td></tr>
+        <tr><td>Verified by</td><td>{{ verified_by or "—" }}{% if order.verified_at %} · {{ order.verified_at.astimezone(printed_at.tzinfo).strftime("%d %b %Y %H:%M") }}{% endif %}</td></tr>
+        <tr><td>Fee category</td><td>{{ order.fee_category.value }}{% if waiver_by %} · waiver approved by {{ waiver_by }}{% endif %}</td></tr>
+        <tr><td>Priority / channel</td><td>{{ order.priority.value }} · {{ order.channel.value }}</td></tr>
+        <tr><td>Amount</td><td>Tk {{ order.total | taka }}{% if order.discount %} (subtotal {{ order.subtotal | taka }}, waiver {{ order.discount | taka }}){% endif %}</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>Order {{ code_raw }}</span><span>{% if reprint %}REPRINT {{ reprint }} · {% endif %}{{ printed_at.strftime("%d %b %Y %H:%M") }}</span></div>
+</section>
+
+</body>
+</html>

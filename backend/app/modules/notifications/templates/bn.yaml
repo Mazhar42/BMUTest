@@ -1,0 +1,8 @@
+# SMS templates (Bangla). Unicode SMS = 70 characters per segment (67 when split): keep within 2 segments.
+otp: "বিএমইউ ল্যাব কোড: {otp}। ৫ মিনিট বৈধ। কাউকে জানাবেন না।"
+order_submitted: "বিএমইউ ল্যাব: অনুরোধ {code} পাওয়া গেছে। যাচাইয়ের পর টাকার পরিমাণ জানানো হবে।"
+order_verified: "বিএমইউ ল্যাব {code}: পরীক্ষা যাচাই হয়েছে। মোট ৳{amount}। {link}"
+order_clarification: "বিএমইউ ল্যাব {code}: প্রেসক্রিপশন বিষয়ে আরও তথ্য প্রয়োজন। {link}"
+order_rejected: "বিএমইউ ল্যাব {code}: অনুরোধটি গ্রহণ করা যায়নি। হেল্প ডেস্কে যোগাযোগ করুন।"
+walkin_created: "বিএমইউ ল্যাব কোড {code}। মোট ৳{amount}। এই কোড দিয়ে ব্যাংক বুথে টাকা দিন।"
+waiver_approved: "বিএমইউ ল্যাব {code}: ফি মওকুফ অনুমোদিত। প্রদেয় ৳{amount}।"

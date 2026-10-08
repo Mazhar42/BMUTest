@@ -1,0 +1,190 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend · lint, types, migrations, tests
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: bmu
+          POSTGRES_PASSWORD: bmu
+          POSTGRES_DB: bmu
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U bmu -d bmu" --health-interval 3s --health-timeout 3s --health-retries 20
+    env:
+      DATABASE_URL: postgresql+psycopg://bmu:bmu@localhost:5432/bmu
+      TEST_DATABASE_URL: postgresql+psycopg://bmu:bmu@localhost:5432/bmu_test
+      ALEMBIC_DATABASE_URL: postgresql+psycopg://bmu:bmu@localhost:5432/bmu
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - name: System libraries (WeasyPrint/Pango, Bangla fonts, zbar)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libpango-1.0-0 libpangoft2-1.0-0 libharfbuzz0b \
+            libharfbuzz-subset0 fonts-noto-core fonts-noto-ui-core libzbar0
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - run: uv python install 3.12
+      - run: uv sync --frozen
+      - run: uv run ruff check app tests
+      - run: uv run ruff format --check app tests
+      - run: uv run mypy
+      - name: Migrations apply cleanly and match the models
+        run: |
+          uv run alembic upgrade head
+          uv run alembic check
+          uv run alembic downgrade base
+          uv run alembic upgrade head
+      - name: Tests (incl. slip PDF + barcode decoding)
+        run: uv run pytest -p no:warnings
+      - name: Generated TypeScript API client is up to date
+        run: |
+          uv run python -m app.cli openapi > /tmp/openapi.json
+          diff -q /tmp/openapi.json ../frontend/packages/api-client/openapi.json \
+            || { echo "::error::Run 'make gen-api' and commit the result"; exit 1; }
+      - run: uv run pip-audit --progress-spinner off || echo "::warning::pip-audit reported issues"
+
+  frontend:
+    name: Frontend · lint, types, tests, build
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r lint
+      - run: pnpm -r typecheck
+      - run: pnpm -r test
+      - run: pnpm -r build
+
+  e2e:
+    name: E2E · Playwright golden paths
+    needs: [backend, frontend]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start the stack (dev compose)
+        run: |
+          cp .env.example .env
+          docker compose up -d --build postgres redis minio api
+          for i in $(seq 1 60); do curl -fs localhost:18000/api/v1/health && break; sleep 3; done
+          docker compose exec -T api alembic upgrade head
+          docker compose exec -T api python -m app.cli seed --demo > /dev/null
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: |
+            frontend/pnpm-lock.yaml
+            e2e/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+        working-directory: frontend
+      - run: pnpm install --frozen-lockfile && pnpm exec playwright install --with-deps chromium
+        working-directory: e2e
+      - run: pnpm exec playwright test
+        working-directory: e2e
+      - if: failure()
+        run: docker compose logs --tail 200 api
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            e2e/playwright-report
+            e2e/test-results
+          retention-days: 7
+
+  images:
+    name: Build & push images (GHCR)
+    needs: [e2e]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Image names
+        id: names
+        run: |
+          owner="$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')"
+          echo "registry=ghcr.io/${owner}" >> "$GITHUB_OUTPUT"
+          echo "sha=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/metadata-action@v5
+        id: api_meta
+        with:
+          images: ${{ steps.names.outputs.registry }}/bmu-lab-api
+          tags: |
+            type=raw,value=${{ steps.names.outputs.sha }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=ref,event=tag
+      - uses: docker/build-push-action@v6
+        with:
+          context: backend
+          build-args: UV_SYNC_ARGS=--no-dev
+          push: true
+          tags: ${{ steps.api_meta.outputs.tags }}
+          labels: ${{ steps.api_meta.outputs.labels }}
+          cache-from: type=gha,scope=api
+          cache-to: type=gha,mode=max,scope=api
+      - uses: docker/metadata-action@v5
+        id: web_meta
+        with:
+          images: ${{ steps.names.outputs.registry }}/bmu-lab-web
+          tags: |
+            type=raw,value=${{ steps.names.outputs.sha }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=ref,event=tag
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/web/Dockerfile
+          push: true
+          tags: ${{ steps.web_meta.outputs.tags }}
+          labels: ${{ steps.web_meta.outputs.labels }}
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,mode=max,scope=web
+      - name: Summary
+        run: |
+          echo "### Images pushed" >> "$GITHUB_STEP_SUMMARY"
+          echo "Deploy with **Actions → Deploy → Run workflow**, tag \`${{ steps.names.outputs.sha }}\`${{ startsWith(github.ref, 'refs/tags/v') && format(' or `{0}`', github.ref_name) || '' }}." >> "$GITHUB_STEP_SUMMARY"

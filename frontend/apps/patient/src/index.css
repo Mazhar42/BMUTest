@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@import "@bmu/ui/theme.css";
+@source "../../../packages/ui/src";
+
+html,
+body {
+  min-height: 100dvh;
+}

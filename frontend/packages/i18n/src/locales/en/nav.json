@@ -1,0 +1,42 @@
+{
+  "staffConsole": "Staff console",
+  "globalSearch": "Search patient, mobile or scan a code…",
+  "scannerReady": "Scanner ready",
+  "noStation": "No station",
+  "groups": {
+    "overview": "Overview",
+    "frontDesk": "Front desk",
+    "payments": "Payments",
+    "collection": "Collection",
+    "laboratory": "Laboratory",
+    "admin": "Administration",
+    "oversight": "Oversight"
+  },
+  "items": {
+    "dashboard": "Dashboard",
+    "helpdesk": "Help desk",
+    "verification": "Verification",
+    "waivers": "Waivers",
+    "orders": "Orders",
+    "patients": "Patients",
+    "teller": "Bank teller",
+    "cashier": "Cashier",
+    "refunds": "Refunds",
+    "reconciliation": "Reconciliation",
+    "checkin": "Check-in",
+    "station": "Collection station",
+    "home": "Home collection",
+    "reception": "Lab reception",
+    "worklist": "Worklist",
+    "release": "Verify & release",
+    "reportDesk": "Report desk",
+    "catalog": "Test catalog",
+    "capacity": "Capacity",
+    "staff": "Staff",
+    "devices": "Devices",
+    "downtime": "Downtime",
+    "settings": "Settings",
+    "analytics": "Analytics",
+    "audit": "Audit log"
+  }
+}

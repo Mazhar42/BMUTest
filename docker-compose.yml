@@ -1,0 +1,110 @@
+name: bmu-lab
+
+x-backend: &backend
+  build: ./backend
+  image: bmu-lab-api:dev
+  env_file: .env
+  environment:
+    DATABASE_URL: postgresql+psycopg://bmu:${POSTGRES_PASSWORD:-bmu}@postgres:5432/bmu
+    TEST_DATABASE_URL: postgresql+psycopg://bmu:${POSTGRES_PASSWORD:-bmu}@postgres:5432/bmu_test
+    REDIS_URL: redis://redis:6379/0
+    S3_ENDPOINT: http://minio:9000
+    STORAGE_LOCAL_DIR: /data/storage
+  volumes:
+    - ./backend:/app
+    - /app/.venv
+    - storage:/data/storage
+  depends_on:
+    postgres: { condition: service_healthy }
+    redis: { condition: service_started }
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: bmu
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bmu}
+      POSTGRES_DB: bmu
+    # WAL archiving for point-in-time recovery (docs/runbooks/backup-restore.md)
+    command: >
+      postgres -c wal_level=replica -c archive_mode=on
+      -c archive_command='test ! -f /wal_archive/%f && cp %p /wal_archive/%f'
+      -c archive_timeout=300 -c max_connections=200
+    ports: ["55432:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - walarchive:/wal_archive
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bmu -d bmu"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    entrypoint: ["sh", "-c", "mkdir -p /wal_archive && chown postgres:postgres /wal_archive && exec docker-entrypoint.sh \"$$@\"", "--"]
+
+  redis:
+    image: redis:7-alpine
+    ports: ["56379:6379"]
+
+  # S3-compatible object store. MinIO no longer ships public images, so dev/pilot uses RustFS
+  # (MinIO-compatible API). See docs/adr/0003-object-store.md.
+  minio:
+    image: rustfs/rustfs:latest
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY:-bmuminio}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY:-bmuminio-secret}
+      RUSTFS_CONSOLE_ENABLE: "true"
+    ports: ["59000:9000", "59001:9001"]
+    volumes: [minio:/data]
+
+  api:
+    <<: *backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --proxy-headers --forwarded-allow-ips '*'
+    ports: ["18000:8000"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8000/api/v1/health || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  worker:
+    <<: *backend
+    command: celery -A app.workers.celery_app worker --loglevel=INFO --concurrency=4
+    environment:
+      DATABASE_URL: postgresql+psycopg://bmu:${POSTGRES_PASSWORD:-bmu}@postgres:5432/bmu
+      REDIS_URL: redis://redis:6379/0
+      S3_ENDPOINT: http://minio:9000
+      STORAGE_LOCAL_DIR: /data/storage
+      CELERY_ENABLED: "true"
+
+  beat:
+    <<: *backend
+    command: celery -A app.workers.celery_app beat --loglevel=INFO --schedule /tmp/celerybeat-schedule
+    environment:
+      DATABASE_URL: postgresql+psycopg://bmu:${POSTGRES_PASSWORD:-bmu}@postgres:5432/bmu
+      REDIS_URL: redis://redis:6379/0
+      CELERY_ENABLED: "true"
+
+  # Production-like front door: built PWA + staff app + API proxy (`make up-prod` → http://localhost:8090).
+  # The real server uses deploy/docker-compose.prod.yml (docs/runbooks/deploy.md).
+  web:
+    profiles: ["prod"]
+    build:
+      context: .
+      dockerfile: deploy/web/Dockerfile
+    environment:
+      SITE_ADDRESS: ":80"
+    ports: ["8090:80"]
+    depends_on: [api]
+
+  uptime-kuma:
+    profiles: ["monitoring"]
+    image: louislam/uptime-kuma:1
+    ports: ["3901:3001"]
+    volumes: [kuma:/app/data]
+
+volumes:
+  pgdata:
+  walarchive:
+  minio:
+  storage:
+  kuma:

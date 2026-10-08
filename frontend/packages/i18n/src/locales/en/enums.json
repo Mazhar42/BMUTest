@@ -1,0 +1,69 @@
+{
+  "orderStatus": {
+    "DRAFT": "Draft",
+    "PENDING_VERIFICATION": "Waiting for verification",
+    "NEEDS_CLARIFICATION": "Needs clarification",
+    "AWAITING_PAYMENT": "Awaiting payment",
+    "PAID": "Paid",
+    "READY_FOR_COLLECTION": "Ready for sample collection",
+    "CHECKED_IN": "Checked in",
+    "COLLECTED": "Sample collected",
+    "IN_LAB": "In the lab",
+    "COMPLETED": "Completed",
+    "REJECTED": "Rejected",
+    "EXPIRED": "Expired",
+    "CANCELLED": "Cancelled",
+    "REFUND_PENDING": "Refund pending",
+    "REFUNDED": "Refunded"
+  },
+  "waiverStatus": { "REQUESTED": "Requested", "APPROVED": "Approved", "DECLINED": "Declined", "WITHDRAWN": "Withdrawn" },
+  "feeCategory": {
+    "GENERAL": "General",
+    "FREE": "Free",
+    "POOR_FUND": "Poor fund",
+    "STAFF": "Staff",
+    "CONCESSION": "Concession"
+  },
+  "priority": { "NORMAL": "Normal", "ELDERLY": "Elderly", "DISABLED": "Disabled", "EMERGENCY": "Emergency" },
+  "channel": {
+    "APP": "App",
+    "WEB": "Web",
+    "HELPDESK": "Help desk",
+    "WALKIN": "Walk-in",
+    "KIOSK": "Kiosk",
+    "HOME": "Home",
+    "BACKENTRY": "Back-entry"
+  },
+  "relation": {
+    "SELF": "Myself",
+    "SPOUSE": "Spouse",
+    "CHILD": "Child",
+    "PARENT": "Parent",
+    "SIBLING": "Brother / sister",
+    "OTHER": "Other"
+  },
+  "specimen": { "BLOOD": "Blood", "URINE": "Urine", "STOOL": "Stool", "SWAB": "Swab", "OTHER": "Other" },
+  "container": {
+    "EDTA": "EDTA (purple)",
+    "PLAIN": "Plain (red)",
+    "SST": "SST (gold)",
+    "FLUORIDE": "Fluoride (grey)",
+    "CITRATE": "Citrate (blue)",
+    "HEPARIN": "Heparin (green)",
+    "URINE_CUP": "Urine container",
+    "STOOL_CUP": "Stool container",
+    "BLOOD_CULTURE": "Blood culture bottle",
+    "SWAB_TUBE": "Swab tube",
+    "OTHER": "Other"
+  },
+  "resource": { "BLOOD_COLLECTION": "Blood collection", "URINE": "Urine / stool", "SPECIAL": "Special" },
+  "resultMode": { "STRUCTURED": "Structured entry", "PDF_UPLOAD": "PDF upload" },
+  "paymentMethod": { "GATEWAY": "Online", "BANK_TELLER": "Bank booth", "COUNTER_CASH": "Counter cash", "WAIVER": "Waiver" },
+  "timeline": {
+    "submitted": "Request submitted",
+    "verified": "Tests verified",
+    "paid": "Payment",
+    "collected": "Sample collection",
+    "reported": "Reports ready"
+  }
+}

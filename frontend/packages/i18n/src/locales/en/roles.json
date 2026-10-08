@@ -1,0 +1,16 @@
+{
+  "HELP_DESK": "Help desk",
+  "VERIFIER": "Verifier",
+  "BANK_TELLER": "Bank teller",
+  "CASHIER": "Cashier",
+  "COLLECTOR": "Sample collector",
+  "LAB_RECEPTION": "Lab reception",
+  "TECHNICIAN": "Technician",
+  "PATHOLOGIST": "Pathologist",
+  "REPORT_DESK": "Report desk",
+  "WAIVER_APPROVER": "Waiver approver",
+  "LAB_ADMIN": "Lab admin",
+  "AUDITOR": "Auditor",
+  "SUPER_ADMIN": "Super admin",
+  "HOME_COLLECTOR": "Home collector"
+}

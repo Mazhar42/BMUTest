@@ -1,0 +1,8 @@
+# PLACEHOLDER — must be confirmed by BMU laboratory.
+# Department list and result mode (STRUCTURED = typed results, PDF_UPLOAD = attach analyzer/LIS printout).
+code,name_en,name_bn,result_mode,sort
+HAEM,Haematology,হেমাটোলজি,STRUCTURED,1
+BIOCHEM,Biochemistry,বায়োকেমিস্ট্রি,STRUCTURED,2
+MICRO,Microbiology,মাইক্রোবায়োলজি,PDF_UPLOAD,3
+CLINPATH,Clinical Pathology,ক্লিনিক্যাল প্যাথলজি,STRUCTURED,4
+IMMUNO,Immunology & Serology,ইমিউনোলজি ও সেরোলজি,PDF_UPLOAD,5

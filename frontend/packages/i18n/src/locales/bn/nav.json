@@ -1,0 +1,42 @@
+{
+  "staffConsole": "স্টাফ কনসোল",
+  "globalSearch": "রোগী, মোবাইল খুঁজুন বা কোড স্ক্যান করুন…",
+  "scannerReady": "স্ক্যানার প্রস্তুত",
+  "noStation": "স্টেশন নেই",
+  "groups": {
+    "overview": "সারসংক্ষেপ",
+    "frontDesk": "ফ্রন্ট ডেস্ক",
+    "payments": "পেমেন্ট",
+    "collection": "নমুনা সংগ্রহ",
+    "laboratory": "ল্যাবরেটরি",
+    "admin": "প্রশাসন",
+    "oversight": "তদারকি"
+  },
+  "items": {
+    "dashboard": "ড্যাশবোর্ড",
+    "helpdesk": "হেল্প ডেস্ক",
+    "verification": "যাচাই",
+    "waivers": "ফি মওকুফ",
+    "orders": "অর্ডার",
+    "patients": "রোগী",
+    "teller": "ব্যাংক টেলার",
+    "cashier": "ক্যাশিয়ার",
+    "refunds": "রিফান্ড",
+    "reconciliation": "হিসাব মিলানো",
+    "checkin": "চেক-ইন",
+    "station": "সংগ্রহ স্টেশন",
+    "home": "বাসা থেকে সংগ্রহ",
+    "reception": "ল্যাব রিসেপশন",
+    "worklist": "ওয়ার্কলিস্ট",
+    "release": "যাচাই ও প্রকাশ",
+    "reportDesk": "রিপোর্ট ডেস্ক",
+    "catalog": "পরীক্ষার তালিকা",
+    "capacity": "ধারণক্ষমতা",
+    "staff": "স্টাফ",
+    "devices": "ডিভাইস",
+    "downtime": "ডাউনটাইম",
+    "settings": "সেটিংস",
+    "analytics": "বিশ্লেষণ",
+    "audit": "অডিট লগ"
+  }
+}

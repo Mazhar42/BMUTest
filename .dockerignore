@@ -1,0 +1,14 @@
+# Build context for deploy/web/Dockerfile (repo root)
+**/node_modules
+**/dist
+**/dev-dist
+**/.venv
+**/__pycache__
+**/.mypy_cache
+**/.pytest_cache
+**/.ruff_cache
+.git
+.env
+e2e/test-results
+e2e/playwright-report
+backend/storage

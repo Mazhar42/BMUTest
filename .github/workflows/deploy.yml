@@ -1,0 +1,91 @@
+name: Deploy
+
+# Production deploys are manual and gated:
+#   * "Run workflow" with an image tag (sha-xxxxxxx from a CI run, or a version tag such as v0.3.0), or
+#   * automatically proposed after CI succeeds for a pushed v* tag.
+# Both wait for approval on the GitHub "production" environment (Settings → Environments → required
+# reviewers) before anything touches the server. Setup: docs/runbooks/deploy.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Image tag to deploy (e.g. sha-1a2b3c4 or v0.3.0)"
+        required: true
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  deploy:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.head_branch, 'v'))
+    runs-on: ubuntu-24.04
+    environment:
+      name: production
+      url: ${{ vars.PUBLIC_URL }}
+    env:
+      TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.event.workflow_run.head_branch }}
+      VPS_PATH: ${{ vars.VPS_PATH || '/opt/bmu-lab' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Check configuration
+        env:
+          HOST: ${{ secrets.VPS_HOST }}
+          KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          [ -n "$HOST" ] && [ -n "$KEY" ] || { echo "::error::Set secrets VPS_HOST, VPS_USER, VPS_SSH_KEY (docs/runbooks/deploy.md)"; exit 1; }
+          echo "Deploying image tag: $TAG"
+
+      - name: SSH setup
+        env:
+          KEY: ${{ secrets.VPS_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
+          HOST: ${{ secrets.VPS_HOST }}
+          PORT: ${{ secrets.VPS_PORT || '22' }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
+          if [ -n "$KNOWN_HOSTS" ]; then printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else ssh-keyscan -p "$PORT" "$HOST" > ~/.ssh/known_hosts; echo "::warning::Pin the host key in secret VPS_KNOWN_HOSTS"; fi
+          cat > ~/.ssh/config <<CFG
+          Host vps
+            HostName $HOST
+            User ${{ secrets.VPS_USER }}
+            Port $PORT
+            IdentityFile ~/.ssh/id_deploy
+            IdentitiesOnly yes
+          CFG
+
+      - name: Copy deploy files
+        run: |
+          ssh vps "mkdir -p '$VPS_PATH'"
+          scp deploy/docker-compose.prod.yml deploy/deploy.sh deploy/backup.sh deploy/.env.production.example "vps:$VPS_PATH/"
+          ssh vps "chmod +x '$VPS_PATH/deploy.sh' '$VPS_PATH/backup.sh'"
+
+      - name: Deploy
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | ssh vps "docker login ghcr.io -u '${{ github.actor }}' --password-stdin"
+          ssh vps "cd '$VPS_PATH' && ./deploy.sh '$TAG'"
+          ssh vps "docker logout ghcr.io" || true
+
+      - name: Smoke test
+        if: vars.PUBLIC_URL != ''
+        run: |
+          for i in $(seq 1 20); do
+            curl -fsS "${{ vars.PUBLIC_URL }}/api/v1/health" && exit 0
+            sleep 5
+          done
+          echo "::error::Health check failed at ${{ vars.PUBLIC_URL }}"; exit 1

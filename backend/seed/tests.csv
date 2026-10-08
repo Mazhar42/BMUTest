@@ -1,0 +1,25 @@
+# PLACEHOLDER — must be confirmed by BMU laboratory.
+# Every value below (names, aliases, specimen, container, fasting, preparation text, TAT, price) is a demo
+# placeholder so the software can be exercised. Replace this file with the confirmed catalog (ROADMAP M0).
+# aliases are |-separated; price_taka is in taka (converted to paisa on import).
+code,name_en,name_bn,abbreviation,aliases,department,specimen_type,container_type,collection_resource,fasting_required,fasting_hours,prep_en,prep_bn,tat_hours,requires_prescription,price_taka,home_collectable
+CBC,Complete Blood Count,কমপ্লিট ব্লাড কাউন্ট (সিবিসি),CBC,Complete blood count|Blood CBC|CBC with ESR|সিবিসি|রক্তের সিবিসি,HAEM,BLOOD,EDTA,BLOOD_COLLECTION,false,,,,24,true,400,true
+ESR,Erythrocyte Sedimentation Rate,ইএসআর,ESR,ESR|Sed rate|ইএসআর,HAEM,BLOOD,EDTA,BLOOD_COLLECTION,false,,,,24,true,150,true
+HB,Haemoglobin,হিমোগ্লোবিন,Hb,Hb|Haemoglobin|Hemoglobin|হিমোগ্লোবিন,HAEM,BLOOD,EDTA,BLOOD_COLLECTION,false,,,,24,true,150,true
+PLT,Platelet Count,প্লাটিলেট কাউন্ট,PLT,Platelet|Platelet count|PLT|প্লাটিলেট,HAEM,BLOOD,EDTA,BLOOD_COLLECTION,false,,,,24,true,200,true
+BG,Blood Grouping & Rh Typing,রক্তের গ্রুপ ও আরএইচ,BG,Blood group|Grouping|ABO Rh|রক্তের গ্রুপ,HAEM,BLOOD,EDTA,BLOOD_COLLECTION,false,,,,24,false,150,true
+HBA1C,HbA1c (Glycated Haemoglobin),এইচবিএওয়ানসি,HbA1c,HbA1c|A1c|Glycated haemoglobin|Glycosylated Hb|এইচবিএওয়ানসি,BIOCHEM,BLOOD,EDTA,BLOOD_COLLECTION,false,,,,48,true,900,true
+FBS,Fasting Blood Sugar,খালি পেটে রক্তের সুগার,FBS,FBS|FBG|Fasting blood sugar|Fasting glucose|সুগার|ডায়াবেটিস,BIOCHEM,BLOOD,FLUORIDE,BLOOD_COLLECTION,true,8,PLACEHOLDER — preparation instructions to be confirmed by BMU laboratory.,নমুনা তথ্য — প্রস্তুতির নির্দেশনা বিএমইউ ল্যাবরেটরি নিশ্চিত করবে।,24,true,150,true
+RBS,Random Blood Sugar,র‍্যান্ডম ব্লাড সুগার,RBS,RBS|Random blood sugar|Random glucose|সুগার,BIOCHEM,BLOOD,FLUORIDE,BLOOD_COLLECTION,false,,,,24,true,150,true
+CREAT,Serum Creatinine,সিরাম ক্রিয়েটিনিন,Creat,S. Creat|S Creatinine|Creat|Cr|ক্রিয়েটিনিন|এস ক্রিয়েটিনিন,BIOCHEM,BLOOD,SST,BLOOD_COLLECTION,false,,,,24,true,300,true
+UREA,Blood Urea,ব্লাড ইউরিয়া,Urea,Urea|BUN|Blood urea nitrogen|ইউরিয়া,BIOCHEM,BLOOD,SST,BLOOD_COLLECTION,false,,,,24,true,300,true
+ALT,SGPT (ALT),এসজিপিটি (এএলটি),SGPT,SGPT|ALT|Alanine aminotransferase|লিভার,BIOCHEM,BLOOD,SST,BLOOD_COLLECTION,false,,,,24,true,300,true
+LIPID,Lipid Profile,লিপিড প্রোফাইল,Lipid,Lipid|Cholesterol|Fasting lipid|কোলেস্টেরল|লিপিড,BIOCHEM,BLOOD,SST,BLOOD_COLLECTION,true,12,PLACEHOLDER — preparation instructions to be confirmed by BMU laboratory.,নমুনা তথ্য — প্রস্তুতির নির্দেশনা বিএমইউ ল্যাবরেটরি নিশ্চিত করবে।,24,true,1000,true
+ELEC,Serum Electrolytes,সিরাম ইলেক্ট্রোলাইট,Elec,Electrolytes|S. Electrolyte|Na K Cl|ইলেক্ট্রোলাইট,BIOCHEM,BLOOD,SST,BLOOD_COLLECTION,false,,,,24,true,800,true
+TSH,Thyroid Stimulating Hormone,টিএসএইচ,TSH,TSH|Thyroid|থাইরয়েড|টিএসএইচ,IMMUNO,BLOOD,SST,BLOOD_COLLECTION,false,,,,48,true,700,true
+CRP,C-Reactive Protein,সিআরপি,CRP,CRP|C reactive protein|সিআরপি,IMMUNO,BLOOD,SST,BLOOD_COLLECTION,false,,,,24,true,500,true
+HBSAG,HBsAg,এইচবিএসএজি,HBsAg,HBsAg|Hepatitis B|হেপাটাইটিস বি,IMMUNO,BLOOD,SST,BLOOD_COLLECTION,false,,,,24,true,400,true
+NS1,Dengue NS1 Antigen,ডেঙ্গু এনএস১ অ্যান্টিজেন,NS1,Dengue|NS1|Dengue antigen|ডেঙ্গু,IMMUNO,BLOOD,SST,BLOOD_COLLECTION,false,,,,24,true,500,true
+URINE_RE,Urine Routine Examination,প্রস্রাবের রুটিন পরীক্ষা,Urine R/E,Urine R/E|Urine RME|Urine routine|প্রস্রাব,CLINPATH,URINE,URINE_CUP,URINE,false,,PLACEHOLDER — preparation instructions to be confirmed by BMU laboratory.,নমুনা তথ্য — প্রস্তুতির নির্দেশনা বিএমইউ ল্যাবরেটরি নিশ্চিত করবে।,24,true,200,false
+STOOL_RE,Stool Routine Examination,মলের রুটিন পরীক্ষা,Stool R/E,Stool R/E|Stool routine|Stool RME|মল|পায়খানা,CLINPATH,STOOL,STOOL_CUP,URINE,false,,PLACEHOLDER — preparation instructions to be confirmed by BMU laboratory.,নমুনা তথ্য — প্রস্তুতির নির্দেশনা বিএমইউ ল্যাবরেটরি নিশ্চিত করবে।,24,true,200,false
+URINE_CS,Urine Culture & Sensitivity,প্রস্রাবের কালচার ও সংবেদনশীলতা,Urine C/S,Urine C/S|Urine culture|Culture sensitivity|কালচার,MICRO,URINE,URINE_CUP,URINE,false,,PLACEHOLDER — preparation instructions to be confirmed by BMU laboratory.,নমুনা তথ্য — প্রস্তুতির নির্দেশনা বিএমইউ ল্যাবরেটরি নিশ্চিত করবে।,72,true,800,false
