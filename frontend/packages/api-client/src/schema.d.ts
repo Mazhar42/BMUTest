@@ -1888,6 +1888,10 @@ export interface components {
             preferred_language: string;
             /** Totp Enabled */
             totp_enabled: boolean;
+            /** Must Change Password */
+            must_change_password: boolean;
+            /** Has Pin */
+            has_pin: boolean;
             /**
              * Session Expires At
              * Format: date-time

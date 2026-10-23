@@ -49,6 +49,8 @@ def require(*permissions: str) -> Callable[..., Actor]:
     """Dependency factory: `actor: Actor = Depends(require("order.verify"))` — any listed permission."""
 
     def dep(ctx: StaffCtx) -> Actor:
+        if ctx.staff.must_change_password:
+            raise Forbidden("PASSWORD_CHANGE_REQUIRED")
         if not any(ctx.actor.can(p) for p in permissions):
             raise Forbidden("MISSING_PERMISSION", permission=permissions[0])
         return ctx.actor

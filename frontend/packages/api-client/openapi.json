@@ -6793,6 +6793,14 @@
       "type": "boolean",
       "title": "Totp Enabled"
      },
+     "must_change_password": {
+      "type": "boolean",
+      "title": "Must Change Password"
+     },
+     "has_pin": {
+      "type": "boolean",
+      "title": "Has Pin"
+     },
      "session_expires_at": {
       "type": "string",
       "format": "date-time",
@@ -6811,6 +6819,8 @@
      "station",
      "preferred_language",
      "totp_enabled",
+     "must_change_password",
+     "has_pin",
      "session_expires_at"
     ],
     "title": "StaffMe"

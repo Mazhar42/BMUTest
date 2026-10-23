@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { FullPageSpinner, LockScreen, Shell } from "./layout/Shell";
 import { NAV } from "./layout/nav";
 import { useSession } from "./lib/session";
+import { ForcePasswordChange } from "./pages/AccountDialogs";
 import { ComingSoonPage } from "./pages/ComingSoonPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -22,6 +23,7 @@ export function App() {
   const { me, loading, locked } = useSession();
   if (loading) return <FullPageSpinner />;
   if (!me) return <LoginPage />;
+  if (me.must_change_password) return <ForcePasswordChange />;
   const later = NAV.flatMap((g) => g.items).filter((i) => i.milestone);
   return (
     <>

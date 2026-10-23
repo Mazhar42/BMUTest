@@ -64,5 +64,6 @@
   "daily_code_capacity_exhausted": "আজকের অর্ডার কোড শেষ হয়ে গেছে।",
   "method_not_allowed": "এই কাজটি অনুমোদিত নয়।",
   "http_error": "কিছু একটা সমস্যা হয়েছে।",
-  "unknown_import_kind": "অজানা ইমপোর্টের ধরন।"
+  "unknown_import_kind": "অজানা ইমপোর্টের ধরন।",
+  "password_change_required": "আগে আপনার অস্থায়ী পাসওয়ার্ড পরিবর্তন করুন।"
 }

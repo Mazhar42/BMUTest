@@ -38,6 +38,8 @@ class StaffMe(BaseModel):
     station: str | None
     preferred_language: str
     totp_enabled: bool
+    must_change_password: bool
+    has_pin: bool
     session_expires_at: datetime
 
 

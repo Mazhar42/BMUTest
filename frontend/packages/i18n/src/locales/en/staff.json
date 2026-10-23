@@ -35,7 +35,10 @@
     "registerAnyway": "Register as a new patient",
     "duplicateHint": "Check whether one of these is the same person before creating a new record.",
     "useThis": "Use this patient",
-    "dupReason": { "MOBILE": "same mobile", "NAME": "similar name and age" },
+    "dupReason": {
+      "MOBILE": "same mobile",
+      "NAME": "similar name and age"
+    },
     "fullName": "Full name (English)",
     "fullNameBn": "Full name (Bangla)",
     "mobileHint": "SMS with the code goes to this number.",
@@ -197,5 +200,20 @@
     "resetTotp": "Reset two-step",
     "passwordReset": "Password reset",
     "totpReset": "Two-step reset — they enrol again at next login"
+  },
+  "account": {
+    "changePassword": "Change password",
+    "forceTitle": "Choose your own password",
+    "forceBody": "Welcome, {{name}}. Your account was set up with a temporary password — replace it before you start.",
+    "currentPassword": "Current (temporary) password",
+    "repeatPassword": "Repeat new password",
+    "passwordRule": "At least 10 characters. Don't reuse the temporary one.",
+    "mismatch": "The passwords don't match.",
+    "passwordChanged": "Password changed",
+    "setPin": "Set unlock PIN",
+    "changePin": "Change unlock PIN",
+    "pin": "PIN (4–6 digits)",
+    "pinHint": "Use the PIN to unlock the screen after inactivity. Your password still works too.",
+    "pinSaved": "PIN saved"
   }
 }

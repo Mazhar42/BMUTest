@@ -2,7 +2,7 @@ import { unwrap } from "@bmu/api-client";
 import { formatTime, setLanguage, useI18n, type Lang } from "@bmu/i18n";
 import { Badge, Button, cn, Dropdown, Field, Input, LiveDot, Logo, LogoMark, SegmentedControl } from "@bmu/ui";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Lock, LogOut, Menu, MonitorSmartphone, ScanBarcode, Search, X } from "lucide-react";
+import { Hash, KeyRound, Lock, LogOut, Menu, MonitorSmartphone, ScanBarcode, Search, X } from "lucide-react";
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import { api, tokenStore } from "../lib/api";
 import { useErrorToast } from "../lib/errors";
 import { classifyScan, useScanner } from "../lib/scanner";
 import { useSession } from "../lib/session";
+import { ChangePasswordDialog, PinDialog } from "../pages/AccountDialogs";
 import { NAV } from "./nav";
 
 export function Shell({ children }: { children: ReactNode }) {
@@ -166,6 +167,7 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
 function UserCard() {
   const { t } = useI18n();
   const { me, signOut, setLocked } = useSession();
+  const [dialog, setDialog] = useState<"password" | "pin" | null>(null);
   const lock = useMutation({
     mutationFn: () => unwrap(api.POST("/api/v1/staff/auth/lock")),
     onSuccess: () => setLocked(true),
@@ -196,6 +198,12 @@ function UserCard() {
         }
         items={[
           { label: t("auth.lockNow"), icon: <Lock className="size-4" />, onSelect: () => lock.mutate() },
+          { label: t("staff.account.changePassword"), icon: <KeyRound className="size-4" />, onSelect: () => setDialog("password") },
+          {
+            label: me.has_pin ? t("staff.account.changePin") : t("staff.account.setPin"),
+            icon: <Hash className="size-4" />,
+            onSelect: () => setDialog("pin"),
+          },
           "separator",
           { label: t("common.logout"), icon: <LogOut className="size-4" />, onSelect: () => void signOut(), danger: true },
         ]}
@@ -207,6 +215,8 @@ function UserCard() {
           </span>
         ))}
       </div>
+      <ChangePasswordDialog open={dialog === "password"} onOpenChange={(v) => setDialog(v ? "password" : null)} />
+      <PinDialog open={dialog === "pin"} onOpenChange={(v) => setDialog(v ? "pin" : null)} />
     </div>
   );
 }

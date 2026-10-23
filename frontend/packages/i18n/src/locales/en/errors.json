@@ -64,5 +64,6 @@
   "daily_code_capacity_exhausted": "No more order codes are available today.",
   "method_not_allowed": "This action is not allowed.",
   "http_error": "Something went wrong.",
-  "unknown_import_kind": "Unknown import type."
+  "unknown_import_kind": "Unknown import type.",
+  "password_change_required": "Change your temporary password first."
 }

@@ -92,6 +92,8 @@ def me(staff: Staff, session: StaffSession) -> schemas.StaffMe:
         station=session.station,
         preferred_language=staff.preferred_language,
         totp_enabled=staff.totp_enabled,
+        must_change_password=staff.must_change_password,
+        has_pin=staff.pin_hash is not None,
         session_expires_at=session.expires_at,
     )
 

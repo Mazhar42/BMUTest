@@ -126,3 +126,33 @@ def test_error_shape(client: TestClient) -> None:
     r = client.get("/api/v1/staff/auth/me")
     assert r.status_code == 401
     assert set(r.json()) == {"code", "message_key", "params"}
+
+
+def test_new_staff_must_change_password_before_working(client: TestClient, db: Session) -> None:
+    admin = login(client, make_staff(db, Role.LAB_ADMIN, totp_secret=new_totp_secret()))
+    payload = {"username": "newclerk", "full_name": "New Clerk", "password": "temporary-pass-1", "roles": [
+        {"role": "HELP_DESK"}]}
+    assert client.post("/api/v1/staff/admin/staff", json=payload, headers=admin).status_code == 201
+    r = client.post("/api/v1/staff/auth/login", json={"username": "newclerk", "password": "temporary-pass-1"})
+    headers = {"Authorization": f"Bearer {r.json()['access_token']}"}
+    assert client.get("/api/v1/staff/auth/me", headers=headers).json()["must_change_password"] is True
+    r = client.get("/api/v1/staff/patients", params={"q": "abc"}, headers=headers)
+    assert r.status_code == 403 and r.json()["code"] == "PASSWORD_CHANGE_REQUIRED"
+    r = client.post(
+        "/api/v1/staff/auth/me/password",
+        json={"current_password": "temporary-pass-1", "new_password": "my-own-secret-99"},
+        headers=headers,
+    )
+    assert r.status_code == 204
+    assert client.get("/api/v1/staff/patients", params={"q": "abc"}, headers=headers).status_code == 200
+
+
+def test_pin_unlocks_an_idle_session(client: TestClient, db: Session) -> None:
+    staff = make_staff(db, Role.COLLECTOR)
+    headers = login(client, staff)
+    r = client.post("/api/v1/staff/auth/me/pin", json={"password": PASSWORD, "pin": "4821"}, headers=headers)
+    assert r.status_code == 204
+    assert client.get("/api/v1/staff/auth/me", headers=headers).json()["has_pin"] is True
+    with clock.frozen(clock.now() + timedelta(minutes=31)):
+        assert client.get("/api/v1/staff/auth/me", headers=headers).status_code == 423
+        assert client.post("/api/v1/staff/auth/unlock", json={"secret": "4821"}, headers=headers).status_code == 200
