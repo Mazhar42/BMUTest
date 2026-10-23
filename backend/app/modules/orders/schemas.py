@@ -143,6 +143,8 @@ class PaymentBrief(BaseModel):
     amount: int
     status: str
     paid_at: datetime | None
+    method_hint: str | None = None
+    bank_receipt_no: str | None = None
 
 
 class OrderOut(BaseModel):

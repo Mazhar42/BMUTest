@@ -8,3 +8,4 @@ from app.modules.orders import models as order_models  # noqa: F401
 from app.modules.patients import models as patient_models  # noqa: F401
 from app.modules.payments import models as payment_models  # noqa: F401
 from app.modules.prescriptions import models as prescription_models  # noqa: F401
+from app.modules.queue import models as queue_models  # noqa: F401

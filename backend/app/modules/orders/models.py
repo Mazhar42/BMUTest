@@ -42,7 +42,7 @@ ORDER_TRANSITIONS: dict[str, set[str]] = {
     "CHECKED_IN": {"COLLECTED", "READY_FOR_COLLECTION"},
     "COLLECTED": {"IN_LAB"},
     "IN_LAB": {"COMPLETED"},
-    "REFUND_PENDING": {"REFUNDED"},
+    "REFUND_PENDING": {"REFUNDED", "PAID"},  # PAID again when the refund request is rejected
 }
 
 

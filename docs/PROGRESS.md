@@ -9,7 +9,7 @@ Source of truth for scope: [ROADMAP.md](ROADMAP.md). Decisions: [adr/](adr/).
 | **M1 Foundation** | **Done** |
 | **M2 Catalog, patients, patient login** | **Done** |
 | **M3 Prescriptions, orders, 3-part slip** | **Done** |
-| M4 Payments | Next. The `payment` table, its state machine and the WAIVER method already exist |
+| **M4 Payments** | **Done** (live SSLCommerz sandbox round trip pending credentials — see open items) |
 | M5–M9 | Not started (screens show "arrives in M*n*" in the staff navigation) |
 
 Deployment pipeline (CI → GHCR → manually approved VPS deploy) is in place: [runbooks/deploy.md](runbooks/deploy.md).
@@ -89,6 +89,35 @@ bn + en), amount in words.
 `tests/pdf/*` need Pango/zbar: they run in the API Docker image (`docker compose run --rm api pytest
 tests/pdf`) and in CI; on a bare Windows host they are skipped.
 
+## M4 — Payments (gateway, bank teller, counter, reconciliation)
+
+Built: payment service + provider adapter interface; **mock gateway** (own fake gateway page, dev/E2E only, off in prod);
+**SSLCommerz adapter** (session, IPN + Validation API, transaction query, refund) tested against a mocked HTTP transport;
+IPN / status-poll / Beat re-query all settle through one idempotent function; **bank teller screen** (scan/type code → name, code,
+amount → "Received" → PAID → W/P token printed on an 80 mm PDF and sent by SMS; clear *ALREADY PAID / NOT VERIFIED YET /
+EXPIRED / CLOSED* states; optional mandatory receipt number); per-teller **day-close** (count, total, refunded, net, printable);
+**counter cash** (cashier screen, behind `COUNTER_PAYMENT_ENABLED`); **refunds** (request → different person approves, manual with
+reference or through the gateway, retry on provider failure, reject restores the order, automatic requests for duplicate
+payments); unpaid-order expiry job and stale-payment expiry; **reconciliation** (bank CSV with per-bank column mapping,
+auto-match by order code/receipt + amount, exceptions screen with resolve notes, nightly re-match); queue tokens table (W/P).
+Patient PWA: payment method choice (bKash / Nagad / Upay / Rocket / card, "Pay at hospital"), result page that polls the
+status, paid state on the order.
+Also closed from the M1 review: first-login forced password change, password and unlock-PIN dialogs.
+
+| Acceptance | Evidence |
+|---|---|
+| Duplicate IPN → one SUCCESS and one audit trail | `test_duplicate_ipn_gives_one_success_and_one_audit_trail`, `test_parallel_ipns_settle_once` (5 parallel sessions) |
+| IPN with the wrong amount → `FAILED` with `AMOUNT_MISMATCH` | `test_ipn_with_wrong_amount_is_flagged_failed`, `test_ipn_route_verifies_with_the_gateway_never_the_payload` |
+| Two tellers receiving the same code at once → exactly one success | `test_two_tellers_receiving_the_same_code_give_exactly_one_success` (6 parallel sessions) |
+| Teller day-close totals equal the sum of their payments | `test_day_close_totals_equal_the_sum_of_payments`, E2E `walkin.spec.ts` |
+| SSLCommerz sandbox round trip documented | [runbooks/payments.md](runbooks/payments.md) (**procedure written, not yet executed — needs sandbox credentials**) |
+
+Also tested: teller screen states, receipt number rule, emergency → `P` token, counter cash rules, waiver then partial payment,
+late gateway success after an in-person payment (refund raised, order stays paid), re-query of lost IPNs, expiry, mock gateway
+disabled in prod, two-person refund rule and rejection, provider vs manual refund, reconciliation (match, mismatch, unmatched,
+duplicate upload, resolve, nightly re-match), token PDF (80 mm, QR decodes to the code).
+E2E (`make e2e`): online → mock gateway → PAID; failed then retried payment; walk-in → teller receives → token → ALREADY PAID → day close.
+
 ## Deviations (with reasons)
 
 - **Caddy instead of nginx** as the front door — automatic TLS, one fewer moving part ([ADR 0004](adr/0004-deployment.md)).
@@ -100,7 +129,9 @@ tests/pdf`) and in CI; on a bare Windows host they are skipped.
   both through `transition()`; the verification SLA lives on the order (and is copied to the prescription).
 - **"My Appointments"** lists the patient's requests until slot booking exists (M5). **"My Reports"** is an
   empty state until M8.
-- **Unpaid-order expiry job** is deferred to M4 (it belongs with payments), as the roadmap lists it there.
+- **Payments** — full-amount payments and refunds only; gateway settlement-report reconciliation is not built (bank statements only) — [ADR 0006](adr/0006-payments.md).
+- **Order `REFUND_PENDING` may return to `PAID`** when a refund request is rejected (added transition).
+- **Payments can settle after `CANCELLED`/`EXPIRED`** (late gateway confirmation) and then raise a refund request instead of keeping the money.
 - `parameters.csv` is **intentionally empty**: reference ranges are clinical content (needed from M7).
 
 ## Open questions / items for BMU [BMU]
@@ -115,8 +146,12 @@ tests/pdf`) and in CI; on a bare Windows host they are skipped.
 7. Should a help-desk patient be claimable by an app account later, and with what identity check?
 8. Hosting (on-prem vs Bangladeshi data centre), domain, data retention — needed before go-live.
 9. Analyzer barcode length limits and label/receipt printer models (M6).
+10. SSLCommerz merchant account in BMU's name, who absorbs the MDR fee, and the refund policy (who may approve, time limits) — needed for the live sandbox round trip and go-live.
+11. Bank booth: which bank, its statement CSV layout (column names, date format), whether it issues a receipt number the teller should key in (`TELLER_REQUIRE_RECEIPT_NO`).
+12. Is counter cash allowed at a hospital cashier at all (`COUNTER_PAYMENT_ENABLED`, default off)?
+13. Should refund approval be a dedicated role instead of LAB_ADMIN/SUPER_ADMIN?
 
-## Next: M4 — Payments
+## Next: M5 — Scheduling, check-in, queue
 
-Payment service + adapter interface + mock gateway page, SSLCommerz sandbox, bank teller screen
-(`/teller` is reserved in navigation), counter cash, refunds, unpaid-order expiry, reconciliation.
+Capacity templates and holidays, slot materialiser, 15-minute holds, slot picker in the PWA, reminders and no-shows,
+A/W/P queue calling, check-in kiosk page and the `/display` screen. The `queue_token` table (W/P) already exists.

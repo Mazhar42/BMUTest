@@ -58,4 +58,52 @@ test("online request is verified by staff and the patient sees price and prepara
   await expect(fbs.getByText("Come fasting (8 hours)")).toBeVisible();
   await expect(fbs.getByTestId("item-prep")).toContainText("preparation instructions");
   await expect(page.getByText("Amount to pay: ৳450")).toBeVisible();
+
+  // M4: pay online through the (mock) gateway → result page polls → order is PAID
+  await expect(page.getByTestId("pay-at-hospital")).toContainText("Give this code at the bank booth");
+  await page.getByTestId("pay-bkash").click();
+  await expect(page.getByText("Mock payment gateway")).toBeVisible();
+  await expect(page.getByText("৳450")).toBeVisible();
+  await page.locator("#pay-success").click();
+  await expect(page.getByTestId("pay-result")).toHaveAttribute("data-kind", "success");
+  await page.getByTestId("pay-back-to-order").click();
+  await expect(page.getByText("Payment received").first()).toBeVisible();
+  await expect(page.getByTestId("pay-bkash")).toHaveCount(0);
+});
+
+test("a failed online payment can be retried", async ({ page, browser }) => {
+  await page.goto("/welcome");
+  await page.getByRole("button", { name: "English" }).click();
+  await page.locator("#mobile").fill(randomMobile());
+  await page.getByRole("button", { name: "Send code" }).click();
+  await page.locator("#code").fill((await page.getByTestId("dev-code").textContent())!.trim());
+  await page.getByRole("button", { name: "Verify & continue" }).click();
+  await page.getByTestId("home-book").click();
+  await page.getByTestId("add-self").click();
+  await page.getByTestId("family-name").fill("Retry Patient");
+  await page.getByTestId("family-age").fill("40");
+  await page.getByTestId("family-save").click();
+  await page.getByTestId("photo-input").setInputFiles({ name: "rx.png", mimeType: "image/png", buffer: PNG_1PX });
+  await page.getByTestId("book-next").click();
+  await page.getByTestId("patient-test-search").fill("complete blood");
+  await page.getByTestId("patient-test-option").first().click();
+  await page.getByTestId("book-next").click();
+  await page.getByTestId("book-submit").click();
+  const code = (await page.getByTestId("order-code").innerText()).replace(/\D/g, "");
+  const staff = await staffPage(browser, "verifier");
+  await staff.goto("verification");
+  await staff.getByTestId("queue-row").filter({ hasText: `${code.slice(0, 6)}-${code.slice(6, 11)}-${code.slice(11)}` }).click();
+  await staff.getByTestId("verify-confirm").click();
+  await expect(staff.getByText("Verified — the patient has been told the amount")).toBeVisible();
+  await staff.context().close();
+
+  await page.reload();
+  await page.getByTestId("pay-card").click();
+  await page.locator("#pay-fail").click();
+  await expect(page.getByTestId("pay-result")).toHaveAttribute("data-kind", "failed");
+  await page.getByTestId("pay-back-to-order").click();
+  await expect(page.getByText("Awaiting payment").first()).toBeVisible();
+  await page.getByTestId("pay-nagad").click();
+  await page.locator("#pay-success").click();
+  await expect(page.getByTestId("pay-result")).toHaveAttribute("data-kind", "success");
 });

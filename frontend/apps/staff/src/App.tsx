@@ -18,6 +18,10 @@ const OrderDetailPage = lazy(() => import("./pages/OrderDetailPage"));
 const PatientsPage = lazy(() => import("./pages/PatientsPage"));
 const CatalogPage = lazy(() => import("./pages/CatalogPage"));
 const StaffAdminPage = lazy(() => import("./pages/StaffAdminPage"));
+const TellerPage = lazy(() => import("./pages/TellerPage"));
+const CashierPage = lazy(() => import("./pages/CashierPage"));
+const RefundsPage = lazy(() => import("./pages/RefundsPage"));
+const ReconciliationPage = lazy(() => import("./pages/ReconciliationPage"));
 
 export function App() {
   const { me, loading, locked } = useSession();
@@ -40,6 +44,10 @@ export function App() {
             <Route path="/patients" element={<PatientsPage />} />
             <Route path="/admin/catalog" element={<CatalogPage />} />
             <Route path="/admin/staff" element={<StaffAdminPage />} />
+            <Route path="/teller" element={<TellerPage />} />
+            <Route path="/cashier" element={<CashierPage />} />
+            <Route path="/refunds" element={<RefundsPage />} />
+            <Route path="/reconciliation" element={<ReconciliationPage />} />
             {later.map((item) => (
               <Route key={item.key} path={item.path} element={<ComingSoonPage item={item} />} />
             ))}

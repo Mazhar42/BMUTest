@@ -19,3 +19,11 @@ def verification_sla_alerts() -> dict[str, int]:
     if n:
         log.warning("verification SLA breached", extra={"overdue_orders": n})
     return {"overdue": n}
+
+
+@job("expire_unpaid_orders")
+def expire_unpaid_orders() -> dict[str, int]:
+    with session_factory()() as db:
+        n = service.expire_unpaid(db)
+        db.commit()
+    return {"expired": n}

@@ -6,3 +6,6 @@ order_clarification: "বিএমইউ ল্যাব {code}: প্রেস
 order_rejected: "বিএমইউ ল্যাব {code}: অনুরোধটি গ্রহণ করা যায়নি। হেল্প ডেস্কে যোগাযোগ করুন।"
 walkin_created: "বিএমইউ ল্যাব কোড {code}। মোট ৳{amount}। এই কোড দিয়ে ব্যাংক বুথে টাকা দিন।"
 waiver_approved: "বিএমইউ ল্যাব {code}: ফি মওকুফ অনুমোদিত। প্রদেয় ৳{amount}।"
+payment_received_token: "বিএমইউ ল্যাব {code}: ৳{amount} পাওয়া গেছে। টোকেন {token}। নমুনা সংগ্রহে যান।"
+payment_received: "বিএমইউ ল্যাব {code}: ৳{amount} পাওয়া গেছে। ধন্যবাদ।"
+refund_completed: "বিএমইউ ল্যাব {code}: ৳{amount} ফেরত দেওয়া হয়েছে।"

@@ -1010,6 +1010,347 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/staff/payments/lookup/{ref}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Lookup
+         * @description Scan or type the code (any format). Shows name, code and amount, or a clear ALREADY_PAID /
+         *     NOT_VERIFIED / EXPIRED state.
+         */
+        get: operations["lookup_api_v1_staff_payments_lookup__ref__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/payments/receive/{ref}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Receive */
+        post: operations["receive_api_v1_staff_payments_receive__ref__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/tokens/{token_id}/print": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Print Token */
+        post: operations["print_token_api_v1_staff_tokens__token_id__print_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/payments/day-close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Day Close
+         * @description Count and total per teller for a business day (Asia/Dhaka). Tellers see their own; `payment.view`
+         *     holders can look at anyone's.
+         */
+        get: operations["day_close_api_v1_staff_payments_day_close_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/payments/by-order/{ref}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** By Order */
+        get: operations["by_order_api_v1_staff_payments_by_order__ref__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/payments/{payment_id}/refund": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request Refund */
+        post: operations["request_refund_api_v1_staff_payments__payment_id__refund_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/refunds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Refunds */
+        get: operations["list_refunds_api_v1_staff_refunds_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/refunds/{refund_id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve Refund */
+        post: operations["approve_refund_api_v1_staff_refunds__refund_id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/refunds/{refund_id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject Refund */
+        post: operations["reject_refund_api_v1_staff_refunds__refund_id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/reconciliation/mappings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mappings */
+        get: operations["mappings_api_v1_staff_reconciliation_mappings_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/reconciliation/imports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Imports */
+        get: operations["imports_api_v1_staff_reconciliation_imports_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/reconciliation/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import Statement */
+        post: operations["import_statement_api_v1_staff_reconciliation_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/reconciliation/exceptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Exception Lines */
+        get: operations["exception_lines_api_v1_staff_reconciliation_exceptions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/reconciliation/lines/{line_id}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Resolve Line */
+        post: operations["resolve_line_api_v1_staff_reconciliation_lines__line_id__resolve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/patient/orders/{order_id}/pay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pay
+         * @description Start an online payment for the amount due; the app redirects the patient to `redirect_url`.
+         */
+        post: operations["pay_api_v1_patient_orders__order_id__pay_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/patient/payments/{tran_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Status
+         * @description Polled by the result page. A payment that is still PENDING is re-checked with the gateway, so the
+         *     patient sees the outcome even if the IPN could not reach us.
+         */
+        get: operations["status_api_v1_patient_payments__tran_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/public/payments/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Config */
+        get: operations["config_api_v1_public_payments_config_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/public/payments/sslcommerz/ipn": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Sslcommerz Ipn
+         * @description Server-to-server notification. We call the Validation API with val_id before believing anything.
+         */
+        post: operations["sslcommerz_ipn_api_v1_public_payments_sslcommerz_ipn_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/public/payments/mock/{tran_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mock Page */
+        get: operations["mock_page_api_v1_public_payments_mock__tran_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1045,6 +1386,26 @@ export interface components {
         Body_import_csv_api_v1_staff_catalog_import__kind__post: {
             /** File */
             file: string;
+        };
+        /** Body_import_statement_api_v1_staff_reconciliation_import_post */
+        Body_import_statement_api_v1_staff_reconciliation_import_post: {
+            /** File */
+            file: string;
+            /** Bank Name */
+            bank_name: string;
+            /** Date Column */
+            date_column: string;
+            /** Amount Column */
+            amount_column: string;
+            /** Reference Column */
+            reference_column: string;
+            /** Receipt Column */
+            receipt_column?: string | null;
+            /**
+             * Date Format
+             * @default %d/%m/%Y
+             */
+            date_format: string;
         };
         /** Body_upload_api_v1_patient_prescriptions_post */
         Body_upload_api_v1_patient_prescriptions_post: {
@@ -1102,6 +1463,53 @@ export interface components {
          * @enum {string}
          */
         ContainerType: "EDTA" | "PLAIN" | "SST" | "FLUORIDE" | "CITRATE" | "HEPARIN" | "URINE_CUP" | "STOOL_CUP" | "BLOOD_CULTURE" | "SWAB_TUBE" | "OTHER";
+        /** DayCloseOut */
+        DayCloseOut: {
+            /**
+             * Day
+             * Format: date
+             */
+            day: string;
+            /**
+             * Staff Id
+             * Format: uuid
+             */
+            staff_id: string;
+            /** Staff Name */
+            staff_name: string;
+            /** Station */
+            station: string | null;
+            /** Count */
+            count: number;
+            /** Total */
+            total: number;
+            /** Refunded Total */
+            refunded_total: number;
+            /** Net */
+            net: number;
+            /** Rows */
+            rows: components["schemas"]["DayCloseRow"][];
+        };
+        /** DayCloseRow */
+        DayCloseRow: {
+            /**
+             * Payment Id
+             * Format: uuid
+             */
+            payment_id: string;
+            /** Order Code */
+            order_code: string | null;
+            /** Paid At */
+            paid_at: string | null;
+            /** Amount */
+            amount: number;
+            method: components["schemas"]["PaymentMethod"];
+            status: components["schemas"]["PaymentStatus"];
+            /** Receipt No */
+            receipt_no: string | null;
+            /** Token */
+            token: string | null;
+        };
         /** DepartmentBrief */
         DepartmentBrief: {
             /**
@@ -1255,6 +1663,31 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /** ImportOut */
+        ImportOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Bank Name */
+            bank_name: string;
+            /** Filename */
+            filename: string;
+            /** Rows */
+            rows: number;
+            /** Matched */
+            matched: number;
+            /** Exceptions */
+            exceptions: number;
+            /** Skipped */
+            skipped: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
         /** ImportResult */
         ImportResult: {
             /** Kind */
@@ -1290,6 +1723,41 @@ export interface components {
          * @enum {string}
          */
         ItemStatus: "ORDERED" | "COLLECTED" | "RECEIVED" | "RESULT_ENTERED" | "VERIFIED" | "RELEASED" | "RECOLLECT_REQUIRED" | "CANCELLED";
+        /**
+         * LineMatch
+         * @enum {string}
+         */
+        LineMatch: "MATCHED" | "UNMATCHED" | "AMOUNT_MISMATCH" | "DUPLICATE" | "RESOLVED";
+        /** LineOut */
+        LineOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Bank Name */
+            bank_name: string;
+            /** Line No */
+            line_no: number;
+            /** Txn Date */
+            txn_date: string | null;
+            /** Amount */
+            amount: number;
+            /** Reference */
+            reference: string;
+            /** Receipt No */
+            receipt_no: string | null;
+            /** Order Code */
+            order_code: string | null;
+            match: components["schemas"]["LineMatch"];
+            /** Note */
+            note: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
         /** LoginIn */
         LoginIn: {
             /** Username */
@@ -1315,6 +1783,61 @@ export interface components {
             /** Totp Secret */
             totp_secret?: string | null;
             me?: components["schemas"]["StaffMe"] | null;
+        };
+        /**
+         * LookupOut
+         * @description What a teller / cashier sees after scanning or typing a code.
+         */
+        LookupOut: {
+            /**
+             * Order Id
+             * Format: uuid
+             */
+            order_id: string;
+            /** Order Code */
+            order_code: string;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "RECEIVABLE" | "ALREADY_PAID" | "NOT_VERIFIED" | "EXPIRED" | "CLOSED";
+            status: components["schemas"]["OrderStatus"];
+            priority: components["schemas"]["OrderPriority"];
+            /** Patient Name */
+            patient_name: string;
+            /** Patient Age */
+            patient_age: number | null;
+            /** Tests */
+            tests: string[];
+            /** Subtotal */
+            subtotal: number;
+            /** Discount */
+            discount: number;
+            /** Total */
+            total: number;
+            /** Amount Due */
+            amount_due: number;
+            paid: components["schemas"]["PaidInfo"] | null;
+            token: components["schemas"]["TokenOut"] | null;
+            /** Receipt No Required */
+            receipt_no_required: boolean;
+            /** Counter Enabled */
+            counter_enabled: boolean;
+        };
+        /** MappingOut */
+        MappingOut: {
+            /** Bank Name */
+            bank_name: string;
+            /** Date Column */
+            date_column: string;
+            /** Amount Column */
+            amount_column: string;
+            /** Reference Column */
+            reference_column: string;
+            /** Receipt Column */
+            receipt_column: string | null;
+            /** Date Format */
+            date_format: string;
         };
         /** OrderItemOut */
         OrderItemOut: {
@@ -1419,6 +1942,24 @@ export interface components {
             /** Next Cursor */
             next_cursor: string | null;
         };
+        /** OrderPayments */
+        OrderPayments: {
+            /**
+             * Order Id
+             * Format: uuid
+             */
+            order_id: string;
+            /** Order Code */
+            order_code: string;
+            /** Patient Name */
+            patient_name: string;
+            /** Total */
+            total: number;
+            /** Payments */
+            payments: components["schemas"]["PaymentOut"][];
+            /** Refunds */
+            refunds: components["schemas"]["RefundOut"][];
+        };
         /**
          * OrderPriority
          * @enum {string}
@@ -1487,6 +2028,14 @@ export interface components {
             code: string;
             /** Lang */
             lang?: ("bn" | "en") | null;
+        };
+        /** PaidInfo */
+        PaidInfo: {
+            /** Paid At */
+            paid_at: string | null;
+            method: components["schemas"]["PaymentMethod"];
+            /** Amount */
+            amount: number;
         };
         /** ParameterIO */
         "ParameterIO-Input": {
@@ -1676,6 +2225,28 @@ export interface components {
             /** Hospital Patient No */
             hospital_patient_no?: string | null;
         };
+        /** PayIn */
+        PayIn: {
+            /**
+             * Method
+             * @enum {string}
+             */
+            method: "bkash" | "nagad" | "upay" | "rocket" | "card";
+        };
+        /** PayOut */
+        PayOut: {
+            /**
+             * Payment Id
+             * Format: uuid
+             */
+            payment_id: string;
+            /** Tran Id */
+            tran_id: string;
+            /** Redirect Url */
+            redirect_url: string;
+            /** Amount */
+            amount: number;
+        };
         /** PaymentBrief */
         PaymentBrief: {
             /**
@@ -1691,6 +2262,80 @@ export interface components {
             status: string;
             /** Paid At */
             paid_at: string | null;
+            /** Method Hint */
+            method_hint?: string | null;
+            /** Bank Receipt No */
+            bank_receipt_no?: string | null;
+        };
+        /**
+         * PaymentMethod
+         * @enum {string}
+         */
+        PaymentMethod: "GATEWAY" | "BANK_TELLER" | "COUNTER_CASH" | "WAIVER";
+        /** PaymentOut */
+        PaymentOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Order Id
+             * Format: uuid
+             */
+            order_id: string;
+            method: components["schemas"]["PaymentMethod"];
+            /** Provider */
+            provider: string | null;
+            /** Method Hint */
+            method_hint: string | null;
+            /** Amount */
+            amount: number;
+            status: components["schemas"]["PaymentStatus"];
+            /** Status Reason */
+            status_reason: string | null;
+            /** Gateway Tran Id */
+            gateway_tran_id: string | null;
+            /** Provider Txn Id */
+            provider_txn_id: string | null;
+            /** Bank Receipt No */
+            bank_receipt_no: string | null;
+            /** Received By Staff Id */
+            received_by_staff_id: string | null;
+            /** Station */
+            station: string | null;
+            /** Paid At */
+            paid_at: string | null;
+            /** Reconciliation Status */
+            reconciliation_status: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /**
+         * PaymentStatus
+         * @enum {string}
+         */
+        PaymentStatus: "INITIATED" | "PENDING" | "SUCCESS" | "FAILED" | "CANCELLED" | "EXPIRED" | "REFUND_PENDING" | "REFUNDED";
+        /** PaymentStatusOut */
+        PaymentStatusOut: {
+            /** Tran Id */
+            tran_id: string;
+            status: components["schemas"]["PaymentStatus"];
+            /** Reason */
+            reason: string | null;
+            /** Amount */
+            amount: number;
+            /**
+             * Order Id
+             * Format: uuid
+             */
+            order_id: string;
+            /** Order Code */
+            order_code: string | null;
+            order_status: components["schemas"]["OrderStatus"];
         };
         /** PinIn */
         PinIn: {
@@ -1774,6 +2419,20 @@ export interface components {
             /** Effective To */
             effective_to: string | null;
         };
+        /** PublicConfig */
+        PublicConfig: {
+            /** Online Payments */
+            online_payments: boolean;
+            /** Provider */
+            provider: string;
+            /** Methods */
+            methods: string[];
+        };
+        /**
+         * QueueName
+         * @enum {string}
+         */
+        QueueName: "A" | "W" | "P";
         /** RangeIO */
         "RangeIO-Input": {
             /** Sex */
@@ -1809,11 +2468,157 @@ export interface components {
             /** Reason */
             reason: string;
         };
+        /** ReceiptOut */
+        ReceiptOut: {
+            /**
+             * Payment Id
+             * Format: uuid
+             */
+            payment_id: string;
+            /** Order Code */
+            order_code: string;
+            /** Patient Name */
+            patient_name: string;
+            /** Amount */
+            amount: number;
+            method: components["schemas"]["PaymentMethod"];
+            /**
+             * Paid At
+             * Format: date-time
+             */
+            paid_at: string;
+            /** Receipt No */
+            receipt_no: string | null;
+            token: components["schemas"]["TokenOut"];
+        };
+        /** ReceiveIn */
+        ReceiveIn: {
+            /**
+             * Method
+             * @default BANK_TELLER
+             * @enum {string}
+             */
+            method: "BANK_TELLER" | "COUNTER_CASH";
+            /** Receipt No */
+            receipt_no?: string | null;
+        };
+        /** RefundApproveIn */
+        RefundApproveIn: {
+            mode: components["schemas"]["RefundMode"];
+            /** Manual Reference */
+            manual_reference?: string | null;
+        };
+        /**
+         * RefundMode
+         * @enum {string}
+         */
+        RefundMode: "PROVIDER" | "MANUAL";
+        /** RefundOut */
+        RefundOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Payment Id
+             * Format: uuid
+             */
+            payment_id: string;
+            /**
+             * Order Id
+             * Format: uuid
+             */
+            order_id: string;
+            /** Amount */
+            amount: number;
+            /** Reason */
+            reason: string;
+            status: components["schemas"]["RefundStatus"];
+            /** Status Reason */
+            status_reason: string | null;
+            mode: components["schemas"]["RefundMode"] | null;
+            /** Requested By */
+            requested_by: string | null;
+            /** Decided By */
+            decided_by: string | null;
+            /** Manual Reference */
+            manual_reference: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** RefundRejectIn */
+        RefundRejectIn: {
+            /** Reason */
+            reason: string;
+        };
+        /** RefundRequestIn */
+        RefundRequestIn: {
+            /** Reason */
+            reason: string;
+        };
+        /** RefundRow */
+        RefundRow: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Payment Id
+             * Format: uuid
+             */
+            payment_id: string;
+            /**
+             * Order Id
+             * Format: uuid
+             */
+            order_id: string;
+            /** Amount */
+            amount: number;
+            /** Reason */
+            reason: string;
+            status: components["schemas"]["RefundStatus"];
+            /** Status Reason */
+            status_reason: string | null;
+            mode: components["schemas"]["RefundMode"] | null;
+            /** Requested By */
+            requested_by: string | null;
+            /** Decided By */
+            decided_by: string | null;
+            /** Manual Reference */
+            manual_reference: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Order Code */
+            order_code: string | null;
+            /** Patient Name */
+            patient_name: string;
+            payment_method: components["schemas"]["PaymentMethod"];
+            /** Provider */
+            provider: string | null;
+        };
+        /**
+         * RefundStatus
+         * @enum {string}
+         */
+        RefundStatus: "REQUESTED" | "APPROVED" | "COMPLETED" | "REJECTED" | "FAILED";
         /**
          * Relation
          * @enum {string}
          */
         Relation: "SELF" | "SPOUSE" | "CHILD" | "PARENT" | "SIBLING" | "OTHER";
+        /** ResolveIn */
+        ResolveIn: {
+            /** Note */
+            note: string;
+        };
         /**
          * ResultMode
          * @enum {string}
@@ -2301,6 +3106,25 @@ export interface components {
             /** Note */
             note?: string | null;
         };
+        /** TokenOut */
+        TokenOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Label */
+            label: string;
+            queue: components["schemas"]["QueueName"];
+            /** Number */
+            number: number;
+            status: components["schemas"]["TokenStatus"];
+        };
+        /**
+         * TokenStatus
+         * @enum {string}
+         */
+        TokenStatus: "ISSUED" | "CALLED" | "SERVED" | "NO_SHOW" | "CANCELLED";
         /** TotpIn */
         TotpIn: {
             /** Challenge */
@@ -4766,6 +5590,626 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["OrderOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lookup_api_v1_staff_payments_lookup__ref__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                ref: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LookupOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    receive_api_v1_staff_payments_receive__ref__post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                ref: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReceiveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReceiptOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    print_token_api_v1_staff_tokens__token_id__print_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                token_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    day_close_api_v1_staff_payments_day_close_get: {
+        parameters: {
+            query?: {
+                day?: string | null;
+                staff_id?: string | null;
+            };
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DayCloseOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    by_order_api_v1_staff_payments_by_order__ref__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                ref: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OrderPayments"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_refund_api_v1_staff_payments__payment_id__refund_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                payment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RefundRequestIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_refunds_api_v1_staff_refunds_get: {
+        parameters: {
+            query?: {
+                status?: components["schemas"]["RefundStatus"];
+            };
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundRow"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_refund_api_v1_staff_refunds__refund_id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                refund_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RefundApproveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reject_refund_api_v1_staff_refunds__refund_id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                refund_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RefundRejectIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mappings_api_v1_staff_reconciliation_mappings_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MappingOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    imports_api_v1_staff_reconciliation_imports_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_statement_api_v1_staff_reconciliation_import_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_import_statement_api_v1_staff_reconciliation_import_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    exception_lines_api_v1_staff_reconciliation_exceptions_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LineOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolve_line_api_v1_staff_reconciliation_lines__line_id__resolve_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                line_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LineOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pay_api_v1_patient_orders__order_id__pay_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                order_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PayIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PayOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    status_api_v1_patient_payments__tran_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                tran_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentStatusOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    config_api_v1_public_payments_config_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicConfig"];
+                };
+            };
+        };
+    };
+    sslcommerz_ipn_api_v1_public_payments_sslcommerz_ipn_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": string;
+                };
+            };
+        };
+    };
+    mock_page_api_v1_public_payments_mock__tran_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tran_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
                 };
             };
             /** @description Validation Error */

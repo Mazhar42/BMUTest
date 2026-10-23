@@ -16,7 +16,12 @@
     "REFUND_PENDING": "রিফান্ড প্রক্রিয়াধীন",
     "REFUNDED": "রিফান্ড হয়েছে"
   },
-  "waiverStatus": { "REQUESTED": "অনুরোধ করা হয়েছে", "APPROVED": "অনুমোদিত", "DECLINED": "নামঞ্জুর", "WITHDRAWN": "প্রত্যাহার" },
+  "waiverStatus": {
+    "REQUESTED": "অনুরোধ করা হয়েছে",
+    "APPROVED": "অনুমোদিত",
+    "DECLINED": "নামঞ্জুর",
+    "WITHDRAWN": "প্রত্যাহার"
+  },
   "feeCategory": {
     "GENERAL": "সাধারণ",
     "FREE": "বিনামূল্যে",
@@ -24,7 +29,12 @@
     "STAFF": "স্টাফ",
     "CONCESSION": "ছাড়"
   },
-  "priority": { "NORMAL": "সাধারণ", "ELDERLY": "বয়স্ক", "DISABLED": "প্রতিবন্ধী", "EMERGENCY": "জরুরি" },
+  "priority": {
+    "NORMAL": "সাধারণ",
+    "ELDERLY": "বয়স্ক",
+    "DISABLED": "প্রতিবন্ধী",
+    "EMERGENCY": "জরুরি"
+  },
   "channel": {
     "APP": "অ্যাপ",
     "WEB": "ওয়েব",
@@ -42,7 +52,13 @@
     "SIBLING": "ভাই / বোন",
     "OTHER": "অন্যান্য"
   },
-  "specimen": { "BLOOD": "রক্ত", "URINE": "প্রস্রাব", "STOOL": "মল", "SWAB": "সোয়াব", "OTHER": "অন্যান্য" },
+  "specimen": {
+    "BLOOD": "রক্ত",
+    "URINE": "প্রস্রাব",
+    "STOOL": "মল",
+    "SWAB": "সোয়াব",
+    "OTHER": "অন্যান্য"
+  },
   "container": {
     "EDTA": "ইডিটিএ (বেগুনি)",
     "PLAIN": "প্লেইন (লাল)",
@@ -56,14 +72,50 @@
     "SWAB_TUBE": "সোয়াব টিউব",
     "OTHER": "অন্যান্য"
   },
-  "resource": { "BLOOD_COLLECTION": "রক্ত সংগ্রহ", "URINE": "প্রস্রাব / মল", "SPECIAL": "বিশেষ" },
-  "resultMode": { "STRUCTURED": "কাঠামোবদ্ধ এন্ট্রি", "PDF_UPLOAD": "পিডিএফ আপলোড" },
-  "paymentMethod": { "GATEWAY": "অনলাইন", "BANK_TELLER": "ব্যাংক বুথ", "COUNTER_CASH": "কাউন্টারে নগদ", "WAIVER": "মওকুফ" },
+  "resource": {
+    "BLOOD_COLLECTION": "রক্ত সংগ্রহ",
+    "URINE": "প্রস্রাব / মল",
+    "SPECIAL": "বিশেষ"
+  },
+  "resultMode": {
+    "STRUCTURED": "কাঠামোবদ্ধ এন্ট্রি",
+    "PDF_UPLOAD": "পিডিএফ আপলোড"
+  },
+  "paymentMethod": {
+    "GATEWAY": "অনলাইন",
+    "BANK_TELLER": "ব্যাংক বুথ",
+    "COUNTER_CASH": "কাউন্টারে নগদ",
+    "WAIVER": "মওকুফ"
+  },
   "timeline": {
     "submitted": "অনুরোধ জমা হয়েছে",
     "verified": "পরীক্ষা যাচাই",
     "paid": "পেমেন্ট",
     "collected": "নমুনা সংগ্রহ",
     "reported": "রিপোর্ট প্রস্তুত"
+  },
+  "paymentStatus": {
+    "INITIATED": "শুরু হয়েছে",
+    "PENDING": "অপেক্ষমাণ",
+    "SUCCESS": "পরিশোধিত",
+    "FAILED": "ব্যর্থ",
+    "CANCELLED": "বাতিল",
+    "EXPIRED": "মেয়াদোত্তীর্ণ",
+    "REFUND_PENDING": "রিফান্ড প্রক্রিয়াধীন",
+    "REFUNDED": "ফেরত দেওয়া হয়েছে"
+  },
+  "refundStatus": {
+    "REQUESTED": "অনুমোদনের অপেক্ষায়",
+    "APPROVED": "অনুমোদিত",
+    "COMPLETED": "ফেরত দেওয়া হয়েছে",
+    "REJECTED": "নামঞ্জুর",
+    "FAILED": "গেটওয়ে ব্যর্থ"
+  },
+  "lineMatch": {
+    "MATCHED": "মিলেছে",
+    "UNMATCHED": "কোনো পেমেন্ট পাওয়া যায়নি",
+    "AMOUNT_MISMATCH": "টাকার পরিমাণ আলাদা",
+    "DUPLICATE": "আগেই মিলেছে",
+    "RESOLVED": "সমাধান হয়েছে"
   }
 }

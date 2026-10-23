@@ -4142,6 +4142,1100 @@
      }
     }
    }
+  },
+  "/api/v1/staff/payments/lookup/{ref}": {
+   "get": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Lookup",
+    "description": "Scan or type the code (any format). Shows name, code and amount, or a clear ALREADY_PAID /\nNOT_VERIFIED / EXPIRED state.",
+    "operationId": "lookup_api_v1_staff_payments_lookup__ref__get",
+    "parameters": [
+     {
+      "name": "ref",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Ref"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/LookupOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/payments/receive/{ref}": {
+   "post": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Receive",
+    "operationId": "receive_api_v1_staff_payments_receive__ref__post",
+    "parameters": [
+     {
+      "name": "ref",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Ref"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReceiveIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReceiptOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/tokens/{token_id}/print": {
+   "post": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Print Token",
+    "operationId": "print_token_api_v1_staff_tokens__token_id__print_post",
+    "parameters": [
+     {
+      "name": "token_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Token Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/pdf": {}
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/payments/day-close": {
+   "get": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Day Close",
+    "description": "Count and total per teller for a business day (Asia/Dhaka). Tellers see their own; `payment.view`\nholders can look at anyone's.",
+    "operationId": "day_close_api_v1_staff_payments_day_close_get",
+    "parameters": [
+     {
+      "name": "day",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Day"
+      }
+     },
+     {
+      "name": "staff_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "uuid"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Staff Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DayCloseOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/payments/by-order/{ref}": {
+   "get": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "By Order",
+    "operationId": "by_order_api_v1_staff_payments_by_order__ref__get",
+    "parameters": [
+     {
+      "name": "ref",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Ref"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/OrderPayments"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/payments/{payment_id}/refund": {
+   "post": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Request Refund",
+    "operationId": "request_refund_api_v1_staff_payments__payment_id__refund_post",
+    "parameters": [
+     {
+      "name": "payment_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Payment Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RefundRequestIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RefundOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/refunds": {
+   "get": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "List Refunds",
+    "operationId": "list_refunds_api_v1_staff_refunds_get",
+    "parameters": [
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "$ref": "#/components/schemas/RefundStatus",
+       "default": "REQUESTED"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/RefundRow"
+         },
+         "title": "Response List Refunds Api V1 Staff Refunds Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/refunds/{refund_id}/approve": {
+   "post": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Approve Refund",
+    "operationId": "approve_refund_api_v1_staff_refunds__refund_id__approve_post",
+    "parameters": [
+     {
+      "name": "refund_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Refund Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RefundApproveIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RefundOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/refunds/{refund_id}/reject": {
+   "post": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Reject Refund",
+    "operationId": "reject_refund_api_v1_staff_refunds__refund_id__reject_post",
+    "parameters": [
+     {
+      "name": "refund_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Refund Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RefundRejectIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/RefundOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/reconciliation/mappings": {
+   "get": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Mappings",
+    "operationId": "mappings_api_v1_staff_reconciliation_mappings_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/MappingOut"
+         },
+         "title": "Response Mappings Api V1 Staff Reconciliation Mappings Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/reconciliation/imports": {
+   "get": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Imports",
+    "operationId": "imports_api_v1_staff_reconciliation_imports_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/ImportOut"
+         },
+         "title": "Response Imports Api V1 Staff Reconciliation Imports Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/reconciliation/import": {
+   "post": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Import Statement",
+    "operationId": "import_statement_api_v1_staff_reconciliation_import_post",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_import_statement_api_v1_staff_reconciliation_import_post"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ImportOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/reconciliation/exceptions": {
+   "get": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Exception Lines",
+    "operationId": "exception_lines_api_v1_staff_reconciliation_exceptions_get",
+    "parameters": [
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/LineOut"
+         },
+         "title": "Response Exception Lines Api V1 Staff Reconciliation Exceptions Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/staff/reconciliation/lines/{line_id}/resolve": {
+   "post": {
+    "tags": [
+     "staff-payments"
+    ],
+    "summary": "Resolve Line",
+    "operationId": "resolve_line_api_v1_staff_reconciliation_lines__line_id__resolve_post",
+    "parameters": [
+     {
+      "name": "line_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Line Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ResolveIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/LineOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/orders/{order_id}/pay": {
+   "post": {
+    "tags": [
+     "patient-payments"
+    ],
+    "summary": "Pay",
+    "description": "Start an online payment for the amount due; the app redirects the patient to `redirect_url`.",
+    "operationId": "pay_api_v1_patient_orders__order_id__pay_post",
+    "parameters": [
+     {
+      "name": "order_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "uuid",
+       "title": "Order Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PayIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PayOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/patient/payments/{tran_id}": {
+   "get": {
+    "tags": [
+     "patient-payments"
+    ],
+    "summary": "Status",
+    "description": "Polled by the result page. A payment that is still PENDING is re-checked with the gateway, so the\npatient sees the outcome even if the IPN could not reach us.",
+    "operationId": "status_api_v1_patient_payments__tran_id__get",
+    "parameters": [
+     {
+      "name": "tran_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Tran Id"
+      }
+     },
+     {
+      "name": "authorization",
+      "in": "header",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Authorization"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PaymentStatusOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/public/payments/config": {
+   "get": {
+    "tags": [
+     "public-payments"
+    ],
+    "summary": "Config",
+    "operationId": "config_api_v1_public_payments_config_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PublicConfig"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/public/payments/sslcommerz/ipn": {
+   "post": {
+    "tags": [
+     "public-payments"
+    ],
+    "summary": "Sslcommerz Ipn",
+    "description": "Server-to-server notification. We call the Validation API with val_id before believing anything.",
+    "operationId": "sslcommerz_ipn_api_v1_public_payments_sslcommerz_ipn_post",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "text/plain": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/v1/public/payments/mock/{tran_id}": {
+   "get": {
+    "tags": [
+     "public-payments"
+    ],
+    "summary": "Mock Page",
+    "operationId": "mock_page_api_v1_public_payments_mock__tran_id__get",
+    "parameters": [
+     {
+      "name": "tran_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Tran Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "text/html": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
   }
  },
  "components": {
@@ -4225,6 +5319,66 @@
      "file"
     ],
     "title": "Body_import_csv_api_v1_staff_catalog_import__kind__post"
+   },
+   "Body_import_statement_api_v1_staff_reconciliation_import_post": {
+    "properties": {
+     "file": {
+      "type": "string",
+      "contentMediaType": "application/octet-stream",
+      "title": "File"
+     },
+     "bank_name": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 2,
+      "title": "Bank Name"
+     },
+     "date_column": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Date Column"
+     },
+     "amount_column": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Amount Column"
+     },
+     "reference_column": {
+      "type": "string",
+      "maxLength": 80,
+      "minLength": 1,
+      "title": "Reference Column"
+     },
+     "receipt_column": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 80
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Receipt Column"
+     },
+     "date_format": {
+      "type": "string",
+      "maxLength": 20,
+      "title": "Date Format",
+      "default": "%d/%m/%Y"
+     }
+    },
+    "type": "object",
+    "required": [
+     "file",
+     "bank_name",
+     "date_column",
+     "amount_column",
+     "reference_column"
+    ],
+    "title": "Body_import_statement_api_v1_staff_reconciliation_import_post"
    },
    "Body_upload_api_v1_patient_prescriptions_post": {
     "properties": {
@@ -4395,6 +5549,147 @@
      "OTHER"
     ],
     "title": "ContainerType"
+   },
+   "DayCloseOut": {
+    "properties": {
+     "day": {
+      "type": "string",
+      "format": "date",
+      "title": "Day"
+     },
+     "staff_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Staff Id"
+     },
+     "staff_name": {
+      "type": "string",
+      "title": "Staff Name"
+     },
+     "station": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Station"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "refunded_total": {
+      "type": "integer",
+      "title": "Refunded Total"
+     },
+     "net": {
+      "type": "integer",
+      "title": "Net"
+     },
+     "rows": {
+      "items": {
+       "$ref": "#/components/schemas/DayCloseRow"
+      },
+      "type": "array",
+      "title": "Rows"
+     }
+    },
+    "type": "object",
+    "required": [
+     "day",
+     "staff_id",
+     "staff_name",
+     "station",
+     "count",
+     "total",
+     "refunded_total",
+     "net",
+     "rows"
+    ],
+    "title": "DayCloseOut"
+   },
+   "DayCloseRow": {
+    "properties": {
+     "payment_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Payment Id"
+     },
+     "order_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Order Code"
+     },
+     "paid_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Paid At"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     },
+     "method": {
+      "$ref": "#/components/schemas/PaymentMethod"
+     },
+     "status": {
+      "$ref": "#/components/schemas/PaymentStatus"
+     },
+     "receipt_no": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Receipt No"
+     },
+     "token": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Token"
+     }
+    },
+    "type": "object",
+    "required": [
+     "payment_id",
+     "order_code",
+     "paid_at",
+     "amount",
+     "method",
+     "status",
+     "receipt_no",
+     "token"
+    ],
+    "title": "DayCloseRow"
    },
    "DepartmentBrief": {
     "properties": {
@@ -4751,6 +6046,56 @@
     "type": "object",
     "title": "HTTPValidationError"
    },
+   "ImportOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "bank_name": {
+      "type": "string",
+      "title": "Bank Name"
+     },
+     "filename": {
+      "type": "string",
+      "title": "Filename"
+     },
+     "rows": {
+      "type": "integer",
+      "title": "Rows"
+     },
+     "matched": {
+      "type": "integer",
+      "title": "Matched"
+     },
+     "exceptions": {
+      "type": "integer",
+      "title": "Exceptions"
+     },
+     "skipped": {
+      "type": "integer",
+      "title": "Skipped"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "bank_name",
+     "filename",
+     "rows",
+     "matched",
+     "exceptions",
+     "skipped",
+     "created_at"
+    ],
+    "title": "ImportOut"
+   },
    "ImportResult": {
     "properties": {
      "kind": {
@@ -4805,6 +6150,110 @@
      "CANCELLED"
     ],
     "title": "ItemStatus"
+   },
+   "LineMatch": {
+    "type": "string",
+    "enum": [
+     "MATCHED",
+     "UNMATCHED",
+     "AMOUNT_MISMATCH",
+     "DUPLICATE",
+     "RESOLVED"
+    ],
+    "title": "LineMatch"
+   },
+   "LineOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "bank_name": {
+      "type": "string",
+      "title": "Bank Name"
+     },
+     "line_no": {
+      "type": "integer",
+      "title": "Line No"
+     },
+     "txn_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Txn Date"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     },
+     "reference": {
+      "type": "string",
+      "title": "Reference"
+     },
+     "receipt_no": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Receipt No"
+     },
+     "order_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Order Code"
+     },
+     "match": {
+      "$ref": "#/components/schemas/LineMatch"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "bank_name",
+     "line_no",
+     "txn_date",
+     "amount",
+     "reference",
+     "receipt_no",
+     "order_code",
+     "match",
+     "note",
+     "created_at"
+    ],
+    "title": "LineOut"
    },
    "LoginIn": {
     "properties": {
@@ -4911,6 +6360,168 @@
      "status"
     ],
     "title": "LoginOut"
+   },
+   "LookupOut": {
+    "properties": {
+     "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id"
+     },
+     "order_code": {
+      "type": "string",
+      "title": "Order Code"
+     },
+     "state": {
+      "type": "string",
+      "enum": [
+       "RECEIVABLE",
+       "ALREADY_PAID",
+       "NOT_VERIFIED",
+       "EXPIRED",
+       "CLOSED"
+      ],
+      "title": "State"
+     },
+     "status": {
+      "$ref": "#/components/schemas/OrderStatus"
+     },
+     "priority": {
+      "$ref": "#/components/schemas/OrderPriority"
+     },
+     "patient_name": {
+      "type": "string",
+      "title": "Patient Name"
+     },
+     "patient_age": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Patient Age"
+     },
+     "tests": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Tests"
+     },
+     "subtotal": {
+      "type": "integer",
+      "title": "Subtotal"
+     },
+     "discount": {
+      "type": "integer",
+      "title": "Discount"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "amount_due": {
+      "type": "integer",
+      "title": "Amount Due"
+     },
+     "paid": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/PaidInfo"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "token": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/TokenOut"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "receipt_no_required": {
+      "type": "boolean",
+      "title": "Receipt No Required"
+     },
+     "counter_enabled": {
+      "type": "boolean",
+      "title": "Counter Enabled"
+     }
+    },
+    "type": "object",
+    "required": [
+     "order_id",
+     "order_code",
+     "state",
+     "status",
+     "priority",
+     "patient_name",
+     "patient_age",
+     "tests",
+     "subtotal",
+     "discount",
+     "total",
+     "amount_due",
+     "paid",
+     "token",
+     "receipt_no_required",
+     "counter_enabled"
+    ],
+    "title": "LookupOut",
+    "description": "What a teller / cashier sees after scanning or typing a code."
+   },
+   "MappingOut": {
+    "properties": {
+     "bank_name": {
+      "type": "string",
+      "title": "Bank Name"
+     },
+     "date_column": {
+      "type": "string",
+      "title": "Date Column"
+     },
+     "amount_column": {
+      "type": "string",
+      "title": "Amount Column"
+     },
+     "reference_column": {
+      "type": "string",
+      "title": "Reference Column"
+     },
+     "receipt_column": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Receipt Column"
+     },
+     "date_format": {
+      "type": "string",
+      "title": "Date Format"
+     }
+    },
+    "type": "object",
+    "required": [
+     "bank_name",
+     "date_column",
+     "amount_column",
+     "reference_column",
+     "receipt_column",
+     "date_format"
+    ],
+    "title": "MappingOut"
    },
    "OrderItemOut": {
     "properties": {
@@ -5256,6 +6867,51 @@
     ],
     "title": "OrderPage"
    },
+   "OrderPayments": {
+    "properties": {
+     "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id"
+     },
+     "order_code": {
+      "type": "string",
+      "title": "Order Code"
+     },
+     "patient_name": {
+      "type": "string",
+      "title": "Patient Name"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "payments": {
+      "items": {
+       "$ref": "#/components/schemas/PaymentOut"
+      },
+      "type": "array",
+      "title": "Payments"
+     },
+     "refunds": {
+      "items": {
+       "$ref": "#/components/schemas/RefundOut"
+      },
+      "type": "array",
+      "title": "Refunds"
+     }
+    },
+    "type": "object",
+    "required": [
+     "order_id",
+     "order_code",
+     "patient_name",
+     "total",
+     "payments",
+     "refunds"
+    ],
+    "title": "OrderPayments"
+   },
    "OrderPriority": {
     "type": "string",
     "enum": [
@@ -5494,6 +7150,36 @@
      "code"
     ],
     "title": "OtpVerifyIn"
+   },
+   "PaidInfo": {
+    "properties": {
+     "paid_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Paid At"
+     },
+     "method": {
+      "$ref": "#/components/schemas/PaymentMethod"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     }
+    },
+    "type": "object",
+    "required": [
+     "paid_at",
+     "method",
+     "amount"
+    ],
+    "title": "PaidInfo"
    },
    "ParameterIO-Input": {
     "properties": {
@@ -6133,6 +7819,55 @@
     "type": "object",
     "title": "PatientUpdate"
    },
+   "PayIn": {
+    "properties": {
+     "method": {
+      "type": "string",
+      "enum": [
+       "bkash",
+       "nagad",
+       "upay",
+       "rocket",
+       "card"
+      ],
+      "title": "Method"
+     }
+    },
+    "type": "object",
+    "required": [
+     "method"
+    ],
+    "title": "PayIn"
+   },
+   "PayOut": {
+    "properties": {
+     "payment_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Payment Id"
+     },
+     "tran_id": {
+      "type": "string",
+      "title": "Tran Id"
+     },
+     "redirect_url": {
+      "type": "string",
+      "title": "Redirect Url"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     }
+    },
+    "type": "object",
+    "required": [
+     "payment_id",
+     "tran_id",
+     "redirect_url",
+     "amount"
+    ],
+    "title": "PayOut"
+   },
    "PaymentBrief": {
     "properties": {
      "id": {
@@ -6163,6 +7898,28 @@
        }
       ],
       "title": "Paid At"
+     },
+     "method_hint": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Method Hint"
+     },
+     "bank_receipt_no": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Bank Receipt No"
      }
     },
     "type": "object",
@@ -6174,6 +7931,240 @@
      "paid_at"
     ],
     "title": "PaymentBrief"
+   },
+   "PaymentMethod": {
+    "type": "string",
+    "enum": [
+     "GATEWAY",
+     "BANK_TELLER",
+     "COUNTER_CASH",
+     "WAIVER"
+    ],
+    "title": "PaymentMethod"
+   },
+   "PaymentOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id"
+     },
+     "method": {
+      "$ref": "#/components/schemas/PaymentMethod"
+     },
+     "provider": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Provider"
+     },
+     "method_hint": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Method Hint"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     },
+     "status": {
+      "$ref": "#/components/schemas/PaymentStatus"
+     },
+     "status_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status Reason"
+     },
+     "gateway_tran_id": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gateway Tran Id"
+     },
+     "provider_txn_id": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Provider Txn Id"
+     },
+     "bank_receipt_no": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Bank Receipt No"
+     },
+     "received_by_staff_id": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Received By Staff Id"
+     },
+     "station": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Station"
+     },
+     "paid_at": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Paid At"
+     },
+     "reconciliation_status": {
+      "type": "string",
+      "title": "Reconciliation Status"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "order_id",
+     "method",
+     "provider",
+     "method_hint",
+     "amount",
+     "status",
+     "status_reason",
+     "gateway_tran_id",
+     "provider_txn_id",
+     "bank_receipt_no",
+     "received_by_staff_id",
+     "station",
+     "paid_at",
+     "reconciliation_status",
+     "created_at"
+    ],
+    "title": "PaymentOut"
+   },
+   "PaymentStatus": {
+    "type": "string",
+    "enum": [
+     "INITIATED",
+     "PENDING",
+     "SUCCESS",
+     "FAILED",
+     "CANCELLED",
+     "EXPIRED",
+     "REFUND_PENDING",
+     "REFUNDED"
+    ],
+    "title": "PaymentStatus"
+   },
+   "PaymentStatusOut": {
+    "properties": {
+     "tran_id": {
+      "type": "string",
+      "title": "Tran Id"
+     },
+     "status": {
+      "$ref": "#/components/schemas/PaymentStatus"
+     },
+     "reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Reason"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     },
+     "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id"
+     },
+     "order_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Order Code"
+     },
+     "order_status": {
+      "$ref": "#/components/schemas/OrderStatus"
+     }
+    },
+    "type": "object",
+    "required": [
+     "tran_id",
+     "status",
+     "reason",
+     "amount",
+     "order_id",
+     "order_code",
+     "order_status"
+    ],
+    "title": "PaymentStatusOut"
    },
    "PinIn": {
     "properties": {
@@ -6373,6 +8364,41 @@
     ],
     "title": "PriceOut"
    },
+   "PublicConfig": {
+    "properties": {
+     "online_payments": {
+      "type": "boolean",
+      "title": "Online Payments"
+     },
+     "provider": {
+      "type": "string",
+      "title": "Provider"
+     },
+     "methods": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Methods"
+     }
+    },
+    "type": "object",
+    "required": [
+     "online_payments",
+     "provider",
+     "methods"
+    ],
+    "title": "PublicConfig"
+   },
+   "QueueName": {
+    "type": "string",
+    "enum": [
+     "A",
+     "W",
+     "P"
+    ],
+    "title": "QueueName"
+   },
    "RangeIO-Input": {
     "properties": {
      "sex": {
@@ -6544,6 +8570,408 @@
     ],
     "title": "ReasonIn"
    },
+   "ReceiptOut": {
+    "properties": {
+     "payment_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Payment Id"
+     },
+     "order_code": {
+      "type": "string",
+      "title": "Order Code"
+     },
+     "patient_name": {
+      "type": "string",
+      "title": "Patient Name"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     },
+     "method": {
+      "$ref": "#/components/schemas/PaymentMethod"
+     },
+     "paid_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Paid At"
+     },
+     "receipt_no": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Receipt No"
+     },
+     "token": {
+      "$ref": "#/components/schemas/TokenOut"
+     }
+    },
+    "type": "object",
+    "required": [
+     "payment_id",
+     "order_code",
+     "patient_name",
+     "amount",
+     "method",
+     "paid_at",
+     "receipt_no",
+     "token"
+    ],
+    "title": "ReceiptOut"
+   },
+   "ReceiveIn": {
+    "properties": {
+     "method": {
+      "type": "string",
+      "enum": [
+       "BANK_TELLER",
+       "COUNTER_CASH"
+      ],
+      "title": "Method",
+      "default": "BANK_TELLER"
+     },
+     "receipt_no": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 40
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Receipt No"
+     }
+    },
+    "type": "object",
+    "title": "ReceiveIn"
+   },
+   "RefundApproveIn": {
+    "properties": {
+     "mode": {
+      "$ref": "#/components/schemas/RefundMode"
+     },
+     "manual_reference": {
+      "anyOf": [
+       {
+        "type": "string",
+        "maxLength": 80
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Manual Reference"
+     }
+    },
+    "type": "object",
+    "required": [
+     "mode"
+    ],
+    "title": "RefundApproveIn"
+   },
+   "RefundMode": {
+    "type": "string",
+    "enum": [
+     "PROVIDER",
+     "MANUAL"
+    ],
+    "title": "RefundMode"
+   },
+   "RefundOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "payment_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Payment Id"
+     },
+     "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     },
+     "reason": {
+      "type": "string",
+      "title": "Reason"
+     },
+     "status": {
+      "$ref": "#/components/schemas/RefundStatus"
+     },
+     "status_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status Reason"
+     },
+     "mode": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/RefundMode"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "requested_by": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Requested By"
+     },
+     "decided_by": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Decided By"
+     },
+     "manual_reference": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Manual Reference"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "payment_id",
+     "order_id",
+     "amount",
+     "reason",
+     "status",
+     "status_reason",
+     "mode",
+     "requested_by",
+     "decided_by",
+     "manual_reference",
+     "created_at"
+    ],
+    "title": "RefundOut"
+   },
+   "RefundRejectIn": {
+    "properties": {
+     "reason": {
+      "type": "string",
+      "maxLength": 500,
+      "minLength": 3,
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "reason"
+    ],
+    "title": "RefundRejectIn"
+   },
+   "RefundRequestIn": {
+    "properties": {
+     "reason": {
+      "type": "string",
+      "maxLength": 500,
+      "minLength": 3,
+      "title": "Reason"
+     }
+    },
+    "type": "object",
+    "required": [
+     "reason"
+    ],
+    "title": "RefundRequestIn"
+   },
+   "RefundRow": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "payment_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Payment Id"
+     },
+     "order_id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Order Id"
+     },
+     "amount": {
+      "type": "integer",
+      "title": "Amount"
+     },
+     "reason": {
+      "type": "string",
+      "title": "Reason"
+     },
+     "status": {
+      "$ref": "#/components/schemas/RefundStatus"
+     },
+     "status_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status Reason"
+     },
+     "mode": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/RefundMode"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "requested_by": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Requested By"
+     },
+     "decided_by": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "uuid"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Decided By"
+     },
+     "manual_reference": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Manual Reference"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     },
+     "order_code": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Order Code"
+     },
+     "patient_name": {
+      "type": "string",
+      "title": "Patient Name"
+     },
+     "payment_method": {
+      "$ref": "#/components/schemas/PaymentMethod"
+     },
+     "provider": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Provider"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "payment_id",
+     "order_id",
+     "amount",
+     "reason",
+     "status",
+     "status_reason",
+     "mode",
+     "requested_by",
+     "decided_by",
+     "manual_reference",
+     "created_at",
+     "order_code",
+     "patient_name",
+     "payment_method",
+     "provider"
+    ],
+    "title": "RefundRow"
+   },
+   "RefundStatus": {
+    "type": "string",
+    "enum": [
+     "REQUESTED",
+     "APPROVED",
+     "COMPLETED",
+     "REJECTED",
+     "FAILED"
+    ],
+    "title": "RefundStatus"
+   },
    "Relation": {
     "type": "string",
     "enum": [
@@ -6555,6 +8983,21 @@
      "OTHER"
     ],
     "title": "Relation"
+   },
+   "ResolveIn": {
+    "properties": {
+     "note": {
+      "type": "string",
+      "maxLength": 500,
+      "minLength": 3,
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "note"
+    ],
+    "title": "ResolveIn"
    },
    "ResultMode": {
     "type": "string",
@@ -8229,6 +10672,49 @@
      "state"
     ],
     "title": "TimelineStep"
+   },
+   "TokenOut": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "format": "uuid",
+      "title": "Id"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "queue": {
+      "$ref": "#/components/schemas/QueueName"
+     },
+     "number": {
+      "type": "integer",
+      "title": "Number"
+     },
+     "status": {
+      "$ref": "#/components/schemas/TokenStatus"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "label",
+     "queue",
+     "number",
+     "status"
+    ],
+    "title": "TokenOut"
+   },
+   "TokenStatus": {
+    "type": "string",
+    "enum": [
+     "ISSUED",
+     "CALLED",
+     "SERVED",
+     "NO_SHOW",
+     "CANCELLED"
+    ],
+    "title": "TokenStatus"
    },
    "TotpIn": {
     "properties": {

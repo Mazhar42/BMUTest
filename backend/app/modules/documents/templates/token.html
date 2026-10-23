@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Token {{ token.label }}</title>
+<style>
+  @page { size: 80mm 100mm; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 5mm 5mm 4mm; font-family: "Noto Sans", "Noto Sans Bengali", sans-serif; font-size: 9pt; color: #000; text-align: center; }
+  .bn { font-family: "Noto Sans Bengali", "Noto Sans", sans-serif; }
+  .inst { font-weight: 700; font-size: 9.5pt; line-height: 1.25; }
+  .inst small { display: block; font-weight: 400; font-size: 7.5pt; }
+  hr { border: 0; border-top: 0.3mm dashed #000; margin: 2.5mm 0; }
+  .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 0.5pt; }
+  .token { font-size: 40pt; font-weight: 800; line-height: 1.05; letter-spacing: 1pt; }
+  .priority { display: inline-block; border: 0.5mm solid #000; padding: 0.4mm 2.5mm; font-weight: 800; margin-top: 1mm; }
+  .code { font-family: "Noto Sans Mono", "DejaVu Sans Mono", monospace; font-weight: 700; font-size: 12pt; }
+  .qr { width: 24mm; height: 24mm; }
+  .go { font-weight: 700; font-size: 10pt; margin-top: 1mm; }
+  .muted { font-size: 7.5pt; }
+</style>
+</head>
+<body>
+  <div class="inst">{{ institution_en }}<small>{{ lab_en }}</small></div>
+  <hr>
+  <div class="label">Token · <span class="bn">টোকেন</span></div>
+  <div class="token">{{ token.label }}</div>
+  {% if token.queue.value == "P" %}<div class="priority">PRIORITY · <span class="bn">অগ্রাধিকার</span></div>{% endif %}
+  <hr>
+  <img class="qr" src="{{ qr }}" alt="QR {{ code }}">
+  <div class="code">{{ code }}</div>
+  <div class="go">Sample collection · <span class="bn">নমুনা সংগ্রহ</span></div>
+  <div class="muted">Show this token or scan the QR · <span class="bn">টোকেন দেখান বা কিউআর স্ক্যান করুন</span></div>
+  <div class="muted">{{ printed_at.strftime("%d %b %Y %H:%M") }}{% if reprint %} · REPRINT {{ reprint }}{% endif %}</div>
+</body>
+</html>

@@ -1,10 +1,10 @@
 import { expect, test } from "@playwright/test";
 
-import { DEMO_PASSWORD, randomMobile, staffToken } from "./helpers";
+import { DEMO_PASSWORD, randomMobile, staffPage, staffToken } from "./helpers";
 
 /** ROADMAP M3 acceptance — help desk walk-in: register → tests → inline verification → AWAITING_PAYMENT
  *  → 3-part slip PDF. (Barcode decoding of the slip is asserted in backend/tests/pdf/test_slip.py.) */
-test("help desk creates a walk-in order and prints the slip", async ({ page }) => {
+test("help desk creates a walk-in order and prints the slip", async ({ page, browser }) => {
   await page.goto("");
   await page.locator("#username").fill("helpdesk");
   await page.locator("#password").fill(DEMO_PASSWORD);
@@ -48,4 +48,38 @@ test("help desk creates a walk-in order and prints the slip", async ({ page }) =
   expect(body.slip_print_count).toBe(1);
   const pdf = await page.request.post(`/api/v1/staff/orders/${body.id}/slip`, { headers: { Authorization: `Bearer ${token}` } });
   expect((await pdf.body()).subarray(0, 4).toString()).toBe("%PDF");
+
+  // M4: the bank teller scans the bank-copy code, receives the money and the token is issued immediately
+  const teller = await staffPage(browser, "teller");
+  await teller.goto("teller");
+  const dashed = `${code.slice(0, 6)}-${code.slice(6, 11)}-${code.slice(11)}`;
+  await teller.getByTestId("teller-code").fill(dashed);
+  await teller.getByTestId("teller-code").press("Enter");
+  const card = teller.getByTestId("lookup-card");
+  await expect(card).toHaveAttribute("data-state", "RECEIVABLE");
+  await expect(teller.getByTestId("lookup-name")).toHaveText(name);
+  await expect(teller.getByTestId("lookup-amount")).toHaveText("৳700");
+  await teller.getByTestId("receipt-no").fill("BK-E2E-1");
+  await teller.getByTestId("receive").click();
+  await expect(teller.getByTestId("token-label")).toHaveText(/^W-\d{3}$/);
+  const tokenLabel = (await teller.getByTestId("token-label").innerText()).trim();
+
+  // the same code again: ALREADY PAID with the token, and no way to take money twice
+  await teller.getByTestId("teller-next").click();
+  await teller.getByTestId("teller-code").fill(code);
+  await teller.getByTestId("teller-code").press("Enter");
+  await expect(teller.getByTestId("lookup-card")).toHaveAttribute("data-state", "ALREADY_PAID");
+  await expect(teller.getByTestId("already-paid")).toContainText(tokenLabel);
+  await expect(teller.getByTestId("receive")).toHaveCount(0);
+
+  // day close: count and total include this payment
+  await teller.getByRole("button", { name: "Day close" }).click();
+  await expect(teller.getByTestId("dc-count")).not.toHaveText("0");
+  await expect(teller.getByTestId("day-close")).toContainText(dashed);
+  await teller.context().close();
+
+  // the order is PAID now and the SMS carries the token
+  const paid = await (await page.request.get(`/api/v1/staff/orders/${code}`, { headers: { Authorization: `Bearer ${token}` } })).json();
+  expect(paid.status).toBe("PAID");
+  expect(paid.payments.some((p: { method: string; amount: number }) => p.method === "BANK_TELLER" && p.amount === 70000)).toBe(true);
 });

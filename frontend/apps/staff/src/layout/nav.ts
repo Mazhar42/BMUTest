@@ -65,10 +65,10 @@ export const NAV: NavGroup[] = [
   {
     key: "payments",
     items: [
-      { key: "teller", path: "/teller", icon: Banknote, perms: ["payment.teller.receive"], milestone: 4 },
-      { key: "cashier", path: "/cashier", icon: Wallet, perms: ["payment.counter.receive"], milestone: 4 },
-      { key: "refunds", path: "/refunds", icon: HandCoins, perms: ["payment.refund.request", "payment.refund.approve"], milestone: 4 },
-      { key: "reconciliation", path: "/reconciliation", icon: Receipt, perms: ["payment.reconcile"], milestone: 4 },
+      { key: "teller", path: "/teller", icon: Banknote, perms: ["payment.teller.receive"] },
+      { key: "cashier", path: "/cashier", icon: Wallet, perms: ["payment.counter.receive"] },
+      { key: "refunds", path: "/refunds", icon: HandCoins, perms: ["payment.refund.request", "payment.refund.approve"] },
+      { key: "reconciliation", path: "/reconciliation", icon: Receipt, perms: ["payment.reconcile"] },
     ],
   },
   {

@@ -17,7 +17,11 @@
       "orders": "Find any order by code, patient or status",
       "patients": "Search, register, avoid duplicates",
       "catalog": "Tests, prices, departments, CSV import",
-      "staff": "Accounts, roles and two-step login"
+      "staff": "Accounts, roles and two-step login",
+      "teller": "Scan the code, receive the money, print the token",
+      "cashier": "Counter cash receipts",
+      "refunds": "Request and approve refunds",
+      "reconciliation": "Bank statements and exceptions"
     }
   },
   "tests": {
@@ -215,5 +219,85 @@
     "pin": "PIN (4–6 digits)",
     "pinHint": "Use the PIN to unlock the screen after inactivity. Your password still works too.",
     "pinSaved": "PIN saved"
+  },
+  "teller": {
+    "title": "Bank teller",
+    "cashierTitle": "Cashier",
+    "subtitle": "Scan or type the code from the bank copy. Check the name and amount, then receive.",
+    "cashierSubtitle": "Receive counter cash for an order. Same code, same token.",
+    "dayClose": "Day close",
+    "received": "Received",
+    "token": "Token",
+    "printToken": "Print token",
+    "next": "Next patient",
+    "scanPlaceholder": "Scan or type the code",
+    "find": "Find",
+    "states": {
+      "RECEIVABLE": "Ready to receive",
+      "ALREADY_PAID": "ALREADY PAID",
+      "NOT_VERIFIED": "NOT VERIFIED YET",
+      "EXPIRED": "EXPIRED",
+      "CLOSED": "CLOSED"
+    },
+    "stateHints": {
+      "RECEIVABLE": "Verified order. Receive the amount shown.",
+      "ALREADY_PAID": "Do not take money again. Send the patient to sample collection with this token.",
+      "NOT_VERIFIED": "Staff have not verified the tests yet. Ask the patient to wait or go to the help desk.",
+      "EXPIRED": "This order was not paid in time. The patient must make a new request.",
+      "CLOSED": "This order was cancelled or rejected."
+    },
+    "paidAmount": "Paid",
+    "amountDue": "Amount to receive",
+    "paidVia": "Paid by {{method}} on {{at}}.",
+    "receiptNo": "Bank receipt no.",
+    "receive": "Received {{amount}}",
+    "counterOff": "Counter payments are switched off in settings.",
+    "count": "Payments",
+    "net": "Net",
+    "noPayments": "No payments received on this day."
+  },
+  "refunds": {
+    "subtitle": "One person requests, another approves. Every step is audited.",
+    "find": "Find an order",
+    "findHint": "Type or scan the order code to see its payments.",
+    "noPayments": "No payments on this order.",
+    "request": "Request refund",
+    "requested": "Refund requested — waiting for approval",
+    "empty": "No refunds here",
+    "system": "Automatic",
+    "retry": "Retry",
+    "approveTitle": "Approve refund",
+    "rejectTitle": "Reject refund",
+    "mode": "How is the money returned?",
+    "modeManual": "Manually (cash or bank transfer)",
+    "modeProvider": "Through the payment gateway",
+    "reference": "Reference",
+    "referenceHint": "Cash voucher no. or bank transfer reference.",
+    "twoPerson": "A different person with refund approval rights must approve this.",
+    "providerFailed": "The gateway refused the refund. You can retry or refund manually.",
+    "done": "Done"
+  },
+  "recon": {
+    "subtitle": "Upload the bank statement; teller payments are matched by order code and amount.",
+    "upload": "Upload statement (CSV)",
+    "uploadHint": "Tell us which columns your bank uses. They are remembered for next time.",
+    "bank": "Bank name",
+    "colDate": "Date column",
+    "colAmount": "Credit column",
+    "colAmountHint": "Money received. Debits are skipped.",
+    "colReference": "Narration column",
+    "colReferenceHint": "Where the order code is written.",
+    "colReceipt": "Receipt column",
+    "dateFormat": "Date format",
+    "chooseFile": "Choose the CSV file",
+    "import": "Import & match",
+    "summary": "{{rows}} rows · {{matched}} matched · {{exceptions}} exceptions · {{skipped}} skipped",
+    "exceptions": "Exceptions",
+    "exceptionsHint": "Lines that need a person to look at them.",
+    "none": "No exceptions — everything matched.",
+    "reference": "Bank reference",
+    "resolve": "Resolve",
+    "resolveHint": "Explain how this line was dealt with.",
+    "resolved": "Marked as resolved"
   }
 }

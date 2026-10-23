@@ -130,8 +130,12 @@ def test_error_shape(client: TestClient) -> None:
 
 def test_new_staff_must_change_password_before_working(client: TestClient, db: Session) -> None:
     admin = login(client, make_staff(db, Role.LAB_ADMIN, totp_secret=new_totp_secret()))
-    payload = {"username": "newclerk", "full_name": "New Clerk", "password": "temporary-pass-1", "roles": [
-        {"role": "HELP_DESK"}]}
+    payload = {
+        "username": "newclerk",
+        "full_name": "New Clerk",
+        "password": "temporary-pass-1",
+        "roles": [{"role": "HELP_DESK"}],
+    }
     assert client.post("/api/v1/staff/admin/staff", json=payload, headers=admin).status_code == 201
     r = client.post("/api/v1/staff/auth/login", json={"username": "newclerk", "password": "temporary-pass-1"})
     headers = {"Authorization": f"Bearer {r.json()['access_token']}"}

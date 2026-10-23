@@ -108,6 +108,72 @@ function Clarify({ order }: { order: Schemas["OrderOut"] }) {
   );
 }
 
+const METHODS = ["bkash", "nagad", "upay", "rocket", "card"] as const;
+const METHOD_STYLE: Record<(typeof METHODS)[number], string> = {
+  bkash: "bg-[#e2136e] text-white",
+  nagad: "bg-[#f6921e] text-white",
+  upay: "bg-[#ffc20e] text-ink",
+  rocket: "bg-[#8c3494] text-white",
+  card: "bg-ink text-white",
+};
+
+/** Amount due, online payment methods (when enabled) and the "pay at hospital" alternative (ROADMAP §5.1/5.3). */
+function PayCard({ order }: { order: Schemas["OrderOut"] }) {
+  const { t, lang } = useI18n();
+  const onError = useErrorToast();
+  const config = useQuery({
+    queryKey: ["pay-config"],
+    queryFn: () => unwrap(api.GET("/api/v1/public/payments/config")),
+    staleTime: 5 * 60_000,
+  });
+  const pay = useMutation({
+    mutationFn: (method: (typeof METHODS)[number]) =>
+      unwrap(api.POST("/api/v1/patient/orders/{order_id}/pay", { params: { path: { order_id: order.id } }, body: { method } })),
+    onSuccess: (out) => {
+      window.location.assign(out.redirect_url);
+    },
+    onError,
+  });
+  return (
+    <Card className="mt-4 border-violet-600/20">
+      <CardBody className="space-y-4">
+        <div className="flex items-start gap-3">
+          <Wallet className="mt-0.5 size-5 shrink-0 text-violet-600" />
+          <div>
+            <div className="text-[17px] font-bold" data-testid="amount-due">
+              {t("patient.order.payTitle", { amount: formatMoney(order.amount_due, lang) })}
+            </div>
+            <p className="mt-0.5 text-[14px] text-sand-600">{t("patient.pay.choose")}</p>
+          </div>
+        </div>
+        {config.data?.online_payments && (
+          <div className="grid grid-cols-2 gap-2.5">
+            {METHODS.filter((m) => config.data?.methods.includes(m)).map((m) => (
+              <button
+                key={m}
+                type="button"
+                disabled={pay.isPending}
+                onClick={() => pay.mutate(m)}
+                data-testid={`pay-${m}`}
+                className={`${METHOD_STYLE[m]} h-14 rounded-2xl text-[16px] font-bold shadow-card transition active:scale-[0.98] disabled:opacity-60 ${m === "card" ? "col-span-2" : ""}`}
+              >
+                {t(`patient.pay.methods.${m}`)}
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="rounded-2xl bg-sand-50 p-4 ring-1 ring-sand-200" data-testid="pay-at-hospital">
+          <div className="font-semibold">{t("patient.pay.atHospital")}</div>
+          <p className="mt-1 text-[14px] text-sand-600">{t("patient.pay.atHospitalBody")}</p>
+          <div className="mt-2">
+            <OrderCode code={order.order_code ?? ""} size="lg" />
+          </div>
+        </div>
+      </CardBody>
+    </Card>
+  );
+}
+
 /** Order status, code + QR, progress timeline, tests with price and preparation (ROADMAP M3). */
 export default function OrderPage() {
   const { ref = "" } = useParams();
@@ -190,9 +256,10 @@ export default function OrderPage() {
           {o.status_reason}
         </Callout>
       )}
-      {o.status === "AWAITING_PAYMENT" && (
-        <Callout tone="violet" icon={<Wallet className="size-5" />} className="mt-4" title={t("patient.order.payTitle", { amount: formatMoney(o.amount_due, lang) })}>
-          {t("patient.order.payBody")}
+      {o.status === "AWAITING_PAYMENT" && <PayCard order={o} />}
+      {o.status === "PAID" && (
+        <Callout tone="ok" icon={<CheckCircle2 className="size-5" />} className="mt-4" title={t("patient.order.paidTitle")}>
+          {t("patient.order.paidBody")}
         </Callout>
       )}
 

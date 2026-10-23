@@ -14,6 +14,7 @@ const BookPage = lazy(() => import("./pages/BookPage"));
 const OrdersPage = lazy(() => import("./pages/OrdersPage"));
 const OrderPage = lazy(() => import("./pages/OrderPage"));
 const ReportsPage = lazy(() => import("./pages/ReportsPage"));
+const PayResultPage = lazy(() => import("./pages/PayResultPage"));
 
 function Splash() {
   return (
@@ -45,6 +46,7 @@ export function App() {
         <Route path="/orders" element={<Private><OrdersPage /></Private>} />
         <Route path="/orders/:ref" element={<Private><OrderPage /></Private>} />
         <Route path="/o/:ref" element={<Private><OrderPage /></Private>} />
+        <Route path="/pay/result" element={<Private><PayResultPage /></Private>} />
         <Route path="/reports" element={<Private><ReportsPage /></Private>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

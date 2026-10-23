@@ -7,3 +7,6 @@ order_clarification: "BMU Lab {code}: we need more information about your prescr
 order_rejected: "BMU Lab {code}: your request could not be accepted. Please contact the help desk."
 walkin_created: "BMU Lab code {code}. Amount Tk {amount}. Pay at the bank booth using this code."
 waiver_approved: "BMU Lab {code}: fee waiver approved. Amount payable Tk {amount}."
+payment_received_token: "BMU Lab {code}: Tk {amount} received. Token {token}. Go to sample collection."
+payment_received: "BMU Lab {code}: Tk {amount} received. Thank you."
+refund_completed: "BMU Lab {code}: Tk {amount} refunded."

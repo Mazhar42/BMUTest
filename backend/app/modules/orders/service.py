@@ -472,6 +472,26 @@ def list_orders(
     return page(rows, limit, lambda o: (o.created_at, o.id))
 
 
+def expire_unpaid(db: Session) -> int:
+    """AWAITING_PAYMENT orders older than `order_expiry_days` expire; open gateway payments are cancelled."""
+    from app.core.actor import SYSTEM
+    from app.modules.payments.models import PaymentMethod, PaymentStatus
+
+    cutoff = clock.now() - timedelta(days=settings_store.get_int(db, "order_expiry_days"))
+    n = 0
+    for order in db.scalars(
+        select(LabOrder)
+        .where(LabOrder.status == OrderStatus.AWAITING_PAYMENT, LabOrder.awaiting_payment_at < cutoff)
+        .with_for_update(skip_locked=True)
+    ):
+        for p in payments.for_order(db, order.id):
+            if p.method == PaymentMethod.GATEWAY and p.status in (PaymentStatus.INITIATED, PaymentStatus.PENDING):
+                transition(db, p, PaymentStatus.CANCELLED, SYSTEM, reason="order expired")
+        transition(db, order, OrderStatus.EXPIRED, SYSTEM, reason="not paid in time")
+        n += 1
+    return n
+
+
 def counts_by_status(db: Session) -> dict[str, int]:
     rows = db.execute(select(LabOrder.status, func.count()).group_by(LabOrder.status)).all()
     return {str(s.value if hasattr(s, "value") else s): int(n) for s, n in rows}

@@ -23,6 +23,9 @@ from app.modules.orders.router_patient import router as orders_patient
 from app.modules.orders.router_staff import router as orders_staff
 from app.modules.patients.router_patient import router as patients_patient
 from app.modules.patients.router_staff import router as patients_staff
+from app.modules.payments.router_patient import router as payments_patient
+from app.modules.payments.router_public import router as payments_public
+from app.modules.payments.router_staff import router as payments_staff
 from app.modules.prescriptions.router_patient import router as prescriptions_patient
 from app.modules.prescriptions.router_staff import router as prescriptions_staff
 
@@ -79,6 +82,9 @@ def create_app() -> FastAPI:
         prescriptions_patient,
         orders_staff,
         orders_patient,
+        payments_staff,
+        payments_patient,
+        payments_public,
     ):
         api.include_router(router)
     app.include_router(api)

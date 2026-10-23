@@ -70,6 +70,8 @@ class Settings(BaseSettings):
     bkash_password: str = ""
     bkash_sandbox: bool = True
     payment_pending_requery_minutes: int = 10
+    payment_pending_expire_hours: int = 24
+    payment_currency: str = "BDT"
     counter_payment_enabled: bool = False
     teller_require_receipt_no: bool = False
 

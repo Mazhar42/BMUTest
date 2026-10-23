@@ -36,7 +36,11 @@
     "relation": "Relation to you"
   },
   "book": {
-    "steps": { "photos": "Prescription", "tests": "Tests", "review": "Review" },
+    "steps": {
+      "photos": "Prescription",
+      "tests": "Tests",
+      "review": "Review"
+    },
     "photosTitle": "Photograph the prescription",
     "photosBody": "Up to 3 pages. Staff check your tests against it.",
     "photosTip": "Lay the paper flat in good light so the doctor's writing is readable.",
@@ -74,7 +78,9 @@
     "payBody": "Pay at the hospital bank booth with this code — no paper needed. Online payment (bKash, Nagad, cards) is coming soon.",
     "waiver": "Waiver",
     "cancel": "Cancel this request",
-    "cancelConfirm": "Cancel this request?"
+    "cancelConfirm": "Cancel this request?",
+    "paidTitle": "Payment received",
+    "paidBody": "Thank you. Bring your code or the QR above to sample collection."
   },
   "orders": {
     "empty": "No requests yet",
@@ -83,5 +89,36 @@
   "reports": {
     "empty": "No reports yet",
     "emptyBody": "When a report is released you'll get an SMS, and it will appear here to view or download."
+  },
+  "pay": {
+    "choose": "Pay online now, or at the hospital.",
+    "methods": {
+      "bkash": "bKash",
+      "nagad": "Nagad",
+      "upay": "Upay",
+      "rocket": "Rocket",
+      "card": "Card"
+    },
+    "atHospital": "Pay at the hospital",
+    "atHospitalBody": "Give this code at the bank booth. No paper needed.",
+    "resultTitle": "Payment",
+    "notFound": "We couldn't find this payment",
+    "result": {
+      "success": {
+        "title": "Payment received",
+        "body": "Thank you. You will also get an SMS."
+      },
+      "pending": {
+        "title": "Checking your payment…",
+        "body": "Please wait. This takes a few seconds."
+      },
+      "failed": {
+        "title": "Payment not completed",
+        "body": "No money was taken. You can try again.",
+        "cancelled": "You cancelled the payment. No money was taken."
+      }
+    },
+    "tryAgain": "Try again",
+    "viewOrder": "View my request"
   }
 }

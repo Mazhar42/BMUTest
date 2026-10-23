@@ -96,3 +96,26 @@ def test_reprint_is_watermarked_and_audited(
     assert actions.count("order.slip_print") == 1 and actions.count("order.slip_reprint") == 1
     detail = client.get(f"{S}/orders/{order['id']}", headers=h).json()
     assert detail["slip_print_count"] == 2
+
+
+def test_token_pdf_is_80mm_with_a_decodable_qr(
+    client: TestClient, db: Session, catalog: dict[str, Any], staff_headers: Any
+) -> None:
+    """The teller prints this right after "Received": token number large, QR = order code only."""
+    order, _ = _walkin(client, staff_headers, catalog)
+    teller = staff_headers(Role.BANK_TELLER)
+    token = client.post(f"{S}/payments/receive/{order['order_code']}", json={}, headers=teller).json()["token"]
+    r = client.post(f"{S}/tokens/{token['id']}/print", headers=teller)
+    assert r.status_code == 200 and r.headers["content-type"] == "application/pdf"
+
+    from pypdf import PdfReader
+
+    page = PdfReader(io.BytesIO(r.content)).pages[0]
+    assert abs(float(page.mediabox.width) / 72 * 25.4 - 80) < 1  # 80 mm thermal roll
+    assert token["label"] in _text(r.content)
+
+    import pypdfium2 as pdfium
+    from pyzbar import pyzbar
+
+    image = pdfium.PdfDocument(r.content)[0].render(scale=300 / 72).to_pil().convert("L")
+    assert [(d.type, d.data.decode()) for d in pyzbar.decode(image)] == [("QRCODE", order["order_code"])]

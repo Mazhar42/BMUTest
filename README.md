@@ -4,8 +4,9 @@ One order code, one backend, every channel: patients register, get their tests v
 sample and download their report — online (PWA + SMS) or through staff counters that print the same
 3-part slip BMU uses today.
 
-- **Status:** milestones M1–M3 done (foundation; catalog, patients, OTP login; prescriptions, orders,
-  verification, waivers, 3-part slip). See [docs/PROGRESS.md](docs/PROGRESS.md).
+- **Status:** milestones M1–M4 done (foundation; catalog, patients, OTP login; prescriptions, orders,
+  verification, waivers, 3-part slip; payments: bank teller, counter cash, online gateway, refunds,
+  reconciliation). Next: M5 scheduling and queue. See [docs/PROGRESS.md](docs/PROGRESS.md).
 - **Plan:** [docs/ROADMAP.md](docs/ROADMAP.md) · **Decisions:** [docs/adr/](docs/adr/) ·
   **Deploying:** [docs/runbooks/deploy.md](docs/runbooks/deploy.md)
 
